@@ -1,0 +1,49 @@
+## Iotic Category Vocabulary.
+
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:      <http://www.w3.org/ns/shacl#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+#PREFIX iotics:  <http://data.iotics.com/ns/>
+
+
+# Iotics public categories use:
+PREFIX cat:     <http://data.iotics.com/category/>
+
+
+## -- https://www.w3.org/TR/skos-primer
+## -- https://www.w3.org/TR/skos-reference/
+
+## iotb:CategoryScheme rdf:type skos:ConceptScheme ;
+##   skos:hasTopConcept iotb:Category .
+## 
+## iotb:Category skos:inScheme iotb:CategoryScheme .
+
+## An IOTICS category is a ("is of class") SKOS Concept.
+
+iotb:Category rdf:type skos:Concept .
+
+## The property.
+iotb:category
+    rdf:type rdf:Property ;
+    rdfs:range iotb:Category ;
+    .
+
+## The SHACL shape.
+iotb:categoryShape
+    sh:targetObjectsOf iotb:category ;
+    sh:class iotb:Category ;
+    .
+
+##### Example: "work of art" category
+## PREFIX my: <http://example/my/>
+## 
+## ## Definition
+## my:WorkOfArt rdf:type iotb:Category ;
+##     rdfs:label "Work of Art" .
+## 
+## ## Usage
+## my:someEntity iotb:category my:WorkOfArt .

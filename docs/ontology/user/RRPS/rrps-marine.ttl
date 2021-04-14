@@ -1,0 +1,193 @@
+PREFIX train:   <http://ex/train/>
+PREFIX rrps:    <http://www.mtu-solutions.com/ont/>
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:      <http://www.w3.org/ns/shacl#>
+PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+
+#### Marine Application
+
+## ---- Class: Ship
+
+rrps:Train rdf:type rdfs:Class ;
+    rrps:label    "Ship" ;
+    rrps:comment  "" ;
+    .
+
+## -- Properties
+
+customerId		String			CustomerAsset		
+inFleet			class Fleet		CustomerAsset		
+objectName		String			ship's name
+
+## ---- Class: ShipPropulsion
+
+rrps:ShipPropulsion rdf:type rdfs:Class ;
+    rrps:label    "" ;
+    rrps:comment  "Main Propulsion System" ;
+    .
+    
+## -- Properties
+## "RRPS Marine RRPSUnit"
+assignedTo		class Ship		RRPSUnit		
+contains		class SubUnit		RRPSUnit		
+installationDate		Date		RRPSUnit		
+materialDescription		String		RRPSUnit		
+equipmentNumber		String				
+containsUnit		Class RRPSUnit				to assign groups of RRPSUnits
+manufacturer		String				MTU, RRPS, other, …
+manufacturerSN		String				
+manufacturerTypeDesignation		String
+
+
+## ---- Class: CODAD
+						
+rrps:CODAD rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:ShipPropulsion ;
+    rdfs:subClassOf rrps:RRPSUnit ;
+    rdfs:subClassOf itob:Twin ;
+    rrps:label    "" ;
+    rrps:comment  "" ;
+    .
+    
+## ---- Class: CODAG
+
+rrps:CODAG rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:ShipPropulsion ;
+    rdfs:subClassOf rrps:RRPSUnit ;
+    rdfs:subClassOf itob:Twin ;
+    rrps:label    "" ;
+    rrps:comment  "" ;
+    .
+
+## ---- 
+
+## ---- Class: Electrical Power System
+rrps:ElectricalPowerSystem rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:RRPSUnit ;
+    rdfs:subClassOf itob:Twin ;
+    rrps:label    "" ;
+    rrps:comment  "" ;
+    .
+
+## -- Properties
+
+rrps:engine
+
+## ---- Class: Connected System
+
+rrps:ConnectedSystem rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:RRPSUnit ;
+    rdfs:subClassOf itob:Twin ;
+    rrps:label    "" ;
+    rrps:comment  "" ;
+    .
+
+## ---- Class: Diesel Generator
+
+rrps:DieselGenerator rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:RRPSUnit ;
+    rdfs:subClassOf itob:Twin ;
+    rrps:label    "" ;
+    rrps:comment  "" ;
+    .
+
+## -- Properties
+
+date of initial operation		Date				
+
+## ---- Class: Propulsion Group
+
+rrps:PropulsionGroup rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:RRPSUnit ;
+    rdfs:subClassOf itob:Twin ;
+    rrps:label    "" ;
+    rrps:comment  "" ;
+    .
+
+## -- Properties
+
+## ---- Class: Marine Engine
+
+rrps:MarineEngine rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:ShipPropulsion ;
+    rdfs:subClassOf rrps:RRPSUnit ;
+    rdfs:subClassOf itob:Twin ;
+    rrps:label    "" ;
+    rrps:comment  "" ;
+    .
+
+## -- Properties
+## @@ On which class?
+						
+serialNumber		String		SubUnit		
+component				SubUnit		Repeated property
+feeds				Iotics Twin		
+productDocumentation						Ideally, a URL.
+materialDescription		String		SubUnit		
+type		String				
+position		String				port side, starboard, center
+shaft		String				1,2,3,...
+functionalSoftwareVersion						nice to have, optional value
+series		String				
+manufacturer		String				MTU, RRPS, other, …
+manufacturerSN		String				
+manufacturerTypeDesignation		String				
+Power		Number				
+Engine speed		Number				
+Date of initial operation		Date				
+						
+## ---- Class: SCR
+## @@ What is this?
+
+rrps:SCR rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:RRPSUnit ;
+    rdfs:subClassOf itob:Twin ;
+    rrps:label    "" ;
+    rrps:comment  "" ;
+    .
+    
+## @@ On which class?
+		
+serialNumber		String		SubUnit
+component				SubUnit		Repeated property
+materialDescription		String		SubUnit
+feeds				Iotics Twin		
+productDocumentation						Ideally, a URL.
+position		String				port side, starboard, center
+shaft		String				1,2,3,...
+manufacturer		String				MTU, RRPS, other, …
+manufacturerSN		String				
+manufacturerTypeDesignation		String				
+Date of initial operation		Date
+
+
+## ---- Class: GearBox
+## @@Component? SubUnit?
+
+## @@ How to say "marine"
+rrps:GearBox  rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:RRPSUnit ;
+    rdfs:subClassOf itob:Twin ;
+    rrps:label    "" ;
+    rrps:comment  "" ;
+    .
+
+## -- Properties
+
+serialNumber		String		SubUnit		
+component				SubUnit		Repeated property
+feeds				Iotics Twin		
+materialDescription		String		SubUnit		
+productDocumentation						Ideally, a URL.
+type		String				
+position		String				port side, starboard, center
+shaft		String				1,2,3,...
+manufacturer		String				MTU, RRPS, other, …
+manufacturerSN		String				
+manufacturerTypeDesignation		String				
+Date of initial operation		Date				
