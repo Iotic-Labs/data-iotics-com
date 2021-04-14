@@ -1,0 +1,36 @@
+## Add categories to public data based on entityTags.
+
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+PREFIX dtb:     <http://iotics.com/dtb#>
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX category:  <http://data.iotics.com/category/>
+
+CONSTRUCT { ?entity iotb:category ?category }
+WHERE {
+    ?entity  iotb:entityTags ?l
+    FILTER CONTAINS(?l, 'cat_')
+    
+    BIND ( REPLACE(?l, '^.*cat_(\\w*).*$', '$1') AS ?x)
+    # Retain only these
+    FILTER ( lcase(?x) IN ( "weather", "waterbody", "transport", "civic", "airquality" ) )
+
+    # Format local name.
+    BIND ( CONCAT( UCASE(substr(?x,1,1)), LCASE(substr(?x,2)) ) AS ?y)
+
+    # Map names
+    BIND ( IF (?y = "Airquality", "AirQuality", ?y) AS ?ln1 )
+    BIND ( IF (?ln1 = "Civic", "Infrastructure", ?ln1) AS  ?ln2 )
+    BIND ( ?ln2 AS ?localName )
+
+    # Make IRI
+    BIND ( CONCAT( str(category:), ?localName) AS ?iriStr)
+    BIND (IRI(?iriStr) AS ?category )
+}
+
+## with (for suitable filename and URL):
+## 
+## curl -XPOST --header 'Content-type: text/turtle' --data-binary @DATA.ttl \
+##     http:://fuseki-server-dns/datasetName/data

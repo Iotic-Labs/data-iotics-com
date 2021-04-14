@@ -1,0 +1,64 @@
+PREFIX geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:      <http://www.w3.org/ns/shacl#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+#PREFIX iotics:  <http://data.iotics.com/ns/>
+
+PREFIX : <http://example/test/>
+
+## Location SHALC shapes.
+
+## Shape to check geo lat/long.
+
+:shapeGeoLatLong
+    sh:targetSubjectsOf  geo:lat, geo:long;
+    sh:property :shapeLat ;
+    sh:property :shapeLong ;
+    .
+          
+:shapeLat
+    rdf:type sh:propertyShape ;
+    sh:path geo:lat ;
+    sh:datatype xsd:float ;
+    sh:minCount 1;
+    sh:maxCount 1;
+    .
+
+:shapeLong
+    rdf:type sh:propertyShape ;
+    sh:path geo:long ;
+    sh:datatype xsd:float ;
+    sh:minCount 1;
+    sh:maxCount 1;
+    .
+
+## Alterntaive usage pattern: if a "place, must have lat and long"
+
+:shapePlace
+    # sh:targetClass :Place ; ## Uncomment to enable.
+    sh:property :shapeLat ;
+    sh:property :shapeLong ;
+    .
+
+## ---- Data
+
+:Place rdf:type rdfs:Class .
+
+:s1
+  geo:lat  "52.244384"^^xsd:float ;
+  geo:long "0.716356"^^xsd:float ;
+  .
+
+:s2
+  geo:long "0.716356"^^xsd:float ;
+  .
+  
+:s3
+  geo:lat  "52.244384"^^xsd:float ;
+  .
+
+:s4 rdf:type :Place .

@@ -1,0 +1,301 @@
+PREFIX train:   <http://ex/train/>
+PREFIX rrps:    <http://www.mtu-solutions.com/ont/>
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:      <http://www.w3.org/ns/shacl#>
+PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+
+#### Rail Application			
+
+## ---- Class: Train
+
+rrps:Train rdf:type rdfs:Class ;
+    rrps:label    "Train" ;
+    rrps:comment  "" ;
+    .
+
+## -- Properties
+
+rrps:railcar rdf:type rdf:Property ;
+    rdfs:label    "Railcar" ;
+    rdfs:comment  "Railcar in a train" ;
+    rdfs:domain    rrps:Train ;
+    rdfs:range     rrps:RailCar ;
+    .
+
+## customerId
+
+## -- Shape
+
+rrps:train-shape
+    sh:targetClass rrps:Train ;
+    sh:property [
+        sh:path rrps:railcar ;
+        sh:class rrps:RailCar ;
+    ];
+    sh:property
+        rrps:customerId-shape ;
+    .
+			
+## ---- Class: Railcar
+
+rrps:RailCar rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:CustomerAsset ;
+    rdfs:label      "Rail car" ;
+    rdfs:comment    "" ;
+    .
+
+## -- Properties
+
+## customerId  rdf:type rdf:Property ;
+## inFleet rdf:type rdf:Property ;
+
+## @@ Name?
+## Inverse of rrps:railcar
+
+rrps:assignedTo rdf:type rdf:Property ;
+    rdfs:label    "Train for railcar" ;
+    rdfs:comment  "Train for this railcar" ;
+    rdfs:domain    rrps:RailCar ;
+    rdfs:range     rrps:Train ;
+    .
+    
+rrps:sequence  rdf:type rdf:Property ;
+    rdfs:label    "RailCar number";
+    rdfs:comment  "Sequence number of this railcar";
+    rdfs:domain    rrps:RailCar ;
+    rdfs:range     xsd:integer ;
+    .
+
+## rrps:installationDate rdf:type  rdf:Property
+
+rrps:powerpack  rdf:type rdf:Property ;
+    rdfs:label    "Powerpack" ;
+    rdfs:comment  "Powerpack for this railcar" ;
+    rdfs:domain    rrps:RailCar ;
+    rdfs:range     rrps:PowerPack ;
+    .
+
+## -- Shape
+
+rrps:railcar-shape
+    sh:targetClassOf rrps:RailCar ;
+    sh:property
+        rrps:customerId-shape ;
+    sh:property
+        rrps:inFleet-shape ;
+    sh:property [
+        sh:path rrps:assignedTo ;
+        sh:class rrps:Train ;
+    ] ;
+    sh:property
+        rrps:installationDate-shape ;
+    sh:property [
+        sh:path rrps:powerpack ;
+        sh:class rrps:PowerPack ;
+    ];
+    sh:property
+        rrps:materialDescription-shape ;
+    sh:property [
+        sh:path rrps:sequence ;
+        sh:datatype xsd:integer ;
+    ];
+    .
+
+## ---- Class: PowerPack
+
+rrps:PowerPack rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:Unit ;
+    rdfs:subClassOf rrps:RailPropulsion ;
+    rdfs:subClassOf iotb:Twin ;
+    rrps:label      "PowerPack" ;
+    rrps:comment    "" ;
+    .
+
+## -- Properties
+
+## assignedTo rdf:type rdf:Property
+## inFleet  rdf:type rdf:Property
+## contains	rdf:type rdf:Property
+## serialNumber				String								
+## materialDescription												
+
+rrps:engine rdf:type rdf:Property ;
+    rdfs:subPropertyOf rrps;contains ;
+    rdfs:label    "engine" ;
+    rdfs:comment  "Engine in PowerPack ;
+    rdfs:domain   rrps:PowerPack ;
+    rdfs:range    rrps:Engine ;
+    .
+
+rrps:eWebName rdf:type rdf:Property ;
+    rdfs:label    "Name in eWeb" ;
+    rdfs:comment  "Name used as reference in eWeb" ;
+    rdfs:domain   rrps:PowerPack ;
+    rdfs:range    xsd:string ;
+    .
+    
+rrps:tenDatabase rdf:type rdf:Property ;
+    rdfs:label    "Name in TEN" ;
+    rdfs:comment  "Name used as referenece in TEN" ;
+    rdfs:domain   rrps:PowerPack ;
+    ##rdfs:range  URL
+    .
+
+## @@?? simCard				of the DPU
+
+## rrps:software rdf:Property ;
+
+## -- Shape
+
+rrps:PowerPack-shape
+    sh:targetClass rrps:PowerPack ;
+    sh:property
+        rrps:inFleet-shape ;
+    sh:property
+        rrps:contains-shape ;
+    sh:property [
+        sh:path rrps:engine ;
+        sh:class rrps:Engine ;
+    ] ;
+    sh:property
+        rrps:serialNumber-shape ;
+    sh:property
+        rrps:materialDescription-shape ;
+    sh:property [
+        sh:path rrps:eWebName ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property
+        rrps:tenDatabase-shape ;
+    sh:property
+        rrps:software-shape ;
+    .
+
+## ----
+
+rrps:RailPowerPack1600  rdfs:subClassOf  rrps:PowerPack .
+rrps:RailPowerPack1800  rdfs:subClassOf  rrps:PowerPack .
+## @@ Other
+## @@ Categories better?
+
+## ---- Class: RailPropulsion
+## @@ In or out?
+
+rrps:RailPropulsion rdfs:subClassOf rdfs:Unit ;
+    rrps:label      "Rail propulsion" ;
+    rrps:comment    "Class of things that are propulsion for trains" ;
+    .
+
+## @@ @@ feeds					SubUnit
+
+## -- Shape
+
+rrps:RailPropulsion-shape
+    sh:targetClass rrps:RailPropulsion ;
+    sh:property
+        rrps:component-shape ;
+    sh:property
+        rrps:tenDatabase-shape;
+    ## feeds
+    .    
+
+## ---- Class: Engine
+
+rrps:Engine rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:SubUnit ;
+    rdfs:subClassOf rrps:Railpropulsion ;
+    rdfs:subClassOf iotb:Twin ;
+    rdfs:label      "Engine" ;
+    rdfs:comment    "" ;
+    .
+
+## -- Properties
+
+## serialNumber
+## component
+## feeds
+
+## productDocumentation										Ideally, a URL.
+## materialDescription												
+
+rrps:engineModel rdf:type rdf:Property ;
+    rdfs:label      "Engine Model" ;
+    rdfs:comment    "" ;
+    ##rdfs:domain
+    rdfs:range      xsd:string ;
+    .
+												
+## software <- functionalSoftwareVersion												
+
+## -- Shape
+rrps:engine-shape
+    sh:targetClass rrps:Engine ;
+    sh:property [
+        sh:path rrps:engineModel ;
+        sh:datatype xsd:string ;
+    ];
+    sh:property
+        rrps:serialNumber-shape ;
+    sh:property
+        rrps:component-shape ;
+    sh:property
+        rrps:productDocumentation-shape ;
+    sh:property
+        rrps:materialDescription-shape ;
+    sh:property
+        rrps:software ;
+    .
+
+## ---- Engines
+
+rrps:RailEngine rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:Engine ;
+    .
+    
+rrps:RailEngine1600 rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:Engine ;
+    rdfs:subClassOf rrps:RailEngine ;
+    rrps:label      "" ;
+    rrps:comment    "" ;
+    .
+    
+rrps:RailEngine1800 rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:Engine ;
+    rdfs:subClassOf rrps:RailEngine ;
+    rrps:label      "" ;
+    rrps:comment    "" ;
+    .
+
+rrps:RailEngine2000 rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:Engine ;
+    rdfs:subClassOf rrps:RailEngine ;
+    rrps:label      "" ;
+    rrps:comment    "" ;
+    .
+
+rrps:RailEngine4000 rdf:type rdfs:Class ;
+    rdfs:subClassOf rrps:Engine ;
+    rdfs:subClassOf rrps:RailEngine ;
+    rrps:label      "" ;
+    rrps:comment    "" ;
+    .
+												
+## @@ EngineComponent				Not for V1 ontology.								
+
+## ---- General properties
+
+rrps:tenDatabase rdf:type rdf:Property ;
+    rdfs:label    "Name in TEN" ;
+    rdfs:comment  "Name used as referenece in TEN" ;
+    rdfs:domain   rrps:PowerPack ;
+    ##rdfs:range  URL
+    .
+rrps:tenDatabase-shape rdf:type sh:PropertyShape ;
+    sh:path rrps:tenDatabase ;
+    sh:nodeKind sh:IRI ;
+    .        
