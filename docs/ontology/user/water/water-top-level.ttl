@@ -1,0 +1,72 @@
+PREFIX water:   <http://data.iotics.com/water#>
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:      <http://www.w3.org/ns/shacl#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+
+#### Top-level concepts.
+
+water:Device rdf:type rdfs:Class ;
+    rdfs:label "Device" ;
+    rdfs:comment "An object which measures a specific parameter of water" ;
+    rdfs:subClassOf iotb:Entity ;
+    .
+
+water:deviceName rdf:type rdf:Property ;
+    rdfs: "Device name" ;
+    rdfs:comment "Human-readable name for the device: WW 'DB Name', NRW 'paramName'" ;
+    rdfs:domain water:Device ;
+    rdfs:range xsd:string;
+.
+
+water:deviceId rdf:type rdf:Property ;
+                    rdfs:label "Device Id" ;
+                    rdfs:comment "Customer-provided identifier unique to the device: WW 'DB Address', NRW 'title'" ;
+                    rdfs:domain water:Device ;
+                    rdfs:range xsd:string;
+.
+
+water:stationName rdf:type rdf:Property ;
+    rdfs:label   "Station name" ;
+    rdfs:comment "Human-readable name for the station where this device is located: WW 'OS Name', NRW 'Name'" ;
+    rdfs:domain  water:Device;
+    rdfs:range   xsd:string ;
+    .
+
+water:stationId rdf:type rdf:Property ;
+    rdfs:label   "Station Id" ;
+    rdfs:comment "Customer-provided id unique to this device's station: WW 'OS ID', NRW 'Location'" ;
+    rdfs:domain  water:Device ;
+    rdfs:range   xsd:string ;
+    .
+
+water:DeviceShape rdf:type sh:NodeShape ;
+    sh:targetClass water:Device ;
+    sh:property [
+        sh:path water:deviceName ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path water:deviceId ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path water:stationName ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path water:stationId ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path geo:lat ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path geo:long ;
+        sh:minCount 1;
+] ;
+.

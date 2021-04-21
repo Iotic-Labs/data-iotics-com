@@ -1,0 +1,74 @@
+PREFIX water:   <http://data.iotics.com/water#>
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:      <http://www.w3.org/ns/shacl#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+### Concepts related to Welsh Water stations.
+
+water:WelshWaterDevice rdf:type rdfs:Class ;
+    rdfs:label "Welsh Water Device" ;
+    rdfs:comment "A device owned by Welsh Water" ;
+    rdfs:subClassOf water:Device ;
+    .
+
+water:sapAssetId rdf:type rdf:Property ;
+    rdfs:label "SAP Asset Id" ;
+    rdfs:domain water:WelshWaterDevice ;
+    rdfs:range xsd:string ;
+    .
+
+## None of the below have comments because my -- and in most cases, Arup's -- understanding of them is incomplete.
+
+water:setPointsAvailable rdf:type rdf:Property ;
+    rdfs:label "Set Points Available" ;
+    rdfs:domain water:WelshWaterDevice ;
+    rdfs:range xsd:string ;
+    .
+
+water:setPointsStatus rdf:type rdf:Property ;
+    rdfs:label "Set Points Status Comment" ;
+    rdfs:domain water:WelshWaterDevice ;
+    rdfs:range xsd:string ;
+.
+
+### Parent property, not used directly
+
+water:setPoint rdf:type rdf:Property ;
+    rdfs:domain water:WelshWaterDevice ;
+.
+
+### These do not have range as they need to be able to accept either decimals or strings (strings = mapping?)
+
+water:setPointHiHi rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "HIHI SP/Mapping" ;
+.
+
+water:setPointHigh rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "HIGH SP/Mapping" ;
+.
+
+water:setPointLow rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "LOW SP/Mapping" ;
+.
+
+water:setPointLoLo rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "LOLO SP/Mapping" ;
+.
+
+water:watercoreAlarmLow rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "Watercore High alarm threshold" ;
+    rdfs:range xsd:decimal ;
+.
+
+water:watercoreAlarmHigh rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "Watercore Low alarm threshold" ;
+    rdfs:range xsd:decimal ;
+.

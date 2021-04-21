@@ -1,0 +1,73 @@
+PREFIX water:   <http://data.iotics.com/water#>
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:      <http://www.w3.org/ns/shacl#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+### Concepts related to Natural Resource Wales stations.
+
+water:NRWDevice rdf:type rdfs:Class ;
+    rdfs:label "Natural Resources Wales Device" ;
+    rdfs:comment "A device owned by Natural Resources Wales" ;
+    rdfs:subClassOf water:Device ;
+    .
+
+water:deviceType rdf:type rdf:Property ;
+    rdfs:label "Device type" ;
+    rdfs:comment "Whether this device measures rainfall or river/tidal level" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
+.
+
+water:isOnline rdf:type rdf:Property ;
+    rdfs:label "online" ;
+    rdfs:comment "Whether the station is online" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:boolean ;
+    .
+
+water:url rdf:type rdf:Property ;
+    rdfs:label "URL" ;
+    rdfs:comment "The URI of the monitoring station supplying the measure" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
+    .
+
+water:ngr rdf:type rdf:Property ;
+    rdfs:label "NGR" ;
+    rdfs:comment "National Grid Reference Number of the station" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
+    .
+
+water:NRWDeviceShape rdf:type sh:NodeShape ;
+    sh:targetClass water:NRWDevice ;
+    sh:property [
+        sh:path water:deviceName ;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
+    ] ;
+    sh:property [
+        sh:path water:deviceType ;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
+    ] ;
+    sh:property [
+        sh:path water:stationName ;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
+    ] ;
+    .
+
+## Meant for use as the valueUnit for the value containing the measurement's status, which is shared to the feed
+## alongside the quantifiable value
+
+water:StatusUnit rdf:type rdfs:Class ;
+    rdfs:label "Measurement status" ;
+    rdfs:comment "A textual description of the extent or trend of the measurement, eg. Light Rain, Level Falling" ;
+    rdfs:subClassOf <http://purl.obolibrary.org/obo/NCIT_C25365> ;
+    .

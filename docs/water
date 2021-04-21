@@ -1,0 +1,213 @@
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX sh:      <http://www.w3.org/ns/shacl#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX water:   <http://data.iotics.com/water#>
+
+
+
+### Concepts related to Welsh Water stations.
+
+water:WelshWaterDevice rdf:type rdfs:Class ;
+    rdfs:label "Welsh Water Device" ;
+    rdfs:comment "A device owned by Welsh Water" ;
+    rdfs:subClassOf water:Device ;
+    .
+
+water:sapAssetId rdf:type rdf:Property ;
+    rdfs:label "SAP Asset Id" ;
+    rdfs:domain water:WelshWaterDevice ;
+    rdfs:range xsd:string ;
+    .
+
+## None of the below have comments because my -- and in most cases, Arup's -- understanding of them is incomplete.
+
+water:setPointsAvailable rdf:type rdf:Property ;
+    rdfs:label "Set Points Available" ;
+    rdfs:domain water:WelshWaterDevice ;
+    rdfs:range xsd:string ;
+    .
+
+water:setPointsStatus rdf:type rdf:Property ;
+    rdfs:label "Set Points Status Comment" ;
+    rdfs:domain water:WelshWaterDevice ;
+    rdfs:range xsd:string ;
+.
+
+### Parent property, not used directly
+
+water:setPoint rdf:type rdf:Property ;
+    rdfs:domain water:WelshWaterDevice ;
+.
+
+### These do not have range as they need to be able to accept either decimals or strings (strings = mapping?)
+
+water:setPointHiHi rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "HIHI SP/Mapping" ;
+.
+
+water:setPointHigh rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "HIGH SP/Mapping" ;
+.
+
+water:setPointLow rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "LOW SP/Mapping" ;
+.
+
+water:setPointLoLo rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "LOLO SP/Mapping" ;
+.
+
+water:watercoreAlarmLow rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "Watercore High alarm threshold" ;
+    rdfs:range xsd:decimal ;
+.
+
+water:watercoreAlarmHigh rdf:type rdf:Property ;
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "Watercore Low alarm threshold" ;
+    rdfs:range xsd:decimal ;
+.
+
+
+
+### Concepts related to Natural Resource Wales stations.
+
+water:NRWDevice rdf:type rdfs:Class ;
+    rdfs:label "Natural Resources Wales Device" ;
+    rdfs:comment "A device owned by Natural Resources Wales" ;
+    rdfs:subClassOf water:Device ;
+    .
+
+water:deviceType rdf:type rdf:Property ;
+    rdfs:label "Device type" ;
+    rdfs:comment "Whether this device measures rainfall or river/tidal level" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
+.
+
+water:isOnline rdf:type rdf:Property ;
+    rdfs:label "online" ;
+    rdfs:comment "Whether the station is online" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:boolean ;
+    .
+
+water:url rdf:type rdf:Property ;
+    rdfs:label "URL" ;
+    rdfs:comment "The URI of the monitoring station supplying the measure" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
+    .
+
+water:ngr rdf:type rdf:Property ;
+    rdfs:label "NGR" ;
+    rdfs:comment "National Grid Reference Number of the station" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
+    .
+
+water:NRWDeviceShape rdf:type sh:NodeShape ;
+    sh:targetClass water:NRWDevice ;
+    sh:property [
+        sh:path water:deviceName ;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
+    ] ;
+    sh:property [
+        sh:path water:deviceType ;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
+    ] ;
+    sh:property [
+        sh:path water:stationName ;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
+    ] ;
+    .
+
+## Meant for use as the valueUnit for the value containing the measurement's status, which is shared to the feed
+## alongside the quantifiable value
+
+water:StatusUnit rdf:type rdfs:Class ;
+    rdfs:label "Measurement status" ;
+    rdfs:comment "A textual description of the extent or trend of the measurement, eg. Light Rain, Level Falling" ;
+    rdfs:subClassOf <http://purl.obolibrary.org/obo/NCIT_C25365> ;
+    .
+
+
+
+#### Top-level concepts.
+
+water:Device rdf:type rdfs:Class ;
+    rdfs:label "Device" ;
+    rdfs:comment "An object which measures a specific parameter of water" ;
+    rdfs:subClassOf iotb:Entity ;
+    .
+
+water:deviceName rdf:type rdf:Property ;
+    rdfs: "Device name" ;
+    rdfs:comment "Human-readable name for the device: WW 'DB Name', NRW 'paramName'" ;
+    rdfs:domain water:Device ;
+    rdfs:range xsd:string;
+.
+
+water:deviceId rdf:type rdf:Property ;
+                    rdfs:label "Device Id" ;
+                    rdfs:comment "Customer-provided identifier unique to the device: WW 'DB Address', NRW 'title'" ;
+                    rdfs:domain water:Device ;
+                    rdfs:range xsd:string;
+.
+
+water:stationName rdf:type rdf:Property ;
+    rdfs:label   "Station name" ;
+    rdfs:comment "Human-readable name for the station where this device is located: WW 'OS Name', NRW 'Name'" ;
+    rdfs:domain  water:Device;
+    rdfs:range   xsd:string ;
+    .
+
+water:stationId rdf:type rdf:Property ;
+    rdfs:label   "Station Id" ;
+    rdfs:comment "Customer-provided id unique to this device's station: WW 'OS ID', NRW 'Location'" ;
+    rdfs:domain  water:Device ;
+    rdfs:range   xsd:string ;
+    .
+
+water:DeviceShape rdf:type sh:NodeShape ;
+    sh:targetClass water:Device ;
+    sh:property [
+        sh:path water:deviceName ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path water:deviceId ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path water:stationName ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path water:stationId ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path geo:lat ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path geo:long ;
+        sh:minCount 1;
+] ;
+.
+
