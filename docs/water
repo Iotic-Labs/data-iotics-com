@@ -10,70 +10,72 @@ PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 
 
 
+### Concepts related to Natural Resource Wales stations.
 
-#### Top-level concepts.
-
-water:Device rdf:type rdfs:Class ;
-    rdfs:label "Device" ;
-    rdfs:comment "An object which measures a specific parameter of water" ;
-    rdfs:subClassOf iotb:Entity ;
+water:NRWDevice rdf:type rdfs:Class ;
+    rdfs:label "Natural Resources Wales Device" ;
+    rdfs:comment "A device owned by Natural Resources Wales" ;
+    rdfs:subClassOf water:Device ;
     .
 
-water:deviceName rdf:type rdf:Property ;
-    rdfs: "Device name" ;
-    rdfs:comment "Human-readable name for the device: WW 'DB Name', NRW 'paramName'" ;
-    rdfs:domain water:Device ;
-    rdfs:range xsd:string;
+water:deviceType rdf:type rdf:Property ;
+    rdfs:label "Device type" ;
+    rdfs:comment "Whether this device measures rainfall or river/tidal level" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
 .
 
-water:deviceId rdf:type rdf:Property ;
-                    rdfs:label "Device Id" ;
-                    rdfs:comment "Customer-provided identifier unique to the device: WW 'DB Address', NRW 'title'" ;
-                    rdfs:domain water:Device ;
-                    rdfs:range xsd:string;
-.
-
-water:stationName rdf:type rdf:Property ;
-    rdfs:label   "Station name" ;
-    rdfs:comment "Human-readable name for the station where this device is located: WW 'OS Name', NRW 'Name'" ;
-    rdfs:domain  water:Device;
-    rdfs:range   xsd:string ;
+water:isOnline rdf:type rdf:Property ;
+    rdfs:label "online" ;
+    rdfs:comment "Whether the station is online" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:boolean ;
     .
 
-water:stationId rdf:type rdf:Property ;
-    rdfs:label   "Station Id" ;
-    rdfs:comment "Customer-provided id unique to this device's station: WW 'OS ID', NRW 'Location'" ;
-    rdfs:domain  water:Device ;
-    rdfs:range   xsd:string ;
+water:url rdf:type rdf:Property ;
+    rdfs:label "URL" ;
+    rdfs:comment "The URI of the monitoring station supplying the measure" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
     .
 
-water:DeviceShape rdf:type sh:NodeShape ;
-    sh:targetClass water:Device ;
+water:ngr rdf:type rdf:Property ;
+    rdfs:label "NGR" ;
+    rdfs:comment "National Grid Reference Number of the station" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
+    .
+
+water:NRWDeviceShape rdf:type sh:NodeShape ;
+    sh:targetClass water:NRWDevice ;
     sh:property [
         sh:path water:deviceName ;
-        sh:minCount 1;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
     ] ;
     sh:property [
-        sh:path water:deviceId ;
-        sh:minCount 1;
+        sh:path water:deviceType ;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
     ] ;
     sh:property [
         sh:path water:stationName ;
-        sh:minCount 1;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
     ] ;
-    sh:property [
-        sh:path water:stationId ;
-        sh:minCount 1;
-    ] ;
-    sh:property [
-        sh:path geo:lat ;
-        sh:minCount 1;
-    ] ;
-    sh:property [
-        sh:path geo:long ;
-        sh:minCount 1;
-] ;
-.
+    .
+
+## Meant for use as the valueUnit for the value containing the measurement's status, which is shared to the feed
+## alongside the quantifiable value
+
+water:StatusUnit rdf:type rdfs:Class ;
+    rdfs:label "Measurement status" ;
+    rdfs:comment "A textual description of the extent or trend of the measurement, eg. Light Rain, Level Falling" ;
+    rdfs:subClassOf <http://purl.obolibrary.org/obo/NCIT_C25365> ;
+    .
 
 
 ### Concepts related to Welsh Water stations.
@@ -146,70 +148,68 @@ water:watercoreAlarmHigh rdf:type rdf:Property ;
 
 
 
-### Concepts related to Natural Resource Wales stations.
 
-water:NRWDevice rdf:type rdfs:Class ;
-    rdfs:label "Natural Resources Wales Device" ;
-    rdfs:comment "A device owned by Natural Resources Wales" ;
-    rdfs:subClassOf water:Device ;
+#### Top-level concepts.
+
+water:Device rdf:type rdfs:Class ;
+    rdfs:label "Device" ;
+    rdfs:comment "An object which measures a specific parameter of water" ;
+    rdfs:subClassOf iotb:Entity ;
     .
 
-water:deviceType rdf:type rdf:Property ;
-    rdfs:label "Device type" ;
-    rdfs:comment "Whether this device measures rainfall or river/tidal level" ;
-    rdfs:domain water:NRWDevice ;
-    rdfs:range xsd:string ;
+water:deviceName rdf:type rdf:Property ;
+    rdfs: "Device name" ;
+    rdfs:comment "Human-readable name for the device: WW 'DB Name', NRW 'paramName'" ;
+    rdfs:domain water:Device ;
+    rdfs:range xsd:string;
 .
 
-water:isOnline rdf:type rdf:Property ;
-    rdfs:label "online" ;
-    rdfs:comment "Whether the station is online" ;
-    rdfs:domain water:NRWDevice ;
-    rdfs:range xsd:boolean ;
+water:deviceId rdf:type rdf:Property ;
+                    rdfs:label "Device Id" ;
+                    rdfs:comment "Customer-provided identifier unique to the device: WW 'DB Address', NRW 'title'" ;
+                    rdfs:domain water:Device ;
+                    rdfs:range xsd:string;
+.
+
+water:stationName rdf:type rdf:Property ;
+    rdfs:label   "Station name" ;
+    rdfs:comment "Human-readable name for the station where this device is located: WW 'OS Name', NRW 'Name'" ;
+    rdfs:domain  water:Device;
+    rdfs:range   xsd:string ;
     .
 
-water:url rdf:type rdf:Property ;
-    rdfs:label "URL" ;
-    rdfs:comment "The URI of the monitoring station supplying the measure" ;
-    rdfs:domain water:NRWDevice ;
-    rdfs:range xsd:string ;
+water:stationId rdf:type rdf:Property ;
+    rdfs:label   "Station Id" ;
+    rdfs:comment "Customer-provided id unique to this device's station: WW 'OS ID', NRW 'Location'" ;
+    rdfs:domain  water:Device ;
+    rdfs:range   xsd:string ;
     .
 
-water:ngr rdf:type rdf:Property ;
-    rdfs:label "NGR" ;
-    rdfs:comment "National Grid Reference Number of the station" ;
-    rdfs:domain water:NRWDevice ;
-    rdfs:range xsd:string ;
-    .
-
-water:NRWDeviceShape rdf:type sh:NodeShape ;
-    sh:targetClass water:NRWDevice ;
+water:DeviceShape rdf:type sh:NodeShape ;
+    sh:targetClass water:Device ;
     sh:property [
         sh:path water:deviceName ;
-        sh:minCount 2;
-        sh:languageIn ( "en" "cy" ) ;
-        sh:uniqueLang true;
+        sh:minCount 1;
     ] ;
     sh:property [
-        sh:path water:deviceType ;
-        sh:minCount 2;
-        sh:languageIn ( "en" "cy" ) ;
-        sh:uniqueLang true;
+        sh:path water:deviceId ;
+        sh:minCount 1;
     ] ;
     sh:property [
         sh:path water:stationName ;
-        sh:minCount 2;
-        sh:languageIn ( "en" "cy" ) ;
-        sh:uniqueLang true;
+        sh:minCount 1;
     ] ;
-    .
-
-## Meant for use as the valueUnit for the value containing the measurement's status, which is shared to the feed
-## alongside the quantifiable value
-
-water:StatusUnit rdf:type rdfs:Class ;
-    rdfs:label "Measurement status" ;
-    rdfs:comment "A textual description of the extent or trend of the measurement, eg. Light Rain, Level Falling" ;
-    rdfs:subClassOf <http://purl.obolibrary.org/obo/NCIT_C25365> ;
-    .
+    sh:property [
+        sh:path water:stationId ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path geo:lat ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path geo:long ;
+        sh:minCount 1;
+] ;
+.
 
