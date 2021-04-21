@@ -1,10 +1,12 @@
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+ # Auto-generated from iotic-rdf-ontology repository, src/ontology/user/water. Edits will be overwritten!
+
 PREFIX geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#>
-PREFIX sh:      <http://www.w3.org/ns/shacl#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:      <http://www.w3.org/ns/shacl#>
 PREFIX water:   <http://data.iotics.com/water#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 
 
 
