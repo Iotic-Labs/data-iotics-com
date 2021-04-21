@@ -17,28 +17,28 @@ water:Device rdf:type rdfs:Class ;
 
 water:deviceName rdf:type rdf:Property ;
     rdfs: "Device name" ;
-    rdfs:comment "Human-readable name for the device: WW 'DB Name', NRW 'paramName'" ;
+    rdfs:comment "Human-readable name for the device: DCWW 'DB Name', NRW 'paramName'" ;
     rdfs:domain water:Device ;
     rdfs:range xsd:string;
 .
 
 water:deviceId rdf:type rdf:Property ;
                     rdfs:label "Device Id" ;
-                    rdfs:comment "Customer-provided identifier unique to the device: WW 'DB Address', NRW 'title'" ;
+                    rdfs:comment "Customer-provided identifier unique to the device: DCWW 'DB Address', NRW 'title'" ;
                     rdfs:domain water:Device ;
                     rdfs:range xsd:string;
 .
 
 water:stationName rdf:type rdf:Property ;
     rdfs:label   "Station name" ;
-    rdfs:comment "Human-readable name for the station where this device is located: WW 'OS Name', NRW 'Name'" ;
+    rdfs:comment "Human-readable name for the station where this device is located: DCWW 'OS Name', NRW 'Name'" ;
     rdfs:domain  water:Device;
     rdfs:range   xsd:string ;
     .
 
 water:stationId rdf:type rdf:Property ;
     rdfs:label   "Station Id" ;
-    rdfs:comment "Customer-provided id unique to this device's station: WW 'OS ID', NRW 'Location'" ;
+    rdfs:comment "Customer-provided id unique to this device's station: DCWW 'OS ID', NRW 'Location'" ;
     rdfs:domain  water:Device ;
     rdfs:range   xsd:string ;
     .
