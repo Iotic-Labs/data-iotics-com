@@ -15,10 +15,10 @@ pub:HostTwin
     rdfs:comment "The Iotics Host virtual counterpart"@en ;
     .
 
-pub:apiWhitelist
+pub:apiAllowList
     rdf:type rdf:Property ;
-    rdfs:label "API whitelist"@en ;
-    rdfs:comment "Agent or Twin DID allowed to interact with the host"@en ;
+    rdfs:label "API allow list"@en ;
+    rdfs:comment "User or Twin DIDs allowed to interact with the host API"@en ;
     rdfs:domain pub:HostTwin;
     rdfs:range xsd:string ;
     .
