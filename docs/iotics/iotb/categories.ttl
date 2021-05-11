@@ -7,7 +7,6 @@ PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
 
 PREFIX iotb:    <http://purl.org/net/iotic-labs#>
-#PREFIX iotics:  <http://data.iotics.com/ns/>
 
 
 # Iotics public categories use:
