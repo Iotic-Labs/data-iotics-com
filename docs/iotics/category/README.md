@@ -1,7 +1,3 @@
-Most moved to:
-
-https://ioticlabs.atlassian.net/wiki/spaces/DT/pages/208601108/Categories
-
 # Categories
 
 Categories are used to organize items described in the Iotic Knowledge Graph.
@@ -92,3 +88,7 @@ ex:GoodSource      rdf:type  skos:Concept ;
 ```
 
 Data sources can provide their own categories and concept schemas.
+
+##  Links
+- [wiki](https://ioticlabs.atlassian.net/wiki/spaces/DT/pages/208601108/Categories)
+- [ttl source](public-categories.ttl)

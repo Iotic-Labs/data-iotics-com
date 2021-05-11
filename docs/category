@@ -1,11 +1,15 @@
+ # Auto-generated from iotic-rdf-ontology repository, iotics/category. Edits will be overwritten!
+
+PREFIX cat:     <http://data.iotics.com/category/>
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sh:      <http://www.w3.org/ns/shacl#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 
-PREFIX iotb:    <http://purl.org/net/iotic-labs#>
-PREFIX cat:     <http://data.iotics.com/category/>
+
+
 
 cat:PublicCategoryScheme rdf:type skos:ConceptScheme ;
   skos:hasTopConcept iotb:Category ;
@@ -63,3 +67,5 @@ cat:Weather      skos:broader   cat:Environment .
 
 cat:Environment  skos:narrower  cat:AirQuality .
 cat:AirQuality   skos:broader   cat:Environment .
+
+

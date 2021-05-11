@@ -1,4 +1,4 @@
- # Auto-generated from iotic-rdf-ontology repository, src/ontology/user/water. Edits will be overwritten!
+ # Auto-generated from iotic-rdf-ontology repository, 3rd/water. Edits will be overwritten!
 
 PREFIX geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX iotb:    <http://purl.org/net/iotic-labs#>
