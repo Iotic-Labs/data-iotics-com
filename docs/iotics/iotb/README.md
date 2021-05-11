@@ -1,7 +1,5 @@
 # Iotics Base ontology
 
-as designed for Arup
-
 | File | Description |
 | --- | --- |
 | [iotic-labs.ttl](iotic-labs.ttl) | Iotic Twins (aka entities), their feeds, and values |
