@@ -1,0 +1,88 @@
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+PREFIX app:     <http://data.iotics.com/app#>
+
+
+app:Model rdf:type rdfs:Class ;
+    rdfs:label "Digital Twin Model"@en ;
+    rdfs:comment "A template for creating digital twins with the same feeds and properties"@en ;
+.
+
+app:model rdf:type rdf:Property ;
+    rdfs:label "Twin model";
+    rdfs:comment "Model from which the twin was created" ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range app:Model ;
+.
+
+app:createdAt rdf:type rdf:Property ;
+    rdfs:label "Created at"@en ;
+    rdfs:comment "Twin creation time"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range xsd:dateTime ;
+.
+
+app:updatedAt rdf:type rdf:Property ;
+    rdfs:label "Updated at"@en ;
+    rdfs:comment "Twin update time"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range xsd:dateTime ;
+.
+
+app:createdBy rdf:type rdf:Property ;
+    rdfs:label "Created by"@en ;
+    rdfs:comment "Name of user who created the twin"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range xsd:string ;
+.
+
+app:updatedBy rdf:type rdf:Property ;
+    rdfs:label "Updated by"@en ;
+    rdfs:comment "Name of user who updated the twin"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range xsd:string ;
+.
+
+app:createdFrom rdf:type rdf:Property ;
+    rdfs:label "Created from"@en ;
+    rdfs:comment "How the twin was created"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range app:TwinCreationMeans ;
+.
+
+app:TwinCreationMeans rdf:type rdfs:Class ;
+    rdfs:label "Twin creation means"@en ;
+    rdfs:comment "Way of making a digital twin"@en ;
+.
+
+app:ByCloudApp rdf:type app:TwinCreationMeans ;
+    rdfs:label "By cloud app"@en ;
+    rdfs:comment "Using the Iotics Cloud Application" ;
+.
+
+app:ByModel rdf:type app:TwinCreationMeans ;
+    rdfs:label "By model"@en ;
+    rdfs:comment "From a Digital Twin Model"@en ;
+.
+
+app:Application rdf:type rdfs:Class ;
+    rdfs:label "Application"@en ;
+    rdfs:comment "User application"@en ;
+.
+
+app:applicationId rdf:type rdf:Property ;
+    rdfs:label "Application ID"@en ;
+    rdfs:comment "Unique identifier for an application"@en ;
+    rdfs:domain app:Application ;
+    rdfs:range xsd:string ;
+.
+
+app:dataSource rdf:type rdf:Property ;
+    rdfs:label "has Data Source Twin" ;
+    rdfs:comment "ID of twin providing data to this application" ;
+    rdfs:domain app:Application ;
+    rdfs:range iotb:Entity ;
+.

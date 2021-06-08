@@ -2,6 +2,7 @@
 
 | Full ontology | Source files |
 | --- | --- |
+| [app](app) | [source](iotics/app) |
 | [category](category) | [source](iotics/category) |
 | [iotb](iotb) | [source](iotics/iotb) |
 
