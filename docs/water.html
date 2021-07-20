@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html><pre>
+# Auto-generated from iotic-rdf-ontology repository, 3rd/water. Edits will be overwritten!
+
+PREFIX geo:     &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt;
+PREFIX iotb:    &lt;http://purl.org/net/iotic-labs#&gt;
+PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX sh:      &lt;http://www.w3.org/ns/shacl#&gt;
+PREFIX water:   &lt;http://data.iotics.com/water#&gt;
+PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
+
+### Concepts related to Natural Resource Wales stations.
+
+<span id="NRWDevice">water:NRWDevice rdf:type rdfs:Class ;</span>
+    rdfs:label "Natural Resources Wales Device" ;
+    rdfs:comment "A device owned by Natural Resources Wales" ;
+    rdfs:subClassOf water:Device ;
+    .
+
+<span id="deviceType">water:deviceType rdf:type rdf:Property ;</span>
+    rdfs:label "Device type" ;
+    rdfs:comment "Whether this device measures rainfall or river/tidal level" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
+.
+
+<span id="isOnline">water:isOnline rdf:type rdf:Property ;</span>
+    rdfs:label "online" ;
+    rdfs:comment "Whether the station is online" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:boolean ;
+    .
+
+<span id="url">water:url rdf:type rdf:Property ;</span>
+    rdfs:label "URL" ;
+    rdfs:comment "The URI of the monitoring station supplying the measure" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
+    .
+
+<span id="ngr">water:ngr rdf:type rdf:Property ;</span>
+    rdfs:label "NGR" ;
+    rdfs:comment "National Grid Reference Number of the station" ;
+    rdfs:domain water:NRWDevice ;
+    rdfs:range xsd:string ;
+    .
+
+<span id="NRWDeviceShape">water:NRWDeviceShape rdf:type sh:NodeShape ;</span>
+    sh:targetClass water:NRWDevice ;
+    sh:property [
+        sh:path water:deviceName ;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
+    ] ;
+    sh:property [
+        sh:path water:deviceType ;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
+    ] ;
+    sh:property [
+        sh:path water:stationName ;
+        sh:minCount 2;
+        sh:languageIn ( "en" "cy" ) ;
+        sh:uniqueLang true;
+    ] ;
+    .
+
+## Meant for use as the valueUnit for the value containing the measurement's status, which is shared to the feed
+## alongside the quantifiable value
+
+<span id="StatusUnit">water:StatusUnit rdf:type rdfs:Class ;</span>
+    rdfs:label "Measurement status" ;
+    rdfs:comment "A textual description of the extent or trend of the measurement, eg. Light Rain, Level Falling" ;
+    rdfs:subClassOf &lt;http://purl.obolibrary.org/obo/NCIT_C25365&gt; ;
+    .
+
+
+### Concepts related to Welsh Water stations.
+
+<span id="WelshWaterDevice">water:WelshWaterDevice rdf:type rdfs:Class ;</span>
+    rdfs:label "Welsh Water Device" ;
+    rdfs:comment "A device owned by Welsh Water" ;
+    rdfs:subClassOf water:Device ;
+    .
+
+<span id="sapAssetId">water:sapAssetId rdf:type rdf:Property ;</span>
+    rdfs:label "SAP Asset Id" ;
+    rdfs:domain water:WelshWaterDevice ;
+    rdfs:range xsd:string ;
+    .
+
+## None of the below have comments because my -- and in most cases, Arup's -- understanding of them is incomplete.
+
+<span id="setPointsAvailable">water:setPointsAvailable rdf:type rdf:Property ;</span>
+    rdfs:label "Set Points Available" ;
+    rdfs:domain water:WelshWaterDevice ;
+    rdfs:range xsd:string ;
+    .
+
+<span id="setPointsStatus">water:setPointsStatus rdf:type rdf:Property ;</span>
+    rdfs:label "Set Points Status Comment" ;
+    rdfs:domain water:WelshWaterDevice ;
+    rdfs:range xsd:string ;
+.
+
+### Parent property, not used directly
+
+<span id="setPoint">water:setPoint rdf:type rdf:Property ;</span>
+    rdfs:domain water:WelshWaterDevice ;
+.
+
+### These do not have range as they need to be able to accept either decimals or strings (strings = mapping?)
+
+<span id="setPointHiHi">water:setPointHiHi rdf:type rdf:Property ;</span>
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "HIHI SP/Mapping" ;
+.
+
+<span id="setPointHigh">water:setPointHigh rdf:type rdf:Property ;</span>
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "HIGH SP/Mapping" ;
+.
+
+<span id="setPointLow">water:setPointLow rdf:type rdf:Property ;</span>
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "LOW SP/Mapping" ;
+.
+
+<span id="setPointLoLo">water:setPointLoLo rdf:type rdf:Property ;</span>
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "LOLO SP/Mapping" ;
+.
+
+<span id="watercoreAlarmLow">water:watercoreAlarmLow rdf:type rdf:Property ;</span>
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "Watercore High alarm threshold" ;
+    rdfs:range xsd:decimal ;
+.
+
+<span id="watercoreAlarmHigh">water:watercoreAlarmHigh rdf:type rdf:Property ;</span>
+    rdfs:subPropertyOf water:setPoint ;
+    rdfs:label "Watercore Low alarm threshold" ;
+    rdfs:range xsd:decimal ;
+.
+
+
+
+
+#### Top-level concepts.
+
+<span id="Device">water:Device rdf:type rdfs:Class ;</span>
+    rdfs:label "Device" ;
+    rdfs:comment "An object which measures a specific parameter of water" ;
+    rdfs:subClassOf iotb:Entity ;
+    .
+
+<span id="deviceName">water:deviceName rdf:type rdf:Property ;</span>
+    rdfs: "Device name" ;
+    rdfs:comment "Human-readable name for the device: DCWW 'DB Name', NRW 'paramName'" ;
+    rdfs:domain water:Device ;
+    rdfs:range xsd:string;
+.
+
+<span id="deviceId">water:deviceId rdf:type rdf:Property ;</span>
+                    rdfs:label "Device Id" ;
+                    rdfs:comment "Customer-provided identifier unique to the device: DCWW 'DB Address', NRW 'title'" ;
+                    rdfs:domain water:Device ;
+                    rdfs:range xsd:string;
+.
+
+<span id="stationName">water:stationName rdf:type rdf:Property ;</span>
+    rdfs:label   "Station name" ;
+    rdfs:comment "Human-readable name for the station where this device is located: DCWW 'OS Name', NRW 'Name'" ;
+    rdfs:domain  water:Device;
+    rdfs:range   xsd:string ;
+    .
+
+<span id="stationId">water:stationId rdf:type rdf:Property ;</span>
+    rdfs:label   "Station Id" ;
+    rdfs:comment "Customer-provided id unique to this device's station: DCWW 'OS ID', NRW 'Location'" ;
+    rdfs:domain  water:Device ;
+    rdfs:range   xsd:string ;
+    .
+
+<span id="DeviceShape">water:DeviceShape rdf:type sh:NodeShape ;</span>
+    sh:targetClass water:Device ;
+    sh:property [
+        sh:path water:deviceName ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path water:deviceId ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path water:stationName ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path water:stationId ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path geo:lat ;
+        sh:minCount 1;
+    ] ;
+    sh:property [
+        sh:path geo:long ;
+        sh:minCount 1;
+] ;
+.
+
+</pre></html>

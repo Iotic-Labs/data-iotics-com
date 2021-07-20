@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html><pre>
+# Auto-generated from iotic-rdf-ontology repository, iotics/iotb. Edits will be overwritten!
+
+PREFIX cat:     &lt;http://data.iotics.com/category/&gt;
+PREFIX iotb:    &lt;http://purl.org/net/iotic-labs#&gt;
+PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; 
+PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX sh:      &lt;http://www.w3.org/ns/shacl#&gt;
+PREFIX skos:    &lt;http://www.w3.org/2004/02/skos/core#&gt;
+PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
+## Iotic Category Vocabulary.
+
+
+
+
+# Iotics public categories use:
+
+
+## -- https://www.w3.org/TR/skos-primer
+## -- https://www.w3.org/TR/skos-reference/
+
+## iotb:CategoryScheme rdf:type skos:ConceptScheme ;
+##   skos:hasTopConcept iotb:Category .
+## 
+## iotb:Category skos:inScheme iotb:CategoryScheme .
+
+## An IOTICS category is a ("is of class") SKOS Concept.
+
+<span id="Category">iotb:Category rdf:type skos:Concept .</span>
+
+## The property.
+iotb:category
+    rdf:type rdf:Property ;
+    rdfs:range iotb:Category ;
+    .
+
+## The SHACL shape.
+iotb:categoryShape
+    sh:targetObjectsOf iotb:category ;
+    sh:class iotb:Category ;
+    .
+
+##### Example: "work of art" category
+## PREFIX my: &lt;http://example/my/&gt;
+## 
+## ## Definition
+## my:WorkOfArt rdf:type iotb:Category ;
+##     rdfs:label "Work of Art" .
+## 
+## ## Usage
+## my:someEntity iotb:category my:WorkOfArt .
+
+
+# Copyright (c) 2019 Iotic Labs Ltd. All rights reserved.
+
+###############################################################################
+# IOTIC Resource Ontology                                                     #
+###############################################################################
+
+
+
+## Base ontology for things (entities) in Iotics spaces.
+
+iotb:Entity
+    rdf:type rdfs:Class ;
+    rdfs:label "Iotic Entity"@en ;
+    rdfs:comment "A virtual thing in the Iotic Space"@en ;
+    .
+
+iotb:HostTwin
+    rdf:type rdfs:Class ;
+    rdfs:subClassOf iotb:Entity ;
+    rdfs:label "Iotics Host Twin"@en ;
+    rdfs:comment "The Iotics Host virtual counterpart"@en ;
+    .
+
+iotb:entityLabel
+    rdf:type rdf:Property ;
+    rdfs:subPropertyOf rdfs:label ;
+    rdfs:domain iotb:Entity ;
+    .
+
+iotb:entityComment
+    rdf:type rdf:Property ;
+    rdfs:subPropertyOf rdfs:comment ;
+    rdfs:domain iotb:Entity ;
+    .
+
+iotb:entityTags
+    rdf:type rdf:Property ;
+    rdfs:label "Concatenated string of an entity's tags"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range xsd:string ;
+    .
+
+iotb:Container
+    rdf:type rdfs:Class ;
+    rdfs:label "Iotic Container"@en ;
+    rdfs:comment "An Iotic infrastructure container"@en ;
+    .
+
+iotb:Owner
+    rdf:type rdfs:Class ;
+    rdfs:label "Iotic Owner"@en ;
+    rdfs:comment "An owner of an iotic entity"@en ;
+    .
+
+iotb:ownedBy
+    rdf:type rdf:Property ;
+    rdfs:label "Owned By"@en ;
+    rdfs:comment "Expresses the ownership of an entity"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range iotb:Owner ;
+    .
+
+iotb:containedIn
+    rdf:type rdf:Property ;
+    rdfs:label "Contained In"@en ;
+    rdfs:comment "Expresses the fact of being in a particular container"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range iotb:Container ;
+    .
+
+iotb:advertises
+    rdf:type rdf:Property ;
+    rdfs:label "Advertises"@en ;
+    rdfs:comment "The act of providing a feed"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range iotb:Point ;
+    .
+
+iotb:public
+    rdf:type rdf:Property ;
+    rdfs:label "Public"@en ;
+    rdfs:comment "Publicity of metadata flag"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range xsd:boolean ;
+    .
+
+iotb:Point
+    rdf:type rdfs:Class ;
+    rdfs:label "Iotic Point"@en ;
+    rdfs:comment "A connection point advertised by an Iotic Entity, either a feed or a control"@en ;
+    .
+
+iotb:pointType
+    rdf:type rdf:Property ;
+    rdfs:label "Point type (abstract)"@en ;
+    rdfs:comment "The type of a point (i.e. a feed or a control)"@en ;
+    rdfs:domain iotb:Point ;
+    rdfs:range iotb:Feed, iotb:Control ;
+    .
+
+iotb:pointLabel
+    rdf:type rdf:Property ;
+    rdfs:subPropertyOf rdfs:label ;
+    rdfs:domain iotb:Point ;
+    .
+
+iotb:pointName
+	rdf:type rdf:Property ;
+	rdfs:domain iotb:Point ;
+	rdfs:range xsd:string ;
+	.
+
+iotb:pointComment
+    rdf:type rdf:Property ;
+    rdfs:subPropertyOf rdfs:comment ;
+    rdfs:domain iotb:Point ;
+    .
+
+iotb:pointTags
+    rdf:type rdf:Property ;
+    rdfs:label "Concatenated string of a point's tags"@en ;
+    rdfs:domain iotb:Point;
+    rdfs:range xsd:string ;
+    .
+
+iotb:valueIndex
+    rdf:type rdf:Property ;
+    rdfs:label "Point value counter"@en ;
+    rdfs:comment "Counter of how many distinct values have been presented by this point"@en ;
+    rdfs:domain iotb:Point ;
+    rdfs:range xsd:unsignedInt ;
+    .
+
+iotb:Feed
+    rdf:type rdfs:Class ;
+    rdfs:subClassOf iotb:Point ;
+    rdfs:label "Iotic Feed"@en ;
+    rdfs:comment "A feed of data advertised by an Iotic Entity"@en ;
+    .
+
+iotb:storeLast
+    rdf:type rdf:Property ;
+    rdfs:label "Stores last sample"@en ;
+    rdfs:comment "Whether most recent sample might be available on this point"@en ;
+    rdfs:domain iotb:Point ;
+    rdfs:range xsd:boolean ;
+    .
+
+iotb:Control
+    rdf:type rdfs:Class ;
+    rdfs:subClassOf iotb:Point ;
+    rdfs:label "Iotic Control"@en ;
+    rdfs:comment "An Control advertised by an Iotic Entity"@en ;
+    .
+
+iotb:Value
+    rdf:type rdfs:Class ;
+    rdfs:label "Iotic Value"@en ;
+    rdfs:comment "A value of a feed or a value to send to an Control"@en ;
+    .
+
+iotb:valueLabel
+    rdf:type rdf:Property ;
+    rdfs:subPropertyOf rdfs:label ;
+    rdfs:domain iotb:Value ;
+    .
+
+iotb:valueComment
+    rdf:type rdf:Property ;
+    rdfs:subPropertyOf rdfs:comment ;
+    rdfs:domain iotb:Value ;
+    .
+
+iotb:valueType
+    rdf:type rdf:Property ;
+    rdfs:label "Value type"@en ;
+    rdfs:comment "The datatype of the feed/control value e.g. xsd:decimal"@en ;
+    rdfs:domain iotb:Value ;
+    .
+
+iotb:valueUnit
+    rdf:type rdf:Property ;
+    rdfs:label "Value Unit"@en ;
+    rdfs:comment "The unit of the feed/control value e.g. obo:UO_0000027"@en ;
+    rdfs:domain iotb:Value ;
+    .
+
+iotb:presents
+    rdf:type rdf:Property ;
+    rdfs:label "Presents"@en ;
+    rdfs:comment "The values presented by a point (feed or control)"@en ;
+    rdfs:domain iotb:Point;
+    rdfs:range iotb:Value ;
+    .
+
+
+</pre></html>

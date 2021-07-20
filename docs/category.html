@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html><pre>
+# Auto-generated from iotic-rdf-ontology repository, iotics/category. Edits will be overwritten!
+
+PREFIX cat:     &lt;http://data.iotics.com/category/&gt;
+PREFIX iotb:    &lt;http://purl.org/net/iotic-labs#&gt;
+PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; 
+PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX sh:      &lt;http://www.w3.org/ns/shacl#&gt;
+PREFIX skos:    &lt;http://www.w3.org/2004/02/skos/core#&gt;
+PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
+
+
+cat:PublicCategoryScheme rdf:type skos:ConceptScheme ;
+  skos:hasTopConcept iotb:Category ;
+  rdfs:comment "Some categories provided for the Iotics public data."
+  .
+
+## ---- Categories
+
+cat:Weather        rdf:type  skos:Concept ;
+    skos:inScheme  cat:PublicCategoryScheme ;
+    skos:prefLabel "Weather" ;
+    rdfs:label     "Weather" ;
+    .
+
+cat:Waterbody      rdf:type  skos:Concept ;
+    skos:inScheme  cat:PublicCategoryScheme ;
+    skos:prefLabel "Waterbody" ;
+    rdfs:label     "Waterbody" ;
+    .
+
+cat:Transport      rdf:type  skos:Concept ;
+    skos:inScheme  cat:PublicCategoryScheme ;
+    skos:prefLabel "Transport" ;
+    rdfs:label     "Transport" ;
+    .
+
+cat:Infrastructure rdf:type  skos:Concept ;
+    skos:inScheme  cat:PublicCategoryScheme ;
+    skos:prefLabel "Infrastructure" ;
+    rdfs:label     "Infrastructure" ;
+    .
+
+cat:AirQuality     rdf:type  skos:Concept ;
+    skos:inScheme  cat:PublicCategoryScheme ;
+    skos:prefLabel "Air Quality" ;
+    rdfs:label     "Air Quality" ;
+    .
+
+cat:Environment    rdf:type  skos:Concept ;
+    skos:inScheme  cat:PublicCategoryScheme ;
+    skos:prefLabel "Environment" ;
+    rdfs:label     "Environment" ;
+    .
+
+## ---- Relationships between categories.
+
+## "Environment"  has narrower concept  "Weather"
+##  "Weather"     has broader concept   "Environment"
+
+cat:Environment  skos:narrower  cat:Weather .
+cat:Weather      skos:broader   cat:Environment .
+
+## "Environment"  has narrower concept  "AirQuality"
+## "AirQuality"   has broader concept   "Environment"
+
+cat:Environment  skos:narrower  cat:AirQuality .
+cat:AirQuality   skos:broader   cat:Environment .
+
+
+</pre></html>

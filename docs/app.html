@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html><pre>
+# Auto-generated from iotic-rdf-ontology repository, iotics/app. Edits will be overwritten!
+
+PREFIX app:     &lt;http://data.iotics.com/app#&gt;
+PREFIX iotb:    &lt;http://purl.org/net/iotic-labs#&gt;
+PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
+
+
+
+<span id="Model">app:Model rdf:type rdfs:Class ;</span>
+    rdfs:label "Digital Twin Model"@en ;
+    rdfs:comment "A template for creating digital twins with the same feeds and properties"@en ;
+.
+
+<span id="model">app:model rdf:type rdf:Property ;</span>
+    rdfs:label "Twin model";
+    rdfs:comment "Model from which the twin was created" ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range app:Model ;
+.
+
+<span id="createdAt">app:createdAt rdf:type rdf:Property ;</span>
+    rdfs:label "Created at"@en ;
+    rdfs:comment "Twin creation time"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range xsd:dateTime ;
+.
+
+<span id="updatedAt">app:updatedAt rdf:type rdf:Property ;</span>
+    rdfs:label "Updated at"@en ;
+    rdfs:comment "Twin update time"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range xsd:dateTime ;
+.
+
+<span id="createdBy">app:createdBy rdf:type rdf:Property ;</span>
+    rdfs:label "Created by"@en ;
+    rdfs:comment "Name of user who created the twin"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range xsd:string ;
+.
+
+<span id="updatedBy">app:updatedBy rdf:type rdf:Property ;</span>
+    rdfs:label "Updated by"@en ;
+    rdfs:comment "Name of user who updated the twin"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range xsd:string ;
+.
+
+<span id="createdFrom">app:createdFrom rdf:type rdf:Property ;</span>
+    rdfs:label "Created from"@en ;
+    rdfs:comment "How the twin was created"@en ;
+    rdfs:domain iotb:Entity ;
+    rdfs:range app:TwinCreationMeans ;
+.
+
+<span id="TwinCreationMeans">app:TwinCreationMeans rdf:type rdfs:Class ;</span>
+    rdfs:label "Twin creation means"@en ;
+    rdfs:comment "Way of making a digital twin"@en ;
+.
+
+<span id="ByCloudApp">app:ByCloudApp rdf:type app:TwinCreationMeans ;</span>
+    rdfs:label "By cloud app"@en ;
+    rdfs:comment "Using the Iotics Cloud Application" ;
+.
+
+<span id="ByModel">app:ByModel rdf:type app:TwinCreationMeans ;</span>
+    rdfs:label "By model"@en ;
+    rdfs:comment "From a Digital Twin Model"@en ;
+.
+
+<span id="Application">app:Application rdf:type rdfs:Class ;</span>
+    rdfs:label "Application"@en ;
+    rdfs:comment "User application"@en ;
+.
+
+<span id="applicationId">app:applicationId rdf:type rdf:Property ;</span>
+    rdfs:label "Application ID"@en ;
+    rdfs:comment "Unique identifier for an application"@en ;
+    rdfs:domain app:Application ;
+    rdfs:range xsd:string ;
+.
+
+<span id="dataSource">app:dataSource rdf:type rdf:Property ;</span>
+    rdfs:label "has Data Source Twin" ;
+    rdfs:comment "ID of twin providing data to this application" ;
+    rdfs:domain app:Application ;
+    rdfs:range iotb:Entity ;
+.
+
+</pre></html>
