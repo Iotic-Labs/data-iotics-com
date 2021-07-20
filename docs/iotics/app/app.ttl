@@ -53,6 +53,34 @@ app:createdFrom rdf:type rdf:Property ;
     rdfs:range app:TwinCreationMeans ;
 .
 
+app:spaceName rdf:type rdf:Property ;
+    rdfs:label "Space name"@en ;
+    rdfs:comment "User-friendly name of the space the model belongs to"@en ;
+    rdfs:domain app:Model ;
+    rdfs:range xsd:string ;
+.
+
+app:spaceUrl rdf:type rdf:Property ;
+    rdfs:label "Space URL"@en ;
+    rdfs:comment "URL name of the space the model belongs to"@en ;
+    rdfs:domain app:Model ;
+    rdfs:range xsd:string ;
+.
+
+app:color rdf:type rdf:Property ;
+    rdfs:label "Color"@en ;
+    rdfs:comment "Hex color of the portal representation of this model's twins (omits leading #)"@en ;
+    rdfs:domain app:Model ;
+    rdfs:range xsd:hexBinary ;
+.
+
+app:defines rdf:type rdf:Property ;
+    rdfs:label "Defines"@en ;
+    rdfs:comment "The URI of the model this twin describes (a Model instance defined in another ontology)"@en ;
+    rdfs:domain app:Model ;
+    rdfs:range app:Model ;
+.
+
 app:TwinCreationMeans rdf:type rdfs:Class ;
     rdfs:label "Twin creation means"@en ;
     rdfs:comment "Way of making a digital twin"@en ;
@@ -60,12 +88,17 @@ app:TwinCreationMeans rdf:type rdfs:Class ;
 
 app:ByCloudApp rdf:type app:TwinCreationMeans ;
     rdfs:label "By cloud app"@en ;
-    rdfs:comment "Using the Iotics Cloud Application" ;
+    rdfs:comment "Created using the Iotics Cloud Application" ;
 .
 
 app:ByModel rdf:type app:TwinCreationMeans ;
     rdfs:label "By model"@en ;
-    rdfs:comment "From a Digital Twin Model"@en ;
+    rdfs:comment "Created from a Digital Twin Model"@en ;
+.
+
+app:ByPublicConnector rdf:type app:TwinCreationMeans ;
+    rdfs:label "By public connector"@en ;
+    rdfs:comment "Created using a public connector"@en ;
 .
 
 app:Application rdf:type rdfs:Class ;
