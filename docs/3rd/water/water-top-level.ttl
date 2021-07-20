@@ -23,10 +23,10 @@ water:deviceName rdf:type rdf:Property ;
 .
 
 water:deviceId rdf:type rdf:Property ;
-                    rdfs:label "Device Id" ;
-                    rdfs:comment "Customer-provided identifier unique to the device: DCWW 'DB Address', NRW 'title'" ;
-                    rdfs:domain water:Device ;
-                    rdfs:range xsd:string;
+    rdfs:label "Device Id" ;
+    rdfs:comment "Customer-provided identifier unique to the device: DCWW 'DB Address', NRW 'title'" ;
+    rdfs:domain water:Device ;
+    rdfs:range xsd:string;
 .
 
 water:stationName rdf:type rdf:Property ;
