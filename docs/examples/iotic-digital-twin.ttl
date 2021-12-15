@@ -1,0 +1,201 @@
+# Copyright (c) 2020 Iotic Labs Ltd. All rights reserved.
+
+###############################################################################
+# IOTIC Digital Twin Component Ontology                                       #
+###############################################################################
+
+PREFIX rdf:        <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:       <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:        <http://www.w3.org/2001/XMLSchema#>
+PREFIX sh:         <http://www.w3.org/ns/shacl#>
+
+PREFIX iotb:       <http://purl.org/net/iotic-labs#>
+
+PREFIX dtb:        <http://iotics.com/dtb#>
+
+## ----
+## About the ontology itself.
+<http://iotic-labs.com/some/path/iotic-dtb>
+    rdfs:comment "IOTIC Digital Twin Component Ontology" ;
+    rdfs:label "A digital twin ecosystem component"@en ;
+    rdfs:comment """This covers: Twins, followers and integrators"""@en ;
+.
+
+## ----
+## Any iotb:entity can have a dtb:environment property-value.
+dtb:environmentPropertyShape
+    sh:targetClass iotb:Entity;
+    sh:property [
+        sh:path dtb:environment ;
+        sh:datatype xsd:string ;
+        ## No minimum => optional
+        sh:maxCount 1 ;
+        sh:pattern "^\\S+$" ;
+        rdfs:label "Environment in which this entity resides."@en ;
+    ] ;
+.
+
+# Node shape that adds "required" for dtb:environment
+dtb:environmentRequiredShape
+    sh:property [
+        sh:path dtb:environment ;
+        sh:minCount 1 ;
+    ] ;
+.
+
+##----
+## An Iotic Twin.
+## A twin has 3 parts: DataInput (data into twin), DataOutput (data from twin) and FieldData.
+
+dtb:Twin
+    rdf:type rdfs:Class ;
+    ## itob:Entity is the root of all things which are in an environment.
+    rdfs:subClassOf iotb:Entity ;
+    rdfs:label "Iotic Thing which is a twin"@en ;
+    .
+
+## Properties of a twin.
+## Split into different shapes for convenience
+## They are both "sh:targetClass :Twin" so apply together.
+## (can merge into the class as well)
+
+dtb:twinClassShapeComponents
+    sh:targetClass   dtb:Twin ;
+    sh:property [
+        sh:path      dtb:dataOutput ;
+        sh:class     dtb:DataOutput ;
+        sh:maxCount  1 ;
+    ] ;
+    sh:property [
+        sh:path      dtb:dataInput ;
+        sh:class     dtb:DataInput ;
+        sh:maxCount  1 ;
+    ] ;
+    sh:property [
+        sh:path      dtb:fieldData ;
+        sh:class     dtb:FieldData ;
+        sh:maxCount  1 ;
+    ] ;
+.
+
+## The customer ID is how the customer refers to the twin.
+## Allows for customers to rename their twins without losing
+## any original relationships
+
+dtb:twinClassShape
+    sh:targetClass   dtb:Twin ;
+    sh:property [
+        sh:path dtb:customerId ;
+        rdfs:label "Customer-specific unique (asset) ID for a twin"@en ;
+        rdfs:comment "Meaning of this ID depends on customer."@en ;
+        rdfs:range xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 1;
+    ] ;
+    sh:node          dtb:environmentRequiredShape ;
+##    sh:property [
+##        # When used with dtb:Twin, dtb:environment is required.
+##        sh:path dtb:environment ;
+##        sh:minCount 1 ;
+##    ] ;
+    sh:property [
+        sh:path dtb:topic ;
+        sh:class dtb:EventLog ;
+    ] ;
+.
+
+## Event Log (Kafka or other)
+
+dtb:EventLog rdf:type rdfs:Class, sh:NodeShape ;
+    sh:property [
+        sh:path dtb:topicName ;
+        sh:datatype xsd:String ;
+        sh:minLength 1 ;
+    ] ;
+.
+
+## Other terminology: "Producer" and "Consumer".
+##
+## These names arose to reflect their use:
+##
+## Consumer: The part of the twin seen by consumers of data - e.g. followers
+## Producer: The part of the twin seen by producers of data - e.g. integrators
+##
+## so "consumers" are data outputs of twins, the place where consumers get data.
+## and "producers" are data inputs to twins, the place where producers send data.
+##
+## Data in/out can be two separate components or one component that is of both
+## class dtb:DataInput and dtb:DataOutput.
+
+## ----
+
+## The super class of all Twin components (data input, data output, field data).
+
+dtb:TwinComponent rdf:type rdfs:Class .
+
+## DataInput : part of a twin
+## Also called a "producer"
+## Iotic Thing which exposes data ingestion into the Twin
+## Used to push data to the twin.
+
+dtb:DataInput
+    rdf:type rdfs:Class ;
+    rdf:type iotb:Entity ;
+    rdfs:subClassOf dtb:TwinComponent ;
+    rdfs:label "DataInput"@en ;
+    rdfs:comment "Iotic Thing which exposes data ingestion capabilities for the Twin"@en
+.
+
+## ----
+
+## DataOutput : part of a twin
+## Also called "consumer"
+## Iotic Thing which exposes data retrieval capabilities for the Twin
+## Used to fetch data from the twin.
+
+dtb:DataOutput
+    rdf:type rdfs:Class ;
+    rdf:type iotb:Entity ;
+    rdfs:subClassOf dtb:TwinComponent ;
+    rdfs:label "DataOutput"@en ;
+    rdfs:comment "Iotic Thing which exposes data retrieval capabilities for the Twin"@en ;
+.
+
+## ----
+
+## Field Data : part of a twin
+## Iotic Thing which exposes Field Data feeds(s)
+## Used to get fast-moving data from the twin.
+
+dtb:FieldData
+    rdf:type rdfs:Class ;
+    rdf:type iotb:Entity ;
+    rdfs:subClassOf dtb:TwinComponent ;
+    rdfs:label "Field data"@en ;
+    rdfs:comment "Used by followers to get fast-moving data from the twin"@en
+.
+## ----
+
+## @@ Descriptions : Integrator, Follower & T2Provider
+
+dtb:Follower rdfs:subClassOf iotb:Entity .
+
+dtb:Integrator rdfs:subClassOf iotb:Entity .
+## @@ Link to the twin component data it uses?
+
+dtb:T2Provider rdfs:subClassOf dtb:Integrator .
+
+dtb:integratorDataClassShape
+    sh:targetClass   dtb:Integrator ;
+    sh:node          dtb:environmentRequiredShape ;
+    sh:property [
+        # Alias of a particular integrator. Runners also use this to identify T2 provider ID. If an integrator is also a
+        # T2Provider, this property must currently be unique with an environment.
+        sh:path dtb:source ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 1 ;
+    ];
+.

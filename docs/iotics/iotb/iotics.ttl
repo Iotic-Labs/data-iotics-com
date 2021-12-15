@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html><pre>
-# Auto-generated from iotic-rdf-ontology repository, iotics/iotb. Edits will be overwritten!
-
-PREFIX iotics:    &lt;http://data.iotics.com/iotics#&gt;
-PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
-PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
 # Copyright (c) 2021 Iotic Labs Ltd. All rights reserved.
 
 ###############################################################################
 # IOTICS Resource Ontology                                                    #
 ###############################################################################
 
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 
+PREFIX iotics:    <http://data.iotics.com/iotics#>
 
 ## Base ontology for IOTICS Digital Twins and the data they share.
 
@@ -142,6 +138,3 @@ iotics:presents
     rdfs:domain iotics:Point;
     rdfs:range iotics:Value ;
     .
-
-
-</pre></html>
