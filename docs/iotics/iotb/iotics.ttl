@@ -139,29 +139,3 @@ iotics:presents
     rdfs:domain iotics:Point;
     rdfs:range iotics:Value ;
     .
-
-# Included for legacy purposes. These will be rewritten, see EI-543
-iotics:hostAllowList
-    rdf:type rdf:Property ;
-    rdfs:label "Host network allow list"@en ;
-    rdfs:comment "Host twin DIDs (or allow all/none predefined allowed values) allowed to interact with the resource over the network"@en ;
-    rdfs:domain iotics:DigitalTwin ;
-    rdfs:range iotics:AllowListValue ;
-    .
-
-iotics:AllowListValue rdf:type rdfs:Class ;
-    rdfs:label "Allow list value"@en ;
-    rdfs:comment "Host network allow list value"@en ;
-.
-
-iotics:allHosts
-    rdf:type iotics:AllowListValue ;
-    rdfs:label "Allow all hosts value"@en ;
-    rdfs:comment "Allow list value used to allow interactions initiated from any remote host to the resource over the network"@en ;
-    .
-
-iotics:noHost
-    rdf:type iotics:AllowListValue ;
-    rdfs:label "No host allowed value"@en ;
-    rdfs:comment "Allow list Value used to deny any interaction initiated from a remote host to the resource over the network"@en ;
-    .

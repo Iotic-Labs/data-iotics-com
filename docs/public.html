@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><pre>
+# Auto-generated from iotic-rdf-ontology repository, iotics/public. Edits will be overwritten!
+
+PREFIX iotics:  &lt;http://data.iotics.com/iotics#&gt;
+PREFIX pub:     &lt;http://data.iotics.com/public#&gt;
+PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
+
+
+pub:hostAllowList
+    rdf:type rdf:Property ;
+    rdfs:label "Host network allow list"@en ;
+    rdfs:comment "Host twin DIDs (or allow all/none predefined allowed values) allowed to interact with the resource over the network"@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range pub:AllowListValue ;
+    .
+
+pub:AllowListValue rdf:type rdfs:Class ;
+    rdfs:label "Allow list value"@en ;
+    rdfs:comment "Host network allow list value"@en ;
+.
+
+pub:allHosts
+    rdf:type pub:AllowListValue ;
+    rdfs:label "Allow all hosts value"@en ;
+    rdfs:comment "Allow list value used to allow interactions initiated from any remote host to the resource over the network"@en ;
+    .
+
+pub:noHost
+    rdf:type iotics:AllowListValue ;
+    rdfs:label "No host allowed value"@en ;
+    rdfs:comment "Allow list Value used to deny any interaction initiated from a remote host to the resource over the network"@en ;
+    .
+
+
+</pre></html>
