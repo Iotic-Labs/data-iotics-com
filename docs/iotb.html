@@ -2,10 +2,194 @@
 <html><pre>
 # Auto-generated from iotic-rdf-ontology repository, iotics/iotb. Edits will be overwritten!
 
+PREFIX geo:     &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt;
 PREFIX iotics:    &lt;http://data.iotics.com/iotics#&gt;
 PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX sh:      &lt;http://www.w3.org/ns/shacl#&gt;
 PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
+# Copyright (c) 2021 Iotic Labs Ltd. All rights reserved.
+
+###############################################################################
+# IOTICS Resource Ontology - Validation Shapes                                #
+###############################################################################
+
+
+
+iotics:LocatedShape
+    a sh:NodeShape ;
+    sh:description "Values that have either latitude or longitude must have both."@en ;
+    sh:targetSubjectsOf geo:lat, geo:long ;
+    sh:property iotics:LatitudeShape ;
+    sh:property iotics:LongitudeShape ;
+    .
+
+iotics:LatitudeShape
+    a sh:PropertyShape ;
+    sh:path geo:lat ;
+    sh:minInclusive -90.0 ;
+    sh:maxInclusive 90.0 ;
+    .
+
+iotics:LongitudeShape
+    a sh:PropertyShape ;
+    sh:path geo:long ;
+    sh:minInclusive -180.0 ;
+    sh:maxInclusive 180.0 ;
+    .
+
+iotics:NamedPointShape
+    a sh:NodeShape ;
+    sh: description "Points must have exactly one name, which must be a string with at least one non-whitespace character"@en ;
+    sh:targetClass iotics:Point ;
+    sh: property [
+        sh:path iotics:pointName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength  1 ;
+        sh:pattern "\S" ;
+    ] .
+
+iotics:LabelShape
+    sh:description "Labels must be no longer than 128 chars, cannot start or end with whitespace, and must have unique languages."@en ;
+    sh:datatype xsd:string ;
+    sh:pattern "^\S(.{0,126}\S)?$" ;
+    sh:uniqueLang true ;
+    .
+
+iotics:LabelledShape
+    a sh:NodeShape ;
+    sh:description "Labels must be between 1 and 128 characters long, and cannot start or end with whitespace."@en ;
+    sh:targetClass iotics:DigitalTwin, iotics:Point ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:node iotics:LabelShape
+    ] .
+
+iotics:CommentedShape
+    a sh:NodeShape ;
+    sh: description "Comments must be between 1 and 1024 characters long, and cannot start or end with whitespace. Newlines are ok."@en ;
+    sh:targetClass iotics:DigitalTwin, iotics:Point, iotics:Value ;
+    sh:property [
+        sh:path rdfs:comment ;
+        sh:datatype xsd:string ;
+        sh:pattern "(?s)^\S(.{0,1022}\S)?$" ;
+        sh:uniqueLang true;
+    ] .
+
+iotics:ValueShape
+    a sh:NodeShape ;
+    sh:description """Values must have exactly one valueKey property with the same restrictions as a label, and most one valueUnit
+        property that is a URI not longer than 128 characters."""@en ;
+    sh:targetClass iotics:Value ;
+    sh: property [
+        sh:path iotics:valueKey ;
+        sh:node iotics:LabelShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path iotics:valueUnit ;
+        sh:datatype xsd:anyURI ;
+        sh:maxCount 1 ;
+        sh:maxLength 128 ;
+    ] .
+
+iotics:UUIDShape
+    a sh:NodeShape ;
+    sh:description "Point URIs must be properly-formatted UUIDs."@en ;
+    sh:targetClass iotics:Point ;
+    sh:pattern "^urn:uuid:?P&lt;uuid&gt;([a-f0-9]{8})-([a-f0-9]{4})-([a-f0-9]{4})-([a-f0-9]{4})-([a-f0-9]{12}))$" ;
+    .
+
+iotics:IdentityShape
+    a sh:NodeShape ;
+    sh:description "IOTICS Decentralized Identity Document"@en ;
+    sh:targetClass iotics:DigitalTwin, iotics:User ;
+    sh:pattern "^did:iotics:iot[A-Za-z0-9]{33}$" ;
+    .
+
+
+iotics:AllowListShape
+    a sh:NodeShape ;
+    sh:description "Allow list values must be either the special values allowAll and allowNone, or they must be an identity."
+    sh:xone (
+        [
+            sh:property [
+                sh:path sh:allows ;
+                sh:in ( iotics:allowAll iotics:allowNone ) ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path sh:allows ;
+                sh:node iotics:IdentityShape ;
+            ]
+        ]
+    ) .
+
+iotics:NetworkAllowListShape
+    a sh:NodeShape ;
+    sh:description "The identities allowed by the network must refer to Hosts. The default is None."@en ;
+    sh:targetClass iotics:NetworkEndpoint ;
+    sh:node iotics:AllowListShape ;
+    sh:property [
+        sh:path sh:allows ;
+        sh:not [
+            sh:and (
+                [ sh:node iotics:IdentityShape ]
+                [ sh:not [sh:class iotics:HostTwin ] ]
+            )
+        ]
+    ] ;
+    sh:rule [
+        a sh:TripleRule ;
+        sh:subject sh:this ;
+        sh:predicate iotics:allows ;
+        sh:object iotics:allowNone ;
+        sh:condition [
+            sh:property [
+                sh:path iotics:allows ;
+                sh:maxCount 0 ;
+            ]
+        ]
+    ] .
+
+iotics:ApiAllowListShape
+    a sh:NodeShape ;
+    sh:description "The identities allowed by the API must refer to Users or Twins. The default is All. Only Hosts have this"@en ;
+    sh:targetClass sh:APIEndpoint ;
+    sh:node iotics:AllowListShape ;
+    sh:property [
+        sh:path [ sh:inversePath iotics:hasEndpoint ] ;
+        sh:class iotics:HostTwin ;
+    ] ;
+    sh:property [
+        sh:path sh:allows ;
+        sh:not [
+            sh:and (
+                [ sh:node iotics:IdentityShape ]
+                [ sh:not [sh:class iotics:User ] ]
+                [ sh:not [sh:class iotics:DigitalTwin] ]
+            )
+        ]
+    ] ;
+    sh:rule [
+        a sh:TripleRule ;
+        sh:subject sh:this ;
+        sh:predicate iotics:allows ;
+        sh:object iotics:allowAll ;
+        sh:condition [
+            sh:property [
+                sh:path iotics:allows ;
+                sh:maxCount 0 ;
+            ]
+        ]
+    ] .
+
+
 # Copyright (c) 2021 Iotic Labs Ltd. All rights reserved.
 
 ###############################################################################
@@ -25,7 +209,6 @@ iotics:DigitalTwin
 iotics:HostTwin
     a rdfs:Class ;
     rdfs:subClassOf iotics:DigitalTwin ;
-    rdfs:subClassOf iotics:AllowListValue ;
     rdfs:label "IOTICS Host Twin"@en ;
     rdfs:comment "The Digital Twin of an IOTICS Host"@en ;
     .
@@ -140,8 +323,62 @@ iotics:presents
     rdfs:label "Presents"@en ;
     rdfs:comment """The property defining what values compose the payload of this point. For example, a feed for a weather station
         may have a payload with two values representing temperature and pressure defined as iotics:Value resources."""@en ;
-    rdfs:domain iotics:Point;
+    rdfs:domain iotics:Point ;
     rdfs:range iotics:Value ;
+    .
+
+iotics:hasEndpoint
+    a rdf:Property ;
+    rdfs:label "has Endpoint"@en ;
+    rdfs:comment "Relates twins to their endpoints"@en ;
+    rdfs:domain iotics:Twin ;
+    rdfs:range iotics:Endpoint ;
+    .
+
+iotics:Endpoint
+    a rdfs:Class ;
+    rdfs:label "Endpoint"@en ;
+    rdfs:comment "A means of interacting with a Twin"@en ;
+    .
+
+iotics:ApiEndpoint
+    a rdfs:Class;
+    rdfs:subClassOf iotics:Endpoint;
+    .
+
+iotics:NetworkEndpoint
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:Endpoint ;
+    .
+
+iotics:allows
+    a rdf:Property ;
+    rdfs:label "Allows"@en ;
+    rdfs:comment "Relates endpoints to the identities allowed to access them"@en ;
+    rdfs:domain iotics:Endpoint ;
+    # range handled via SHACL
+    .
+
+iotics:AllowListValue
+    a rdfs:Class ;
+    rdfs:label "Allow list value"@en ;
+    rdfs:comment "Values indicating that all or no resources are allowed access via the network or API"@en ;
+    .
+
+iotics:allowAll
+    a iotics:AllowListValue ;
+    rdfs:label "Allow All"@en ;
+    .
+
+iotics:allowNone
+    a iotics:AllowListValue ;
+    rdfs:label "Allow None"@en ;
+
+iotics:User
+    # Taken from Tim's concepts document, since this is now used in the ApiAllowListShape. What else can we say about it?
+    rdf:type rdfs:Class ;
+    rdfs:label "User"@en ;
+    rdfs:comment "An Identity of type User"@en ;
     .
 
 

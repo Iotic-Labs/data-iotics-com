@@ -21,7 +21,6 @@ iotics:DigitalTwin
 iotics:HostTwin
     a rdfs:Class ;
     rdfs:subClassOf iotics:DigitalTwin ;
-    rdfs:subClassOf iotics:AllowListValue ;
     rdfs:label "IOTICS Host Twin"@en ;
     rdfs:comment "The Digital Twin of an IOTICS Host"@en ;
     .
@@ -136,6 +135,60 @@ iotics:presents
     rdfs:label "Presents"@en ;
     rdfs:comment """The property defining what values compose the payload of this point. For example, a feed for a weather station
         may have a payload with two values representing temperature and pressure defined as iotics:Value resources."""@en ;
-    rdfs:domain iotics:Point;
+    rdfs:domain iotics:Point ;
     rdfs:range iotics:Value ;
+    .
+
+iotics:hasEndpoint
+    a rdf:Property ;
+    rdfs:label "has Endpoint"@en ;
+    rdfs:comment "Relates twins to their endpoints"@en ;
+    rdfs:domain iotics:Twin ;
+    rdfs:range iotics:Endpoint ;
+    .
+
+iotics:Endpoint
+    a rdfs:Class ;
+    rdfs:label "Endpoint"@en ;
+    rdfs:comment "A means of interacting with a Twin"@en ;
+    .
+
+iotics:ApiEndpoint
+    a rdfs:Class;
+    rdfs:subClassOf iotics:Endpoint;
+    .
+
+iotics:NetworkEndpoint
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:Endpoint ;
+    .
+
+iotics:allows
+    a rdf:Property ;
+    rdfs:label "Allows"@en ;
+    rdfs:comment "Relates endpoints to the identities allowed to access them"@en ;
+    rdfs:domain iotics:Endpoint ;
+    # range handled via SHACL
+    .
+
+iotics:AllowListValue
+    a rdfs:Class ;
+    rdfs:label "Allow list value"@en ;
+    rdfs:comment "Values indicating that all or no resources are allowed access via the network or API"@en ;
+    .
+
+iotics:allowAll
+    a iotics:AllowListValue ;
+    rdfs:label "Allow All"@en ;
+    .
+
+iotics:allowNone
+    a iotics:AllowListValue ;
+    rdfs:label "Allow None"@en ;
+
+iotics:User
+    # Taken from Tim's concepts document, since this is now used in the ApiAllowListShape. What else can we say about it?
+    rdf:type rdfs:Class ;
+    rdfs:label "User"@en ;
+    rdfs:comment "An Identity of type User"@en ;
     .
