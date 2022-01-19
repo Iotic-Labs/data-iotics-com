@@ -1,0 +1,186 @@
+# Copyright (c) 2021 Iotic Labs Ltd. All rights reserved.
+
+###############################################################################
+# IOTICS Resource Ontology - Validation Shapes                                #
+###############################################################################
+
+PREFIX geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:      <http://www.w3.org/ns/shacl#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+PREFIX iotics:    <http://data.iotics.com/iotics#>
+
+iotics:LocatedShape
+    a sh:NodeShape ;
+    sh:description "Values that have either latitude or longitude must have both."@en ;
+    sh:targetSubjectsOf geo:lat, geo:long ;
+    sh:property iotics:LatitudeShape ;
+    sh:property iotics:LongitudeShape ;
+    .
+
+iotics:LatitudeShape
+    a sh:PropertyShape ;
+    sh:path geo:lat ;
+    sh:minInclusive -90.0 ;
+    sh:maxInclusive 90.0 ;
+    .
+
+iotics:LongitudeShape
+    a sh:PropertyShape ;
+    sh:path geo:long ;
+    sh:minInclusive -180.0 ;
+    sh:maxInclusive 180.0 ;
+    .
+
+iotics:NamedPointShape
+    a sh:NodeShape ;
+    sh: description "Points must have exactly one name, which must be a string with at least one non-whitespace character"@en ;
+    sh:targetClass iotics:Point ;
+    sh: property [
+        sh:path iotics:pointName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength  1 ;
+        sh:pattern "\S" ;
+    ] .
+
+iotics:LabelShape
+    sh:description "Labels must be no longer than 128 chars, cannot start or end with whitespace, and must have unique languages."@en ;
+    sh:datatype xsd:string ;
+    sh:pattern "^\S(.{0,126}\S)?$" ;
+    sh:uniqueLang true ;
+    .
+
+iotics:LabelledShape
+    a sh:NodeShape ;
+    sh:description "Labels must be between 1 and 128 characters long, and cannot start or end with whitespace."@en ;
+    sh:targetClass iotics:DigitalTwin, iotics:Point ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:node iotics:LabelShape
+    ] .
+
+iotics:CommentedShape
+    a sh:NodeShape ;
+    sh: description "Comments must be between 1 and 1024 characters long, and cannot start or end with whitespace. Newlines are ok."@en ;
+    sh:targetClass iotics:DigitalTwin, iotics:Point, iotics:Value ;
+    sh:property [
+        sh:path rdfs:comment ;
+        sh:datatype xsd:string ;
+        sh:pattern "(?s)^\S(.{0,1022}\S)?$" ;
+        sh:uniqueLang true;
+    ] .
+
+iotics:ValueShape
+    a sh:NodeShape ;
+    sh:description """Values must have exactly one valueKey property with the same restrictions as a label, and most one valueUnit
+        property that is a URI not longer than 128 characters."""@en ;
+    sh:targetClass iotics:Value ;
+    sh: property [
+        sh:path iotics:valueKey ;
+        sh:node iotics:LabelShape ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path iotics:valueUnit ;
+        sh:datatype xsd:anyURI ;
+        sh:maxCount 1 ;
+        sh:maxLength 128 ;
+    ] .
+
+iotics:UUIDShape
+    a sh:NodeShape ;
+    sh:description "Point URIs must be properly-formatted UUIDs."@en ;
+    sh:targetClass iotics:Point ;
+    sh:pattern "^urn:uuid:?P<uuid>([a-f0-9]{8})-([a-f0-9]{4})-([a-f0-9]{4})-([a-f0-9]{4})-([a-f0-9]{12}))$" ;
+    .
+
+iotics:IdentityShape
+    a sh:NodeShape ;
+    sh:description "IOTICS Decentralized Identity Document"@en ;
+    sh:targetClass iotics:DigitalTwin, iotics:User ;
+    sh:pattern "^did:iotics:iot[A-Za-z0-9]{33}$" ;
+    .
+
+
+iotics:AllowListShape
+    a sh:NodeShape ;
+    sh:description "Allow list values must be either the special values allowAll and allowNone, or they must be an identity."
+    sh:xone (
+        [
+            sh:property [
+                sh:path sh:allows ;
+                sh:in ( iotics:allowAll iotics:allowNone ) ;
+                sh:maxCount 1 ;
+            ]
+        ]
+        [
+            sh:property [
+                sh:path sh:allows ;
+                sh:node iotics:IdentityShape ;
+            ]
+        ]
+    ) .
+
+iotics:NetworkAllowListShape
+    a sh:NodeShape ;
+    sh:description "The identities allowed by the network must refer to Hosts. The default is None."@en ;
+    sh:targetClass iotics:NetworkEndpoint ;
+    sh:node iotics:AllowListShape ;
+    sh:property [
+        sh:path sh:allows ;
+        sh:not [
+            sh:and (
+                [ sh:node iotics:IdentityShape ]
+                [ sh:not [sh:class iotics:HostTwin ] ]
+            )
+        ]
+    ] ;
+    sh:rule [
+        a sh:TripleRule ;
+        sh:subject sh:this ;
+        sh:predicate iotics:allows ;
+        sh:object iotics:allowNone ;
+        sh:condition [
+            sh:property [
+                sh:path iotics:allows ;
+                sh:maxCount 0 ;
+            ]
+        ]
+    ] .
+
+iotics:ApiAllowListShape
+    a sh:NodeShape ;
+    sh:description "The identities allowed by the API must refer to Users or Twins. The default is All. Only Hosts have this"@en ;
+    sh:targetClass sh:APIEndpoint ;
+    sh:node iotics:AllowListShape ;
+    sh:property [
+        sh:path [ sh:inversePath iotics:hasEndpoint ] ;
+        sh:class iotics:HostTwin ;
+    ] ;
+    sh:property [
+        sh:path sh:allows ;
+        sh:not [
+            sh:and (
+                [ sh:node iotics:IdentityShape ]
+                [ sh:not [sh:class iotics:User ] ]
+                [ sh:not [sh:class iotics:DigitalTwin] ]
+            )
+        ]
+    ] ;
+    sh:rule [
+        a sh:TripleRule ;
+        sh:subject sh:this ;
+        sh:predicate iotics:allows ;
+        sh:object iotics:allowAll ;
+        sh:condition [
+            sh:property [
+                sh:path iotics:allows ;
+                sh:maxCount 0 ;
+            ]
+        ]
+    ] .

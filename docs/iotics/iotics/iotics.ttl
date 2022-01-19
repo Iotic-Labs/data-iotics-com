@@ -1,0 +1,194 @@
+# Copyright (c) 2021 Iotic Labs Ltd. All rights reserved.
+
+###############################################################################
+# IOTICS Resource Ontology                                                    #
+###############################################################################
+
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+PREFIX iotics:    <http://data.iotics.com/iotics#>
+
+## Base ontology for IOTICS Digital Twins and the data they share.
+
+iotics:DigitalTwin
+    a rdfs:Class ;
+    rdfs:label "IOTICS Digital Twin"@en ;
+    rdfs:comment "A virtual representation of a real asset, device, concept or person in an IOTICSpace"@en ;
+    .
+
+iotics:HostTwin
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:DigitalTwin ;
+    rdfs:label "IOTICS Host Twin"@en ;
+    rdfs:comment "The Digital Twin of an IOTICS Host"@en ;
+    .
+
+iotics:advertises
+    a rdf:Property ;
+    rdfs:label "Advertises"@en ;
+    rdfs:comment "This property lists (advertises) what mechanisms (points) the Digital Twin has to interact with other Twins"@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range iotics:Point ;
+    .
+
+iotics:Visibility
+    a rdfs:Class ;
+    rdfs:label "Visibility"@en ;
+    rdfs:comment "Defines whether an IOTICS Digital Twin may be found or described from other Hosts"@en ;
+    .
+
+iotics:public
+    a iotics:Visibility ;
+    rdfs:label "Public"@en ;
+    rdfs:comment "A public Digital Twin can be found or described from other Hosts"@en ;
+    .
+
+iotics:private
+    a iotics:Visibility ;
+    rdfs:label "Private"@en ;
+    rdfs:comment "A private Digital Twin can only be found or described from the local Host"@en ;
+    .
+
+iotics:hasVisibility
+    a rdf:Property ;
+    rdfs:comment "Property relating an IOTICS Digital Twin to a certain Visibility level"@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range  iotics:Visibility ;
+    .
+
+iotics:Point
+    a rdfs:Class ;
+    rdfs:label "IOTICS Point"@en ;
+    rdfs:comment """A means by which an IOTICS Digital Twin may interact with other twins, either outbound or inbound. 
+        Metadata describing the payload of the point is available when the point is described and therefore separate to the
+        payload data. Interactions with the point are brokered and secured according to policies controlled by the twin."""@en ;
+    .
+
+iotics:pointName
+    # we need to capture here the restructions:
+    # - a twin can't have two different feeds with the same pointName
+    # - a feed can't have two or more  pointName properties
+	a rdf:Property ;
+    rdfs:label "IOTICS Point name"@en ;
+    rdfs:comment "The name of the point. This must be unique per Digital Twin."@en ;
+	rdfs:domain iotics:Point ;
+	rdfs:range xsd:string ;
+	.
+
+iotics:Feed
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:Point ;
+    rdfs:label "IOTICS Data Feed"@en ;
+    rdfs:comment """A feed of data advertised by an IOTICS Digital Twin, used by the twin to broadcast values. 
+        Authorised twins following this feed receive data when published"""@en ;
+    .
+
+iotics:storesLast
+    a rdf:Property ;
+    rdfs:label "Stores last published payload"@en ;
+    rdfs:comment "Whether most recent published payload might be available on this feed."@en ;
+    rdfs:domain iotics:Feed ;
+    rdfs:range xsd:boolean ;
+    .
+
+iotics:Control
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:Point ;
+    rdfs:label "IOTICS Control"@en ;
+    rdfs:comment """By advertising a Control, an IOTICS Digital Twin allows authorised twins to send it commands,
+        typically resulting in an action on the real asset it represents."""@en ;
+    .
+
+iotics:Value
+    a rdfs:Class ;
+    rdfs:label "IOTICS Payload Value"@en ;
+    rdfs:comment "A semantic description of a Value used by Points when communicating data"@en ;
+    .
+
+iotics:valueKey
+    a rdf:Property ;
+    rdfs:subPropertyOf rdfs:label ;
+    rdfs:label "Value Key"@en ;
+    rdfs:comment "Unique identifier for this Value among those offered by its Point."@en ;
+    rdfs:domain iotics:Value ;
+    .
+
+iotics:valueType
+    a rdf:Property ;
+    rdfs:label "Value Type"@en ;
+    rdfs:comment "The xsd datatype of the Value, e.g. xsd:decimal. See https://www.w3.org/TR/rdf11-concepts/#xsd-datatypes"@en ;
+    rdfs:domain iotics:Value ;
+    # is there a way to restrct the range to some ontology that captures the xsd data types?
+    .
+
+iotics:valueUnit
+    a rdf:Property ;
+    rdfs:label "Value Unit"@en ;
+    rdfs:comment "The unit of the value, e.g. obo:UO_0000027 representing Celsius degrees"@en ;
+    rdfs:domain iotics:Value ;
+    .
+
+iotics:presents
+    a rdf:Property ;
+    rdfs:label "Presents"@en ;
+    rdfs:comment """The property defining what values compose the payload of this point. For example, a feed for a weather station
+        may have a payload with two values representing temperature and pressure defined as iotics:Value resources."""@en ;
+    rdfs:domain iotics:Point ;
+    rdfs:range iotics:Value ;
+    .
+
+iotics:hasEndpoint
+    a rdf:Property ;
+    rdfs:label "has Endpoint"@en ;
+    rdfs:comment "Relates twins to their endpoints"@en ;
+    rdfs:domain iotics:Twin ;
+    rdfs:range iotics:Endpoint ;
+    .
+
+iotics:Endpoint
+    a rdfs:Class ;
+    rdfs:label "Endpoint"@en ;
+    rdfs:comment "A means of interacting with a Twin"@en ;
+    .
+
+iotics:ApiEndpoint
+    a rdfs:Class;
+    rdfs:subClassOf iotics:Endpoint;
+    .
+
+iotics:NetworkEndpoint
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:Endpoint ;
+    .
+
+iotics:allows
+    a rdf:Property ;
+    rdfs:label "Allows"@en ;
+    rdfs:comment "Relates endpoints to the identities allowed to access them"@en ;
+    rdfs:domain iotics:Endpoint ;
+    # range handled via SHACL
+    .
+
+iotics:AllowListValue
+    a rdfs:Class ;
+    rdfs:label "Allow list value"@en ;
+    rdfs:comment "Values indicating that all or no resources are allowed access via the network or API"@en ;
+    .
+
+iotics:allowAll
+    a iotics:AllowListValue ;
+    rdfs:label "Allow All"@en ;
+    .
+
+iotics:allowNone
+    a iotics:AllowListValue ;
+    rdfs:label "Allow None"@en ;
+
+iotics:User
+    # Taken from Tim's concepts document, since this is now used in the ApiAllowListShape. What else can we say about it?
+    rdf:type rdfs:Class ;
+    rdfs:label "User"@en ;
+    rdfs:comment "An Identity of type User"@en ;
+    .

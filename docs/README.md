@@ -3,7 +3,7 @@
 | Full ontology | Source files |
 | --- | --- |
 | [app](app) | [source](iotics/app) |
-| [iotb](iotb) | [source](iotics/iotb) |
+| [iotics](iotics) | [source](iotics/iotics) |
 
 
 # User ontologies
