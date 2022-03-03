@@ -3,7 +3,7 @@ PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX iotb:    <http://purl.org/net/iotic-labs#>
 PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 
-PREFIX app:     <http://data.iotics.com/app#>
+PREFIX app:     <https://data.iotics.com/app#>
 
 
 app:Model rdf:type rdfs:Class ;
