@@ -46,12 +46,12 @@ app:updatedBy rdf:type rdf:Property ;
     rdfs:range xsd:string ;
 .
 
-app:createdFrom rdf:type rdf:Property ;
-    rdfs:label "Created from"@en ;
-    rdfs:comment "How the twin was created"@en ;
-    rdfs:domain iotics:DigitalTwin ;
-    rdfs:range app:TwinCreationMeans ;
-.
+# app:createdFrom rdf:type rdf:Property ;
+#     rdfs:label "Created from"@en ;
+#     rdfs:comment "How the twin was created"@en ;
+#     rdfs:domain iotics:DigitalTwin ;
+#     rdfs:range app:TwinCreationMeans ;
+# .
 
 app:spaceName rdf:type rdf:Property ;
     rdfs:label "Space name"@en ;
