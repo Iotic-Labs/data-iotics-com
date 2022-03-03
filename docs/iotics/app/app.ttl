@@ -119,3 +119,10 @@ app:dataSource rdf:type rdf:Property ;
     rdfs:domain app:Application ;
     rdfs:range iotb:Entity ;
 .
+
+# Hack for EI-755 quick fix
+iotb:Entity
+    rdf:type rdfs:Class ;
+    rdfs:label "Iotic Entity"@en ;
+    rdfs:comment "A virtual thing in the Iotic Space"@en ;
+    .
