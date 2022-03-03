@@ -18,42 +18,42 @@ PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
 <span id="model">app:model rdf:type rdf:Property ;</span>
     rdfs:label "Twin model";
     rdfs:comment "Model from which the twin was created" ;
-    rdfs:domain iotb:Entity ;
+    rdfs:domain iotics:DigitalTwin ;
     rdfs:range app:Model ;
 .
 
 <span id="createdAt">app:createdAt rdf:type rdf:Property ;</span>
     rdfs:label "Created at"@en ;
     rdfs:comment "Twin creation time"@en ;
-    rdfs:domain iotb:Entity ;
+    rdfs:domain iotics:DigitalTwin ;
     rdfs:range xsd:dateTime ;
 .
 
 <span id="updatedAt">app:updatedAt rdf:type rdf:Property ;</span>
     rdfs:label "Updated at"@en ;
     rdfs:comment "Twin update time"@en ;
-    rdfs:domain iotb:Entity ;
+    rdfs:domain iotics:DigitalTwin ;
     rdfs:range xsd:dateTime ;
 .
 
 <span id="createdBy">app:createdBy rdf:type rdf:Property ;</span>
     rdfs:label "Created by"@en ;
     rdfs:comment "Name of user who created the twin"@en ;
-    rdfs:domain iotb:Entity ;
+    rdfs:domain iotics:DigitalTwin ;
     rdfs:range xsd:string ;
 .
 
 <span id="updatedBy">app:updatedBy rdf:type rdf:Property ;</span>
     rdfs:label "Updated by"@en ;
     rdfs:comment "Name of user who updated the twin"@en ;
-    rdfs:domain iotb:Entity ;
+    rdfs:domain iotics:DigitalTwin ;
     rdfs:range xsd:string ;
 .
 
 <span id="createdFrom">app:createdFrom rdf:type rdf:Property ;</span>
     rdfs:label "Created from"@en ;
     rdfs:comment "How the twin was created"@en ;
-    rdfs:domain iotb:Entity ;
+    rdfs:domain iotics:DigitalTwin ;
     rdfs:range app:TwinCreationMeans ;
 .
 
@@ -121,11 +121,11 @@ PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
     rdfs:label "has Data Source Twin" ;
     rdfs:comment "ID of twin providing data to this application" ;
     rdfs:domain app:Application ;
-    rdfs:range iotb:Entity ;
+    rdfs:range iotics:DigitalTwin ;
 .
 
 # Hack for EI-755 quick fix
-iotb:Entity
+iotics:DigitalTwin
     rdf:type rdfs:Class ;
     rdfs:label "Iotic Entity"@en ;
     rdfs:comment "A virtual thing in the Iotic Space"@en ;
