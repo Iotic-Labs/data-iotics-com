@@ -1,6 +1,6 @@
 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX iotics:  <http://data.iotics.com/iotics#>
 PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
 
 PREFIX app:     <https://data.iotics.com/app#>
