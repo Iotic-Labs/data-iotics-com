@@ -9,7 +9,7 @@
 
 # Classes
 
-uostr:Run
+uostr:TestRun
   a rdfs:Class ;
   rdfs:label "A single run of experiments." ;
   rdfs:comment "An experimental run with a specific experimental configuration." ;
