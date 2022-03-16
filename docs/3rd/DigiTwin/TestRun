@@ -69,7 +69,7 @@ uostr:CoordinatesArray
   rdfs:comment "Coordinates in a 3D euclidean space" ;
 .
 
-uostr:MasssArray
+uostr:MassArray
   a rdfs:Class ;
   rdfs:label "Array of added masses during a run." ;
   rdfs:comment "Array of masses in kg" ;
