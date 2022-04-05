@@ -70,9 +70,9 @@ app:spaceUrl rdf:type rdf:Property ;
 
 app:color rdf:type rdf:Property ;
     rdfs:label "Color"@en ;
-    rdfs:comment "Hex color of the portal representation of this model's twins (omits leading #)"@en ;
+    rdfs:comment "Hex color of the portal representation of this model's twins"@en ;
     rdfs:domain app:Model ;
-    rdfs:range xsd:hexBinary ;
+    rdfs:range xsd:string ;
 .
 
 app:defines rdf:type rdf:Property ;
