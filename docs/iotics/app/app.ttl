@@ -7,6 +7,7 @@ PREFIX app:     <https://data.iotics.com/app#>
 
 
 app:Model rdf:type rdfs:Class ;
+    rdfs:subClassOf iotics:DigitalTwin ;
     rdfs:label "Digital Twin Model"@en ;
     rdfs:comment "A template for creating digital twins with the same feeds and properties"@en ;
 .
