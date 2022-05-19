@@ -10,6 +10,7 @@
 
 | Full ontology | Source files |
 | --- | --- |
+| [utilities](utilities) | [source](3rd/utilities) |
 | [water](water) | [source](3rd/water) |
 
 

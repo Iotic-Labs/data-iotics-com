@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html><pre>
+# Auto-generated from iotic-rdf-ontology repository, 3rd/utilities. Edits will be overwritten!
+
+PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX schema:  &lt;https://schema.org/&gt;
+PREFIX utilities:   &lt;http://data.iotics.com/utilities#&gt;
+PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
+
+### Top level concepts related to utilities
+
+<span id="Customer">utilities:Customer rdf:type rdfs:Class ;</span>
+    rdfs:label "Customer" ;
+    rdfs:comment "A utilities customer" ;
+    rdfs:subClassOf schema:Person ;
+    .
+
+<span id="isVulnerable">utilities:isVulnerable rdf:type rdf:Property ;</span>
+    rdfs:label "Is Vulnerable" ;
+    rdfs:comment "Whether or not this customer is classed as being vulnerable" ;
+    rdfs:domain utilities:Customer ;
+    rdfs:range xsd:boolean ;
+    .
+
+<span id="vulnerabilityType">utilities:vulnerabilityType rdf:type rdf:Property ;</span>
+    rdfs:label "Vulnerability Type" ;
+    rdfs:comment "Type of vulnerability" ;
+    rdfs:domain utilities:Customer ;
+    rdfs:range xsd:string ;
+    .
+
+<span id="psrCode">utilities:psrCode rdf:type rdf:Property ;</span>
+    rdfs:label "PSR Code" ;
+    rdfs:comment "Priority Services Register (PSR) category code" ;
+    rdfs:domain utilities:Customer ;
+    rdfs:range xsd:integer ;
+    .
+
+
+</pre></html>
