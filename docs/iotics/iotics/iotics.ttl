@@ -61,7 +61,7 @@ iotics:hasVisibility
 iotics:Point
     a rdfs:Class ;
     rdfs:label "IOTICS Point"@en ;
-    rdfs:comment """A means by which an IOTICS Digital Twin may interact with other twins, either outbound or inbound. 
+    rdfs:comment """A means by which an IOTICS Digital Twin may interact with other twins, either outbound or inbound.
         Metadata describing the payload of the point is available when the point is described and therefore separate to the
         payload data. Interactions with the point are brokered and secured according to policies controlled by the twin."""@en ;
     .
@@ -81,7 +81,7 @@ iotics:Feed
     a rdfs:Class ;
     rdfs:subClassOf iotics:Point ;
     rdfs:label "IOTICS Data Feed"@en ;
-    rdfs:comment """A feed of data advertised by an IOTICS Digital Twin, used by the twin to broadcast values. 
+    rdfs:comment """A feed of data advertised by an IOTICS Digital Twin, used by the twin to broadcast values.
         Authorised twins following this feed receive data when published"""@en ;
     .
 
@@ -185,6 +185,7 @@ iotics:allowAll
 iotics:allowNone
     a iotics:AllowListValue ;
     rdfs:label "Allow None"@en ;
+    .
 
 iotics:User
     # Taken from Tim's concepts document, since this is now used in the ApiAllowListShape. What else can we say about it?

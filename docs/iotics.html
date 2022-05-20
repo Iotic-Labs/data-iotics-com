@@ -40,21 +40,21 @@ iotics:LongitudeShape
 
 iotics:NamedPointShape
     a sh:NodeShape ;
-    sh: description "Points must have exactly one name, which must be a string with at least one non-whitespace character"@en ;
+    sh:description "Points must have exactly one name, which must be a string with at least one non-whitespace character"@en ;
     sh:targetClass iotics:Point ;
-    sh: property [
+    sh:property [
         sh:path iotics:pointName ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
         sh:minLength  1 ;
-        sh:pattern "\S" ;
+        sh:pattern "\\S" ;
     ] .
 
 iotics:LabelShape
     sh:description "Labels must be no longer than 128 chars, cannot start or end with whitespace, and must have unique languages."@en ;
     sh:datatype xsd:string ;
-    sh:pattern "^\S(.{0,126}\S)?$" ;
+    sh:pattern "^\\S(.{0,126}\\S)?$" ;
     sh:uniqueLang true ;
     .
 
@@ -69,12 +69,12 @@ iotics:LabelledShape
 
 iotics:CommentedShape
     a sh:NodeShape ;
-    sh: description "Comments must be between 1 and 1024 characters long, and cannot start or end with whitespace. Newlines are ok."@en ;
+    sh:description "Comments must be between 1 and 1024 characters long, and cannot start or end with whitespace. Newlines are ok."@en ;
     sh:targetClass iotics:DigitalTwin, iotics:Point, iotics:Value ;
     sh:property [
         sh:path rdfs:comment ;
         sh:datatype xsd:string ;
-        sh:pattern "(?s)^\S(.{0,1022}\S)?$" ;
+        sh:pattern "(?s)^\\S(.{0,1022}\\S)?$" ;
         sh:uniqueLang true;
     ] .
 
@@ -83,7 +83,7 @@ iotics:ValueShape
     sh:description """Values must have exactly one valueKey property with the same restrictions as a label, and most one valueUnit
         property that is a URI not longer than 128 characters."""@en ;
     sh:targetClass iotics:Value ;
-    sh: property [
+    sh:property [
         sh:path iotics:valueKey ;
         sh:node iotics:LabelShape ;
         sh:minCount 1 ;
@@ -113,7 +113,7 @@ iotics:IdentityShape
 
 iotics:AllowListShape
     a sh:NodeShape ;
-    sh:description "Allow list values must be either the special values allowAll and allowNone, or they must be an identity."
+    sh:description "Allow list values must be either the special values allowAll and allowNone, or they must be an identity." ;
     sh:xone (
         [
             sh:property [
@@ -249,7 +249,7 @@ iotics:hasVisibility
 iotics:Point
     a rdfs:Class ;
     rdfs:label "IOTICS Point"@en ;
-    rdfs:comment """A means by which an IOTICS Digital Twin may interact with other twins, either outbound or inbound. 
+    rdfs:comment """A means by which an IOTICS Digital Twin may interact with other twins, either outbound or inbound.
         Metadata describing the payload of the point is available when the point is described and therefore separate to the
         payload data. Interactions with the point are brokered and secured according to policies controlled by the twin."""@en ;
     .
@@ -269,7 +269,7 @@ iotics:Feed
     a rdfs:Class ;
     rdfs:subClassOf iotics:Point ;
     rdfs:label "IOTICS Data Feed"@en ;
-    rdfs:comment """A feed of data advertised by an IOTICS Digital Twin, used by the twin to broadcast values. 
+    rdfs:comment """A feed of data advertised by an IOTICS Digital Twin, used by the twin to broadcast values.
         Authorised twins following this feed receive data when published"""@en ;
     .
 
@@ -373,6 +373,7 @@ iotics:allowAll
 iotics:allowNone
     a iotics:AllowListValue ;
     rdfs:label "Allow None"@en ;
+    .
 
 iotics:User
     # Taken from Tim's concepts document, since this is now used in the ApiAllowListShape. What else can we say about it?
