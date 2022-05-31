@@ -36,19 +36,19 @@ uostr:MultipleShakerExcitationTest
 uostr:BurstRandom
   a uostr:SingleShakerExcitationTest;
   rdfs:label "A test using a burst random excitation." ;
-  rdfs:comment "A single shaker test, whose excitatation force is a burst random excitation." ;
+  rdfs:comment "A single shaker test, whose excitation force is a burst random excitation." ;
 .
 
 uostr:ContinuousRandom
   a uostr:SingleShakerExcitationTest ;
   rdfs:label "A test using a continuous random excitation." ;
-  rdfs:comment "A single shaker test, whose excitatation force is a continuously random signal also known as white-noise or pseudo-random excitation." ;
+  rdfs:comment "A single shaker test, whose excitation force is a continuously random signal also known as white-noise or pseudo-random excitation." ;
 .
 
 uostr:SineSwept
   a uostr:SingleShakerExcitationTest ;
   rdfs:label "A test using a sine swept excitation." ;
-  rdfs:comment "A single shaker test with a single frequency excitation, whose excitatation frequency changes as a function of time." ;
+  rdfs:comment "A single shaker test with a single frequency excitation, whose excitation frequency changes as a function of time." ;
 .
 
 uostr:AddedMass
