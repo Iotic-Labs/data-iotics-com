@@ -9,6 +9,14 @@ PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
 
+pub:HostTwin
+    rdf:type rdfs:Class ;
+    rdfs:subClassOf pub:AllowListValue ;
+    rdfs:subClassOf iotics:DigitalTwin ;
+    rdfs:label "Iotics Host Twin"@en ;
+    rdfs:comment "The Iotics Host virtual counterpart"@en ;
+    .
+
 pub:hostAllowList
     rdf:type rdf:Property ;
     rdfs:label "Host network allow list"@en ;
