@@ -281,12 +281,14 @@ iotics:storesLast
     rdfs:range xsd:boolean ;
     .
 
-iotics:Control
+iotics:Input
     a rdfs:Class ;
     rdfs:subClassOf iotics:Point ;
-    rdfs:label "IOTICS Control"@en ;
-    rdfs:comment """By advertising a Control, an IOTICS Digital Twin allows authorised twins to send it commands,
-        typically resulting in an action on the real asset it represents."""@en ;
+    rdfs:label "IOTICS Input"@en ;
+    rdfs:comment """By advertising an input, an IOTICS Digital Twin allows authorised twins to send messages whose meaning
+    might be described by the properties of the input itself and of its payload.
+    For example, inputs can be used to send commands to change the state of the underlying asset or to send messages
+    that can be interpreted by the twin to implement request/response exchanges."""@en ;
     .
 
 iotics:Value
