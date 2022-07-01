@@ -51,12 +51,12 @@ PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
     rdfs:range xsd:string ;
 .
 
-<span id="createdFrom">app:createdFrom rdf:type rdf:Property ;</span>
-    rdfs:label "Created from"@en ;
-    rdfs:comment "How the twin was created"@en ;
-    rdfs:domain iotics:DigitalTwin ;
-    rdfs:range app:TwinCreationMeans ;
-.
+# app:createdFrom rdf:type rdf:Property ;
+#     rdfs:label "Created from"@en ;
+#     rdfs:comment "How the twin was created"@en ;
+#     rdfs:domain iotics:DigitalTwin ;
+#     rdfs:range app:TwinCreationMeans ;
+# .
 
 <span id="spaceName">app:spaceName rdf:type rdf:Property ;</span>
     rdfs:label "Space name"@en ;
@@ -86,25 +86,25 @@ PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
     rdfs:range app:Model ;
 .
 
-<span id="TwinCreationMeans">app:TwinCreationMeans rdf:type rdfs:Class ;</span>
-    rdfs:label "Twin creation means"@en ;
-    rdfs:comment "Way of making a digital twin"@en ;
-.
+# app:TwinCreationMeans rdf:type rdfs:Class ;
+#     rdfs:label "Twin creation means"@en ;
+#     rdfs:comment "Way of making a digital twin"@en ;
+# .
 
-<span id="ByCloudApp">app:ByCloudApp rdf:type app:TwinCreationMeans ;</span>
-    rdfs:label "By cloud app"@en ;
-    rdfs:comment "Created using the Iotics Cloud Application" ;
-.
+# app:ByCloudApp rdf:type app:TwinCreationMeans ;
+#     rdfs:label "By cloud app"@en ;
+#     rdfs:comment "Created using the Iotics Cloud Application" ;
+# .
 
-<span id="ByModel">app:ByModel rdf:type app:TwinCreationMeans ;</span>
-    rdfs:label "By model"@en ;
-    rdfs:comment "Created from a Digital Twin Model"@en ;
-.
+# app:ByModel rdf:type app:TwinCreationMeans ;
+#     rdfs:label "By model"@en ;
+#     rdfs:comment "Created from a Digital Twin Model"@en ;
+# .
 
-<span id="ByPublicConnector">app:ByPublicConnector rdf:type app:TwinCreationMeans ;</span>
-    rdfs:label "By public connector"@en ;
-    rdfs:comment "Created using a public connector"@en ;
-.
+# app:ByPublicConnector rdf:type app:TwinCreationMeans ;
+#     rdfs:label "By public connector"@en ;
+#     rdfs:comment "Created using a public connector"@en ;
+# .
 
 <span id="Application">app:Application rdf:type rdfs:Class ;</span>
     rdfs:label "Application"@en ;
