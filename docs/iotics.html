@@ -2,13 +2,14 @@
 <html><pre>
 # Auto-generated from iotic-rdf-ontology repository, iotics/iotics. Edits will be overwritten!
 
-PREFIX geo:     &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt;
+PREFIX geo:     &lt;http://www.opengis.net/ont/geosparql#&gt;
 PREFIX iotics:    &lt;http://data.iotics.com/iotics#&gt;
 PREFIX rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
 PREFIX rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX sf:      &lt;http://www.opengis.net/ont/sf#&gt;
 PREFIX sh:      &lt;http://www.w3.org/ns/shacl#&gt;
 PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
-# Copyright (c) 2021 Iotic Labs Ltd. All rights reserved.
+# Copyright (c) 2022 Iotic Labs Ltd. All rights reserved.
 
 ###############################################################################
 # IOTICS Resource Ontology - Validation Shapes                                #
@@ -16,27 +17,31 @@ PREFIX xsd:     &lt;http://www.w3.org/2001/XMLSchema#&gt;
 
 
 
-iotics:LocatedShape
+iotics:DefaultLocatedTwinShape
     a sh:NodeShape ;
-    sh:description "Values that have either latitude or longitude must have both."@en ;
-    sh:targetSubjectsOf geo:lat, geo:long ;
-    sh:property iotics:LatitudeShape ;
-    sh:property iotics:LongitudeShape ;
-    .
+    sh:description "Twins can have an optional default single-point location"@en ;
+    sh:targetClass iotics:DigitalTwin ;
+    sh:property [
+        # subclass of geo:hasGeometry
+        sh:path geo:hasDefaultGeometry ;
+        sh:and (
+            # subclass of geo:Geometry
+            [ sh:class sf:Point ]
+            [ sh:node iotics:WKTPointLocatedShape ]
+        ) ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] .
 
-iotics:LatitudeShape
-    a sh:PropertyShape ;
-    sh:path geo:lat ;
-    sh:minInclusive -90.0 ;
-    sh:maxInclusive 90.0 ;
-    .
-
-iotics:LongitudeShape
-    a sh:PropertyShape ;
-    sh:path geo:long ;
-    sh:minInclusive -180.0 ;
-    sh:maxInclusive 180.0 ;
-    .
+iotics:WKTPointLocatedShape
+    a sh:NodeShape ;
+    sh:property [
+        # subclass of geo:hasSerialization
+        sh:path geo:asWKT ;
+        sh:datatype geo:wktLiteral ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] .
 
 iotics:NamedPointShape
     a sh:NodeShape ;
