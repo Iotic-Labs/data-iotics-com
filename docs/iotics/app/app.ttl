@@ -47,12 +47,12 @@ app:updatedBy rdf:type rdf:Property ;
     rdfs:range xsd:string ;
 .
 
-app:createdFrom rdf:type rdf:Property ;
-    rdfs:label "Created from"@en ;
-    rdfs:comment "How the twin was created"@en ;
-    rdfs:domain iotics:DigitalTwin ;
-    rdfs:range app:TwinCreationMeans ;
-.
+# app:createdFrom rdf:type rdf:Property ;
+#     rdfs:label "Created from"@en ;
+#     rdfs:comment "How the twin was created"@en ;
+#     rdfs:domain iotics:DigitalTwin ;
+#     rdfs:range app:TwinCreationMeans ;
+# .
 
 app:spaceName rdf:type rdf:Property ;
     rdfs:label "Space name"@en ;
@@ -82,25 +82,25 @@ app:defines rdf:type rdf:Property ;
     rdfs:range app:Model ;
 .
 
-app:TwinCreationMeans rdf:type rdfs:Class ;
-    rdfs:label "Twin creation means"@en ;
-    rdfs:comment "Way of making a digital twin"@en ;
-.
+# app:TwinCreationMeans rdf:type rdfs:Class ;
+#     rdfs:label "Twin creation means"@en ;
+#     rdfs:comment "Way of making a digital twin"@en ;
+# .
 
-app:ByCloudApp rdf:type app:TwinCreationMeans ;
-    rdfs:label "By cloud app"@en ;
-    rdfs:comment "Created using the Iotics Cloud Application" ;
-.
+# app:ByCloudApp rdf:type app:TwinCreationMeans ;
+#     rdfs:label "By cloud app"@en ;
+#     rdfs:comment "Created using the Iotics Cloud Application" ;
+# .
 
-app:ByModel rdf:type app:TwinCreationMeans ;
-    rdfs:label "By model"@en ;
-    rdfs:comment "Created from a Digital Twin Model"@en ;
-.
+# app:ByModel rdf:type app:TwinCreationMeans ;
+#     rdfs:label "By model"@en ;
+#     rdfs:comment "Created from a Digital Twin Model"@en ;
+# .
 
-app:ByPublicConnector rdf:type app:TwinCreationMeans ;
-    rdfs:label "By public connector"@en ;
-    rdfs:comment "Created using a public connector"@en ;
-.
+# app:ByPublicConnector rdf:type app:TwinCreationMeans ;
+#     rdfs:label "By public connector"@en ;
+#     rdfs:comment "Created using a public connector"@en ;
+# .
 
 app:Application rdf:type rdfs:Class ;
     rdfs:label "Application"@en ;
