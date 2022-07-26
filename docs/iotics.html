@@ -226,31 +226,6 @@ iotics:advertises
     rdfs:range iotics:Point ;
     .
 
-iotics:Visibility
-    a rdfs:Class ;
-    rdfs:label "Visibility"@en ;
-    rdfs:comment "Defines whether an IOTICS Digital Twin may be found or described from other Hosts"@en ;
-    .
-
-iotics:public
-    a iotics:Visibility ;
-    rdfs:label "Public"@en ;
-    rdfs:comment "A public Digital Twin can be found or described from other Hosts"@en ;
-    .
-
-iotics:private
-    a iotics:Visibility ;
-    rdfs:label "Private"@en ;
-    rdfs:comment "A private Digital Twin can only be found or described from the local Host"@en ;
-    .
-
-iotics:hasVisibility
-    a rdf:Property ;
-    rdfs:comment "Property relating an IOTICS Digital Twin to a certain Visibility level"@en ;
-    rdfs:domain iotics:DigitalTwin ;
-    rdfs:range  iotics:Visibility ;
-    .
-
 iotics:Point
     a rdfs:Class ;
     rdfs:label "IOTICS Point"@en ;
