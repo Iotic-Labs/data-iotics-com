@@ -226,6 +226,24 @@ iotics:advertises
     rdfs:range iotics:Point ;
     .
 
+iotics:createdAt
+    a rdf:Property ;
+    rdfs:label "createdAt"@en ;
+    rdfs:comment "The date on which a IOTICS Digital Twin was created"@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range xsd:dateTime
+    .
+
+iotics:updatedAt
+    a rdf:Property ;
+    rdfs:label "updatedAt"@en ;
+    rdfs:comment """The date on which an IOTICS Digital Twin, or any of its feeds
+        or inputs was updated, including updates which do not otherwise modify the
+        Digital Twin, its feeds or inputs"""@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range xsd:dateTime ;
+    .
+
 iotics:Point
     a rdfs:Class ;
     rdfs:label "IOTICS Point"@en ;
