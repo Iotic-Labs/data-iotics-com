@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html><pre>
+# Auto-generated from iotic-rdf-ontology repository, 3rd/savvi. Edits will be overwritten!
+
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+@prefix savvi: &lt;http://data.iotics.com/savvi#&gt; .
+
+# Entity Classes
+## Entities that exist in the SAVVI Logical Model
+
+savvi:Action
+    a rdfs:Class ;
+    rdfs:label "Action"@en ;
+    rdfs:comment "An action that has been carried out as part of responding to a Need."@en ;
+.
+
+savvi:Attribute
+    a rdfs:Class ;
+    rdfs:label "Attribute"@en ;
+    rdfs:comment "A state of a person or household."@en ;
+.
+
+savvi:Case
+    a rdfs:Class ;
+    rdfs:label "Case"@en ;
+    rdfs:comment "A container for information recording the history of events for a person or household who may have needs."@en ;
+.
+
+savvi:ContactEvent
+    a rdfs:Class ;
+    rdfs:label "Contact Event"@en ;
+    rdfs:comment "A record of an event in which the situation of a person or household was sought."@en ;
+.
+
+savvi:Household
+    a rdfs:Class ;
+    rdfs:label "Household"@en ;
+    rdfs:comment "A collection of Persons who live together."@en ;
+.
+
+savvi:Need
+    a rdfs:Class ;
+    rdfs:label "Need"@en ;
+    rdfs:comment "The need where assistance is required to mitigate a vulnerability."@en ;
+.
+
+savvi:Organisation
+    a rdfs:Class ;
+    rdfs:label ""@en ;
+    rdfs:comment ""@en ;
+.
+
+savvi:Outcome
+    a rdfs:Class ;
+    rdfs:label "Outcome"@en ;
+    rdfs:comment "The resulting situation of a Case, or a Need."@en ;
+.
+
+savvi:Person
+    a rdfs:Class ;
+    rdfs:label "Person"@en ;
+    rdfs:comment "A person who may be vulnerable, or who needs assistance."@en ;
+.
+
+savvi:Plan
+    a rdfs:Class ;
+    rdfs:label "Plan"@en ;
+    rdfs:comment "A set of planned actions designed to respond to a Need over a period."@en ;
+.
+
+savvi:Residence
+    a rdfs:Class ;
+    rdfs:label "Residence"@en ;
+    rdfs:comment "A building, or part of a building, designed to accommodate a single Household."@en ;
+.
+
+savvi:RiskAssessment
+    a rdfs:Class ;
+    rdfs:label "Risk Assessment"@en ;
+    rdfs:comment "A categorisation of the risk of a Person or Household."@en ;
+.
+
+savvi:SituationAssessment
+    a rdfs:Class ;
+    rdfs:label "Situation Assessment"@en ;
+    rdfs:comment "An understanding of the situation of a Person or Household as a result of a contact."@en ;
+.
+
+# Non-entity Concept Classes
+## Other concepts that exist in the SAVVI Conceptual Model
+
+savvi:LeadOrganisation
+    a rdfs:Class ;
+    rdfs:label "Lead Organisation"@en ;
+    rdfs:comment "An organisation responsible for coordinating a vulnerability initiative."@en ;
+    rdfs:subClassOf savvi:Organisation;
+.
+
+savvi:ResponsibleOrganisation
+    a rdfs:Class ;
+    rdfs:label "Responsible Organisation"@en ;
+    rdfs:comment "An organisation who is made responsible for a Case."@en ;
+    rdfs:subClassOf savvi:Organisation;
+.
+
+savvi:DeliveryOrganisation
+    a rdfs:Class ;
+    rdfs:label "Delivery Organisation"@en ;
+    rdfs:comment "A service provider who delivers actions that respond to a Need."@en ;
+    rdfs:subClassOf savvi:Organisation;
+.
+
+savvi:SourceOrganisation
+    a rdfs:Class ;
+    rdfs:label "Source Organisation"@en ;
+    rdfs:comment "An organisation who is made responsible for a Case."@en ;
+    rdfs:subClassOf savvi:Organisation;
+.
+
+savvi:Area
+    a rdfs:Class ;
+    rdfs:label "Area"@en ;
+    rdfs:comment "A geographic area."@en ;
+.
+
+savvi:Provenance
+    a rdfs:Class ;
+    rdfs:label "Provenance"@en ;
+    rdfs:comment "A record of the steps taken to prepare a piece of data."@en ;
+.
+
+savvi:StratificationPolicy
+    a rdfs:Class ;
+    rdfs:label "Stratification Policy"@en ;
+    rdfs:comment "A definition of the rules by which Risk Categories will be determined"@en ;
+.
+
+# Data Structure Classes &amp; Properties
+## Structured information which is not present in the SAVVI Conceptual Model,
+## but referred to by the Logical Model
+
+savvi:Address
+    a rdfs:Class ;
+    rdfs:label "Address"@en ;
+    rdfs:comment "The Address of a Property"@en ;
+.
+
+savvi:addressLine
+    a rdf:Property ;
+    rdfs:label "Line"@en ;
+    rdfs:domain savvi:Address ;
+    rdfs:range xsd:string ;
+.
+
+savvi:postcode
+    a rdf:Property ;
+    rdfs:label "Postcode"@en ;
+    xsd:domain savvi:Address ;
+    rdfs:range xsd:string
+.
+
+savvi:Characteristic
+    a rdfs:Class ;
+    rdfs:label "Characteristic"@en ;
+    rdfs:comment "To indicate the presence of a feature of a thing"@en ;
+.
+
+savvi:characteristicScheme
+    a rdf:Property ;
+    rdfs:label "Scheme"@en ;
+    rdfs:comment "To define the scheme that the characteristic is taken from. e.g. condition, ons."@en ;
+    rdfs:domain savvi:Characteristic ;
+    rdfs:range xsd:string ;
+.
+
+savvi:characteristicTerm
+    a rdf:Property ;
+    rdfs:label "Term"@en ;
+    rdfs:comment "A term from the scheme representing a characteristic"@en ;
+    rdfs:domain savvi:Characteristic ;
+    rdfs:range xsd:string ;
+.
+
+savvi:characteristicUri
+    a rdf:Property ;
+    rdfs:label "URI"@en ;
+    rdfs:comment "A persistent identifier for the term"@en ;
+    rdfs:domain savvi:Characteristic ;
+    rdfs:range xsd:string ;
+.
+
+savvi:characteristicValue
+    a rdf:Property ;
+    rdfs:label "Value"@en ;
+    rdfs:comment "An optional value that quantifies the Term. e.g. if the term is 'number of bedrooms', the Value may be 3. Many Terms will not need a value."@en ;
+    rdfs:domain savvi:Characteristic ;
+    rdfs:range xsd:string ;
+.
+
+savvi:ContactPoint
+    a rdfs:Class ;
+    rdfs:label "ContactPoint"@en ;
+    rdfs:comment "Details for all kinds of technology-mediated contact points for a person or organization, including telephone, email, etc."@en ;
+.
+
+savvi:contactPointSystem
+    a rdf:Property ;
+    rdfs:label "System"@en ;
+    rdfs:comment "Telecommunications form for contact point - what communications system is required to make use of the contact. one of phone, email, sms"@en ;
+    rdfs:domain savvi:ContactPoint ;
+    rdfs:range savvi:ContactPointSystem
+.
+
+savvi:contactPointValue
+    a rdf:Property ;
+    rdfs:label "Value"@en ;
+    rdfs:range "The actual contact point details, in a form that is meaningful to the designated communication system (i.e. phone number or email address)."@en ;
+    rdfs:domain savvi:ContactPoint ;
+    rdfs:range xsd:string ;
+.
+    
+savvi:Identifier
+    a rdfs:Class ;
+    rdfs:label "Identifier"@en ;
+    rdfs:comment "A reference from a scheme"@en ;
+.
+
+savvi:identifierScheme
+    a rdf:Property ;
+    rdfs:label "Scheme"@en ;
+    rdfs:comment "To define the scheme that the value is taken from. e.g. nino, nlpg."@en ;
+    rdfs:domain savvi:Identifier ;
+    rdfs:range xsd:string ;
+.
+
+savvi:isPseudonymised
+    a rdf:Property ;
+    rdfs:label "Pseudonymised"@en ;
+    rdfs:comment "To indicate if the Reference has been pseudonymised"@en ;
+    rdfs:domain savvi:Identifier ;
+    rdfs:range xsd:boolean ;
+.
+
+savvi:Position
+    a rdfs:Class ;
+    rdfs:label "Position"@en ;
+    rdfs:comment "The absolute geographic location of the Location, expressed using the WGS84 datum"@en ;
+.
+
+savvi:latitude
+    a rdf:Property ;
+    rdfs:label "latitude" ;
+    rdfs:comment "The latitude of a position expressed using the WGS84 datum"@en ;
+    rdfs:domain savvi:Position ;
+    rdfs:range xsd:decimal ;
+.
+
+savvi:longitude
+    a rdf:Property ;
+    rdfs:label "longitude" ;
+    rdfs:comment "The longitude of a position expressed using the WGS84 datum"@en ;
+    rdfs:domain savvi:Position ;
+    rdfs:range xsd:decimal ;
+.
+
+# Lookup Classes/Instances
+## Terms used for properties whose object must be one of an enumerated list. Named by IOTICS,
+## label represents "permitted value"
+
+savvi:AttributeType
+    a rdfs:Class ;
+    rdfs:label "Attribute Type"@en ;
+.
+
+savvi:Circumstance
+    a savvi:AttributeType ;
+    rdfs:label "Circumstance"@en ;
+.
+
+savvi:Event
+    a savvi:AttributeType ;
+    rdfs:label "Event"@en ;
+.
+
+savvi:Risk
+    a savvi:AttributeType ;
+    rdfs:label "Risk"@en ;
+.
+
+savvi:Service
+    a savvi:AttributeType ;
+    rdfs:label "Service"@en ;
+.
+
+savvi:Status
+    a rdfs:Class ;
+    rdfs:label "Status"@en ;
+.
+
+savvi:Planned
+    a rdfs:CaseStatus ;
+    rdfs:label "planned" ;
+.
+
+savvi:Active
+    a rdfs:CaseStatus ;
+    rdfs:label "active" ;
+.
+
+savvi:OnHold
+    a rdfs:CaseStatus ;
+    rdfs:label "onhold" ;
+.
+
+savvi:Finished
+    a rdfs:CaseStatus ;
+    rdfs:label "finished" ;
+.
+
+savvi:Cancelled
+    a rdfs:CaseStatus ;
+    rdfs:label "Cancelled" ;
+.
+
+savvi:ContactMethod
+    a rdfs:Class ;
+    rdfs:label "Contact Method"@en ;
+.
+
+savvi:Phone
+    a savvi:ContactMethod ;
+    a savvi:ContactPointSystem ;
+    rdfs:label "phone"@en ;
+.
+
+savvi:AtHome
+    a savvi:ContactMethod ;
+    rdfs:label "at home"@en ;
+.
+
+savvi:Letter
+    a savvi:ContactMethod ;
+    rdfs:label "letter"@en ;
+.
+
+savvi:Text
+    a savvi:ContactMethod ;
+    rdfs:label "text"@en ;
+.
+
+savvi:WebForm
+    a savvi:ContactMethod ;
+    rdfs:label "web form"@en ;
+.
+
+savvi:Email
+    a savvi:ContactMethod ;
+    a savvi:ContactPointSystem ;
+    rdfs:label "email"@en ;
+.
+
+savvi:FaceToFace
+    a rdfs:ContactMethod ;
+    rdfs:label "face-2-face"@en ;
+.
+
+savvi:ContactDirection
+    a rdfs:Class ;
+    rdfs:label "Contact Method"@en ;
+.
+
+savvi:Inbound
+    a rdfs:ContactDirection ;
+    rdfs:label "inbound"@en ;
+.
+
+savvi:Outbound
+    a rdfs:ContactDirection ;
+    rdfs:label "outbound"@en ;
+.
+
+savvi:OrganisationType
+    a rdfs:Class ;
+    rdfs:label "Organisation Type"@en ;
+.
+
+savvi:LocalAuthority
+    a savvi:OrganisationType ;
+    rdfs:label "Local Authority"@en ;
+.
+
+savvi:GovernmentDepartment
+    a savvi:OrganisationType ;
+    rdfs:label "Government Department"@en ;
+.
+
+savvi:CommunityGroup
+    a savvi:OrganisationType ;
+    rdfs:label "Community or Voluntary Group"@en ;
+.
+
+savvi:PrivateSector
+    a savvi:OrganisationType ;
+    rdfs:label "Private Sector"@en ;
+.
+
+savvi:OtherOrganisationType
+    a savvi:OrganisationType ;
+    rdfs:label "Other"@en ;
+.
+
+savvi:Gender
+    a rdfs:Class ;
+    rdfs:label "Gender"@en ;
+.
+
+savvi:Male
+    a savvi:Gender ;
+    rdfs:label "male"@en ;
+.
+
+savvi:Female
+    a savvi:Gender ;
+    rdfs:label "female"@en ;
+.
+
+savvi:OtherGender
+    a savvi:Gender ;
+    rdfs:label "other"@en ;
+.
+
+savvi:UnknownGender
+    a savvi:Gender ;
+    rdfs:label "unknown"@en ;
+.
+
+savvi:ContactPointSystem
+    a rdfs:Class ;
+    rdfs:label "System"@en ;
+.
+
+savvi:sms
+    a savvi:ContactPointSystem ;
+    rdfs:label "SMS"@en ;
+.
+
+# Relationship Properties
+## Predicates whose subject and object are both SAVVI entities. Named by IOTICS --
+## "label" shows arrow's label in Logical Model diagram.
+
+savvi:performedBy
+    a rdf:Property ;
+    rdfs:label "by"@en ;
+    rdfs:domain savvi:Action ;
+    rdfs:range savvi:DeliveryOrganisation ;
+.
+
+savvi:addressesNeed
+    a rdf:Property ;
+    rdfs:label "addresses"@en ;
+    rdfs:domain savvi:Action ;
+    rdfs:range savvi:Need ;
+.
+
+savvi:about
+    a rdf:Property ;
+    rdfs:label "about"@en ;
+    rdfs:domain savvi:Attribute ;
+    rdfs:domain savvi:Case ;
+    rdfs:domain savvi:Need ;
+    rdfs:range savvi:Person ;
+    rdfs:range savvi:Household;
+.
+
+savvi:receivesAttribute
+    a rdf:Property ;
+    rdfs:label "receives"@en ;
+    rdfs:domain savvi:LeadOrganisation ;
+    rdfs:range savvi:Attribute ;
+.
+
+savvi:usesAttribute
+    a rdf:Property ;
+    rdfs:label "uses"@en ;
+    rdfs:domain savvi:RiskAssessment ;
+    rdfs:range savvi:Attribute ;
+.
+
+savvi:providesAttribute
+    a rdf:Property ;
+    rdfs:label "provides"@en ;
+    rdfs:domain savvi:SourceOrganisation ;
+    rdfs:range savvi:Attribute ;
+.
+
+savvi:relatesToCase
+    a rdf:Property ;
+    rdfs:label "case"@en ;
+    rdfs:domain savvi:ContactEvent ;
+    rdfs:domain savvi:Need ;
+    rdfs:range savvi:Case ;
+.
+
+savvi:describesCase
+    a rdf:Property ;
+    rdfs:label "of"@en ;
+    rdfs:domain savvi:SituationAssessment ;
+    rdfs:range savvi:Case ;
+.
+
+savvi:hasRiskAssessment
+    a rdf:Property ;
+    rdfs:label "risk"@en ;
+    rdfs:domain savvi:Case ;
+    rdfs:range savvi:RiskAssessment ;
+.
+
+savvi:assignedTo
+    a rdf:Property ;
+    rdfs:label "assigned to"@en ;
+    rdfs:domain savvi:Case ;
+    rdfs:range savvi:ResponsibleOrganisation ;
+.
+
+savvi:regardingCase
+    a rdf:Property ;
+    rdfs:label "about"@en ;
+    rdfs:domain savvi:ContactEvent ;
+    rdfs:range savvi:Case ;
+.
+
+savvi:passesInfoTo
+    a rdf:Property ;
+    rdfs:label "passes info to"@en ;
+    rdfs:domain savvi:ContactEvent ;
+    rdfs:range savvi:ResponsibleOrganisation ;
+.
+
+savvi:residesAt
+    a rdf:Property ;
+    rdfs:label "resides at"@en ;
+    rdfs:domain savvi:Household ;
+    rdfs:range savvi:Residence ;
+.
+
+savvi:includesPerson
+    a rdf:Property ;
+    rdfs:label "contains"@en ;
+    rdfs:domain savvi:Household ;
+    rdfs:range savvi:Person ;
+.
+
+savvi:outcomeOf
+    a rdf:Property ;
+    rdfs:label "of"@en ;
+    rdfs:domain savvi:Outcome ;
+    rdfs:range savvi:Case ;
+    rdfs:range savvi:Need ;
+.
+
+savvi:plansForNeed
+    a rdf:Property ;
+    rdfs:label "about"@en ;
+    rdfs:domain savvi:Plan ;
+    rdfs:range savvi:Need ;
+.
+
+savvi:referredTo
+    a rdf:Property ;
+    rdfs:label "referred to"@en ;
+    rdfs:domain savvi:Need ;
+    rdfs:range savvi:DeliveryOrganisation ;
+.
+
+savvi:plannedBy
+    a rdf:Property ;
+    rdfs:label "of"@en ;
+    rdfs:domain savvi:Plan ;
+    rdfs:range savvi:DeliveryOrganisation ;
+.
+
+savvi:inArea
+    a rdf:Property ;
+    rdfs:label "in"@en ;
+    rdfs:domain savvi:Residence ;
+    rdfs:range savvi:Area ;
+.
+
+savvi:riskAssessedBy
+    a rdf:Property ;
+    rdfs:label "by"@en ;
+    rdfs:domain savvi:RiskAssessment ;
+    rdfs:range savvi:LeadOrganisation ;
+.
+
+savvi:appliesTo
+    a rdf:Property ;
+    rdfs:label "applies"@en ;
+    rdfs:domain savvi:RiskAssessment ;
+    rdfs:range savvi:StratificationPolicy ;
+.
+
+savvi:situationAssessedBy
+    a rdf:Property ;
+    rdfs:label "by"@en ;
+    rdfs:domain savvi:SituationAssessment ;
+    rdfs:range savvi:ResponsibleOrganisation ;
+.
+
+# Attribute Properties
+## Properties relating SAVVI entities to Literals or objects which are not SAVVI
+## conceptual entities (Characteristics, FHIR datatypes, etc.) Named by IOTICS --
+## "label" shows "attribute" name in Logical Model diagram. Somewhat redundant to 
+## capture the separate descriptions (rdfs:comment) of similar fields on different
+## classes.
+
+savvi:actionType
+    a rdf:Property ;
+    rdfs:label "Type"@en ;
+    rdfs:comment "The type of action - e.g. 'food parcel', 'debt advice'"@en ;
+    rdfs:domain savvi:Action ;
+    rdfs:range savvi:Characteristic ;
+.
+
+savvi:actionDate
+    a rdf:Property ;
+    rdfs:label "Date"@en ;
+    rdfs:comment "The date of the Action"@en ;
+    rdfs:domain savvi:Action ;
+    rdfs:range xsd:date ;
+.
+
+savvi:attributeType
+    a rdf:Property ;
+    rdfs:label "Type"@en ;
+    rdfs:comment "The type of Attribute - one of Circumstance, Event, Risk, Service"@en ;
+    rdfs:domain savvi:Attribute ;
+    rdfs:range savvi:AttributeType ;
+.
+
+savvi:attributeCharacteristic
+    a rdf:Property ;
+    rdfs:label "Characteristic"@en ;
+    rdfs:comment "To describe the Attribute, e.g. In receipt of Universal Credit, Living Alone"@en ;
+    rdfs:domain savvi:Attribute ;
+    rdfs:range savvi:Characteristic ;
+.
+
+savvi:attributeDate
+    a rdf:Property ;
+    rdfs:label "Date"@en ;
+    rdfs:comment "The date from which the attribute is true"@en ;
+    rdfs:domain savvi:Attribute ;
+    rdfs:range  xsd:date ;
+.
+
+savvi:attributeEndDate
+    a rdf:Property ;
+    rdfs:label "EndDate"@en ;
+    rdfs:comment "The date from which the attribute ended or is expected to end"@en ;
+    rdfs:domain savvi:Attribute ;
+    rdfs:range xsd:date ;
+.
+
+savvi:caseReference
+    a rdf:Property ;
+    rdfs:label "Reference"@en ;
+    rdfs:comment "A unique reference for the case."@en ;
+    rdfs:domain savvi:Case ;
+    rdfs:range savvi:Identifier ;
+.
+
+savvi:hasStatus
+    a rdf:Property ;
+    rdfs:label "Status"@en ;
+    rdfs:comment "one of planned, active, onhold, finished, cancelled"@en ;
+    rdfs:domain savvi:Case ;
+    rdfs:domain savvi:Plan ;
+    rdfs:range savvi:Status ;
+.
+
+savvi:riskCategory
+    a rdf:Property ;
+    rdfs:label "RiskCategory"@en ;
+    rdfs:comment "A Risk Category if the Case was raised as a result of a Risk Assessment"@en ;
+    rdfs:domain savvi:Case ;
+    rdfs:range savvi:Characteristic ;
+.
+
+savvi:dateRaised
+    a rdf:Property ;
+    rdfs:label "DateRaised"@en ;
+    rdfs:comment "The Date that the Case was started"@en ;
+    rdfs:domain savvi:Case ;
+    rdfs:range xsd:date ;
+.
+
+savvi:dateClosed
+    a rdf:Property ;
+    rdfs:label "DateClosed"@en ;
+    rdfs:comment "The Date that the Case was closed."@en ;
+    rdfs:domain savvi:Case ;
+    rdfs:range xsd:date ;
+.
+
+savvi:contactDate
+    a rdf:Property ;
+    rdfs:label "Date"@en ;
+    rdfs:comment "The Date that the contact took place"@en ;
+    rdfs:domain savvi:ContactEvent ;
+    rdfs:range xsd:date ;
+.
+
+savvi:contactRole
+    a rdf:Property ;
+    rdfs:label "ContactRole"@en ;
+    rdfs:comment "To indicate the role that is providing information about the Case, e.g. Vulnerable Person, Relative, Public, Professional, Community Group, Elected Representative"@en ;
+    rdfs:domain savvi:ContactEvent ;
+    rdfs:range savvi:Characteristic ;
+.
+
+savvi:contactPerson
+    a rdf:Property ;
+    rdfs:label "ContactPerson"@en ;
+    rdfs:comment "The name of the person providing information."@en ;
+    rdfs:domain savvi:ContactEvent ;
+    rdfs:range xsd:string ;
+.
+
+savvi:contactMethod
+    a rdf:Property ;
+    rdfs:label "ContactMethod"@en ;
+    rdfs:comment ""@en ;
+    rdfs:domain savvi:ContactEvent ;
+    rdfs:range savvi:ContactMethod ;
+.
+
+savvi:contactDirection
+    a rdf:Property ;
+    rdfs:label "ContactDirection"@en ;
+    rdfs:comment "To indicate if the contact was initiated by the Subject or a support organisation. One-off, outbound or inbound."@en ;
+    rdfs:domain savvi:ContactEvent ;
+    rdfs:range savvi:ContactDirection ;
+.
+
+savvi:householdCharacteristic
+    a rdf:Property ;
+    rdfs:label "Characteristic"@en ;
+    rdfs:comment "May provide useful information such as OAP, has children"@en ;
+    rdfs:domain savvi:Household ;
+    rdfs:range savvi:Characteristic ;
+.
+
+savvi:householdIdentifier
+    a rdf:Property ;
+    rdfs:label "Identifier"@en ;
+    # no comment
+    rdfs:domain savvi:Household ;
+    rdfs:range savvi:Identifier ;
+.
+
+savvi:needType
+    a rdf:Property ;
+    rdfs:label "Type"@en ;
+    rdfs:comment "The type of need - such as: access to shopping, access to medicine, financial stability, remaining in the current accommodation"@en ;
+    rdfs:domain savvi:Need ;
+    rdfs:range savvi:Characteristic ;
+.
+
+savvi:rationale
+    a rdf:Property ;
+    rdfs:label "Rationale"@en ;
+    rdfs:comment "The reasoning for the need"@en ;
+    rdfs:domain savvi:Need ;
+    rdfs:range xsd:string ;
+.
+
+savvi:needDate
+    a rdf:Property ;
+    rdfs:label "Date"@en ;
+    rdfs:comment "The date that the need is established"@en ;
+    rdfs:domain savvi:Need ;
+    rdfs:range xsd:date ;
+.
+
+savvi:needEndDate
+    a rdf:Property ;
+    rdfs:label "EndDate"@en ;
+    rdfs:comment "The date that the need was resolved"@en ;
+    rdfs:domain savvi:Need ;
+    rdfs:range xsd:date ;
+.
+
+savvi:targetDate
+    a rdf:Property ;
+    rdfs:label "Target Date"@en ;
+    rdfs:comment "The date that the need should be resolved by for it to be effective."@en ;
+    rdfs:domain savvi:Need ;
+    rdfs:range xsd:date ;
+.
+
+savvi:organisationIdentifier
+    a rdf:Property ;
+    rdfs:label "Identifier"@en ;
+    rdfs:comment "A reference by which the organisation is known, eg: GDS Register of Local Authorities, Companies House Number, Charity Number"@en ;
+    rdfs:domain savvi:Organisation ;
+    rdfs:range savvi:Identifier ;
+.
+
+savvi:organisationType
+    a rdf:Property ;
+    rdfs:label "Type"@en ;
+    rdfs:comment "To indicate the type of the Organisation."@en ;
+    rdfs:domain savvi:Organisation ;
+    rdfs:range savvi:OrganisationType ;
+.
+
+savvi:organisationName
+    a rdf:Property ;
+    rdfs:label "Name"@en ;
+    # no comment
+    rdfs:domain savvi:Organisation ;
+    rdfs:range xsd:string ;
+.
+
+savvi:department
+    a rdf:Property ;
+    rdfs:label "Department"@en ;
+    rdfs:comment "a part of the organisation"@en ;
+    rdfs:domain savvi:Organisation ;
+    rdfs:range xsd:string ;
+.
+
+savvi:orgContactPerson
+    a rdf:Property ;
+    rdfs:label "ContactPerson"@en ;
+    # no comment
+    rdfs:domain savvi:Organisation ;
+    rdfs:range xsd:string ;
+.
+
+savvi:orgContactPoint
+    a rdf:Property ;
+    rdfs:label "ContactPoint"@en ;
+    # no comment
+    rdfs:domain savvi:Organisation ;
+    rdfs:range savvi:ContactPoint ;
+.
+
+savvi:outcomeCategory
+    a rdf:Property ;
+    rdfs:label "Category"@en ;
+    rdfs:comment "A Categorisation of the Outcome, such as: now supported by family or friends, lock-down over, sustainable tenancy"@en ;
+    rdfs:domain savvi:Outcome ;
+    rdfs:range savvi:Characteristic ;
+.
+
+savvi:outcomeDescription
+    a rdf:Property ;
+    rdfs:label "Description"@en ;
+    # no comment
+    rdfs:domain savvi:Outcome ;
+    rdfs:range xsd:string ;
+.
+
+savvi:outcomeDate
+    a rdf:Property ;
+    rdfs:label "Date"@en ;
+    rdfs:comment "the date that the Outcome was achieved"@en ;
+    rdfs:domain savvi:Outcome ;
+    rdfs:range xsd:date ;
+.
+
+savvi:personTitle
+    a rdf:Property ;
+    rdfs:label "Title"@en ;
+    # no comment
+    rdfs:domain savvi:Person ;
+    rdfs:range xsd:string ;
+.
+
+savvi:familyName
+    a rdf:Property ;
+    rdfs:label "FamilyName"@en ;
+    # no comment
+    rdfs:domain savvi:Person ;
+    rdfs:range xsd:string ;
+.
+
+savvi:givenNames
+    a rdf:Property ;
+    rdfs:label "GivenNames"@en ;
+    # no comment
+    rdfs:domain savvi:Person ;
+    rdfs:range xsd:string ;
+.
+
+savvi:personAlias
+    a rdf:Property ;
+    rdfs:label "Alias"@en ;
+    rdfs:comment "may be a shortened or familiar form of the GivenName (e.g., Betty or Lizzie vs Elizabeth), by which the person is generally known by family &amp; friends;"@en ;
+    rdfs:domain savvi:Person ;
+    rdfs:range xsd:string ;
+.
+
+savvi:birthDate
+    a rdf:Property ;
+    rdfs:label "BirthDate"@en ;
+    rdfs:comment "At least an estimated year should be provided as a guess if the real DOB is unknown."@en ;
+    rdfs:domain savvi:Person ;
+    rdfs:range xsd:date ;
+.
+
+savvi:gender
+    a rdf:Property ;
+    rdfs:label "Gender"@en ;
+    # no comment
+    rdfs:domain savvi:Person ;
+    rdfs:range savvi:Gender ;
+.
+
+savvi:personIdentifier
+    a rdf:Property ;
+    rdfs:label "Identifier"@en ;
+    rdfs:comment "References by which people are known in various schemes, e.g. NiNo, Health Number, a local reference."@en ;
+    rdfs:domain savvi:Person ;
+    rdfs:range savvi:Identifier ;
+.
+
+savvi:planDescription
+    a rdf:Property ;
+    rdfs:label "Description"@en ;
+    rdfs:comment "Description of the Plan"@en ;
+    rdfs:domain savvi:Plan ;
+    rdfs:range xsd:string ;
+.
+
+savvi:planStartDate
+    a rdf:Property ;
+    rdfs:label "StartDate"@en ;
+    # no comment
+    rdfs:domain savvi:Plan ;
+    rdfs:range xsd:date ;
+.
+
+savvi:planEndDate
+    a rdf:Property ;
+    rdfs:label "EndDate"@en ;
+    # no comment
+    rdfs:domain savvi:Plan ;
+    rdfs:range xsd:date ;
+.
+
+savvi:residenceAddress
+    a rdf:Property ;
+    rdfs:label "Address"@en ;
+    # no comment
+    rdfs:domain savvi:Residence ;
+    rdfs:range savvi:Address ;
+.
+
+savvi:residenceCharacteristic
+    a rdf:Property ;
+    rdfs:label "Characteristic"@en ;
+    rdfs:comment "Information about the residence such as the number of bedrooms, condition"@en ;
+    rdfs:domain savvi:Residence ;
+    rdfs:range savvi:Characteristic ;
+.
+
+savvi:residenceIdentifier
+    a rdf:Property ;
+    rdfs:label "Identifier"@en ;
+    rdfs:comment "Properties are known by references such as the UPRN from GeoPlace. A property reference can be pseudonymised so that it can be matched with others, without knowing the actual address."@en ;
+    rdfs:domain savvi:Residence ;
+    rdfs:range savvi:Identifier ;
+.
+
+savvi:residencePosition
+    a rdf:Property ;
+    rdfs:label "Position"@en ;
+    rdfs:comment "The coordinates of a map pin"@en ;
+    rdfs:domain savvi:Residence ;
+    rdfs:range savvi:Position ;
+.
+
+
+savvi:residenceArea
+    a rdf:Property ;
+    rdfs:label "Area"@en ;
+    rdfs:comment "To indicate a geographic area that a property is contained in. Schemes might include: * Statistical Geographies such as LSOA * Administrative Geographies such as Local Authority jurisdictions * USRN (Unique Street Reference Number)"@en ;
+    rdfs:domain savvi:Residence ;
+    rdfs:range savvi:Identifier ;
+.
+
+savvi:riskAssessmentDate
+    a rdf:Property ;
+    rdfs:label "Date"@en ;
+    rdfs:comment "The Date that the Risk Category was established"@en ;
+    rdfs:domain savvi:RiskAssessment ;
+    rdfs:range savvi:Characteristic ;
+.
+
+savvi:riskAssessmentCategory
+    a rdf:Property ;
+    rdfs:label "Category"@en ;
+    rdfs:comment "A category to match the Risk Stratification Policy"@en ;
+    rdfs:domain savvi:RiskAssessment ;
+    rdfs:range savvi:Characteristic ;
+.
+
+savvi:situationAssessmentDate
+    a rdf:Property ;
+    rdfs:label "Date"@en ;
+    rdfs:comment "the Date that the situation was assessed"@en ;
+    rdfs:domain savvi:SituationAssessment ;
+    rdfs:range xsd:date ;
+.
+
+savvi:situation
+    a rdf:Property ;
+    rdfs:label "Situation"@en ;
+    rdfs:comment "a synopsis of the situation"@en ;
+    rdfs:domain savvi:SituationAssessment ;
+    rdfs:range xsd:string ;
+.
+
+savvi:situationRiskCategory
+    a rdf:Property ;
+    rdfs:label "RiskCategory"@en ;
+    rdfs:comment "The assessed Risk Category"@en ;
+    rdfs:domain savvi:SituationAssessment ;
+    rdfs:range savvi:Characteristic ;
+.
+
+
+</pre></html>
