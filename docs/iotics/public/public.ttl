@@ -15,8 +15,16 @@ pub:HostTwin
 
 pub:hostAllowList
     rdf:type rdf:Property ;
-    rdfs:label "Host network allow list"@en ;
-    rdfs:comment "Host twin DIDs (or allow all/none predefined allowed values) allowed to interact with the resource over the network"@en ;
+    rdfs:label "Host Data allow list"@en ;
+    rdfs:comment "Determines whether a Digital Twin's Data is accessible or not by a Digital Twin from other Hosts. The Twin's Data will always be accessible to other Twins in the same Host."@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range pub:AllowListValue ;
+    .
+
+pub:hostMetadataAllowList
+    rdf:type rdf:Property ;
+    rdfs:label "Host Metadata allow list"@en ;
+    rdfs:comment "Determines whether the Digital Twin's Metadata is visible or not to other Hosts. The Twin's Metadata will always be visible in the same Host"@en ;
     rdfs:domain iotics:DigitalTwin ;
     rdfs:range pub:AllowListValue ;
     .
