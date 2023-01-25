@@ -1,0 +1,459 @@
+@prefix iotics: <http://localhost:8000/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+iotics:Agent
+    a rdfs:Class ;
+    rdfs:subClassOf foaf:Agent ;
+    rdfs:label "Agent" ;
+    rdfs:comment """An entity interacting with a Host in an IOTICSpace. 
+Every agent has an agent identity that is used to authenticate and authorise requests made to the Host by means of an authentication token.
+An agent implement IOTICS Digital Twin *behaviour*. In IOTICS data sharing and interactions occur between two twins (symmetry). 
+Such interactions are programmed in the respective agents of the twins.
+Agents control the twin identity and, by interacting with Host, they manage the twin's metadata, subscribe to other twins' feeds 
+and handle the received data, publish on the twin's feeds, 
+send commands to other twins' inputs or handle commands received on their inputs.
+An agent can implement the behaviour of one or more twins.
+"""@en ;
+    .
+
+iotics:User
+    a rdfs:Class ;
+    rdfs:subClassOf foaf:Agent ;
+    rdfs:label "User" ;
+    rdfs:comment """A legal entity interacting with a Host in an IOTICSpace by means of an Agent. 
+A user interacts with IOTICS via an agent that has explicitely been granted Authentication Delegation. Every request the agent does to the 
+host API is presented with a token that contains the user identifier the request needs to be authenticated for. 
+Host checks whether, for the requesting agent, a delegation exists.
+"""@en  ;
+    .
+
+iotics:hasAgentIdentity
+    a rdf:Property ;
+    rdfs:label "has agent identity"@en ;
+    rdfs:comment "property expressing the relationship between an agent and its identity"@en ;
+    rdf:range iotics:AgentIdentity ;
+    rdf:domain iotics:Agent ;
+    .
+
+iotics:hasUserIdentity
+    a rdf:Property ;
+    rdfs:label "has user identity"@en ;
+    rdfs:comment "property expressing the relationship between an agent and its identity"@en ;
+    rdf:range iotics:UserIdentity ;
+    rdf:domain iotics:User ;
+    .
+
+iotics:hasIdentifier
+    a rdf:Property ;
+    rdfs:label "has identifier"@en ;
+    rdfs:comment "an identifier for this identity or document"@en ;
+    rdf:range iotics:Did ;
+    rdfs:domain [ rdf:type rdf:Class ;
+                owl:unionOf ( iotics:Identity iotics:DidDocument)
+              ] ;
+    .
+
+
+iotics:Identity
+    a rdfs:Class ;
+    rdfs:label "Identity"@en ;
+    rdfs:comment """An IOTICS identity is an identifier and a set of cryptographic keys that can be used to uniquely identify
+entities and prove ownership. IOTICS Identities implements the W3C DID specification.
+Twins, users and agents have an identity. An identity is: (1) a set of private keys owned by the entity 
+(the twin, user or agent), (2) an identity document containing public information about the identity and 
+(3) a unique identifier, the DiD (decentralied identity identifier).
+The DiD can be used to fetch the Identity document from a Resolver. 
+The private keys can be used to provide a signed request to the resolver to update the document.
+Therefore whoever owns the keys, owns the identity of the entity.        
+"""@en ;
+    rdfs:seeAlso <https://docs.iotics.com/docs/identity> ;
+    rdfs:seeAlso <https://github.com/Iotic-Labs/dev-adoc-architecture/tree/main/modules/arch-id/pages> ;
+    .
+
+iotics:AgentIdentity
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:Identity;
+    rdfs:label "Agent Identity" ;
+    .
+
+iotics:UserIdentity
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:Identity;
+    rdfs:label "User Identity" ;
+    .
+
+iotics:TwinIdentity
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:Identity;
+    rdfs:label "Twin Identity" ;
+    .
+
+iotics:KeyID
+    a rdfs:Class ;
+    rdfs:label "Key"@en ;
+    rdfs:comment """Key owned by the subject. The ID is required an must be unique for the document, 
+moreover, it must be encoded in ascii and start with a '#'. For example: #key-0, #deleg-0.
+If the revoked flag is set to false the key is not usable. If this key is revoked, old signatures are still valid.
+The KeyID allows an identity owner to manage multiple functions in the same document using different named keys."""@en ;
+    .
+
+iotics:keyIdRevoked
+    a rdf:Property ;
+    rdfs:label "key revoked" ;
+    rdfs:comment "whethert this key has been revoked" ;
+    rdf:range xsd:boolean ;
+    rdf:domain iotics:KeyID ;     
+    .
+
+iotics:keyIdValue
+    a rdf:Property ;
+    rdfs:label "key value" ;
+    rdfs:comment "the identifier value of this keyID" ;
+    rdf:range xsd:string ;
+    rdf:domain iotics:KeyID ;     
+    .
+
+iotics:keyIdType
+    a rdf:Property ;
+    rdfs:label "key type" ;
+    rdfs:comment "the type this keyID" ;
+    rdf:range xsd:string ;
+    rdf:domain iotics:KeyID ;     
+    .
+
+iotics:publicKeyBase58
+    a rdf:Property ;
+    rdfs:label "public key Base58" ;
+    rdfs:comment "the Base58 representation of the public key (DER) of this key, base58" ;
+    rdf:range xsd:string ;
+    rdf:domain iotics:KeyID ;     
+    .
+
+iotics:Did
+    a rdfs:Class ;
+    rdfs:label "Decentralised Identifier"@en ;
+    rdfs:comment "An IOTICS DID in the form of did:iotics:XXX"@en ;
+    .
+
+iotics:refersToDocument
+    a rdf:Property ;
+    rdfs:label "refers to document"@en ;
+    rdfs:comment "an identifier for this identity"@en ;
+    rdf:range iotics:DidDocument ;
+    rdf:domain iotics:Did ; 
+    .
+    
+iotics:ProofType
+    a rdfs:Class ;
+    rdfs:label "Proof Type"@en ;
+    .
+
+iotics:proofType_did
+    a owl:NamedIndividual, iotics:ProofType ;
+    rdfs:label "Proof Type (DID)"@en ;
+    .
+
+iotics:proofType_generic
+    a owl:NamedIndividual, iotics:ProofType ; 
+    rdfs:label "Proof Type (Generic)"@en ;
+    .
+
+iotics:AcceptedProofType
+    a rdfs:Class ;
+    rdfs:label "Accepted Proof Type"@en ;
+    owl:equivalentClass 
+        [ a rdfs:Class  ;
+          owl:oneOf(iotics:proofType_did iotics:proofType_generic)] ;
+    .
+
+iotics:Delegation
+    a rdfs:Class ;
+    rdfs:label "Delegation"@en ;
+    rdfs:comment """The delegation is a proof that a specific permission has been granted from a subject to another subject. 
+Delegation is requested by the delegate to a controller and stored in the controller's Identity document. 
+Every time the delegate claims the permission on behalf of the issuer, the verification can be made by looking into the issuer's document.
+If the key is absent/removed from controllers doc then this delegation is invalid
+"""@en ;
+    iotics:id  xsd:string ;
+    .
+
+iotics:delegationId
+    a rdf:Property ;
+    rdfs:label "delegation id" ;
+    rdfs:comment "The id of this delegation" ;
+    rdf:range iotics:string;
+    rdf:domain iotics:Delegation ;     
+    .
+
+iotics:delegationController
+    a rdf:Property ;
+    rdfs:label "delegation controller" ;
+    rdfs:comment "The controller property is the DID of the entity being delegated to." ;
+    rdf:range iotics:DID;
+    rdf:domain iotics:Delegation ;     
+    .
+
+iotics:delegationProof
+    a rdf:Property ;
+    rdfs:label "delegation proof" ;
+    rdfs:comment "proof supplied for this delegation: the proof is valid if the key is present in the Controller's doc." ;
+    rdf:range xsd:string ;
+    rdf:domain iotics:Delegation ;     
+    .
+
+iotics:delegationProofType
+    a rdf:Property ;
+    rdfs:label "delegation proof type" ;
+    rdfs:comment "the type of proof supplied for this delegation" ;
+    rdf:range iotics:AcceptedProofType ;
+    rdf:domain iotics:Delegation ;     
+    .
+
+iotics:delegationRevoked
+    a rdf:Property ;
+    rdfs:label "delegation revoked" ;
+    rdfs:comment "whethert this delegation has been revoked" ;
+    rdf:range xsd:boolean ;
+    rdf:domain iotics:Delegation ;     
+    .
+
+iotics:DidDocumentMetadata
+    a rdfs:Class ;
+    rdfs:label "DID Document metadata"@en ;
+    rdfs:comment """Metadata of this document according to DID spec"""@en ;
+    .
+
+iotics:DidDocument
+    a rdfs:Class ;
+    rdfs:label "DID Document"@en ;
+    rdfs:comment """DID Document created and representing public data about this identity, All types (user, agent, twin) have the same document.
+Proof is Base64 encoded signature bytes.
+ProofType: In case of 'did' it's the signature of a DID ascii (did:iotics:a:b) using original key. In case of 'generic' it's the signature of an empty byte array using original key.
+This prevents registering DIDs without a matching private key and reduces trust required of the registry.
+Verifying signature outputs public key which is hashed to match DID.
+'revoked' is optional boolean, once set to true the document cannot be updated again. All authentication is denied for revoked docs"""@en
+    .
+
+iotics:ioticsDIDType
+    a rdf:Property ;
+    rdfs:label "did document type"@en ;
+    rdfs:comment "what type of document this did refers to (one of: agent, user, twin)"@en ;
+    rdf:range iotics:AcceptedDocumentType ;
+    rdf:domain iotics:DidDocument ; 
+    .
+
+iotics:ioticsSpecVersion
+    a rdf:Property ;
+    rdfs:label "spec version"@en ;
+    rdfs:comment "what IOTICS DID Spec version this document is compliant to"@en ;
+    rdf:range xsd:string ;
+    rdf:domain iotics:DidDocument ; 
+    .
+    
+iotics:updateTime
+    a rdf:Property ;
+    rdfs:label "document update time"@en ;
+    rdfs:comment "the update time of this document"@en ;
+    rdf:range xsd:dateTime ;
+    rdf:domain iotics:DidDocument ; 
+    .
+    
+iotics:creator
+    a rdf:Property ;
+    rdfs:label "document creator"@en ;
+    rdfs:comment "the creator of this document"@en ;
+    rdf:range xsd:string ;
+    rdf:domain iotics:DidDocument ; 
+    .
+    
+iotics:metadata
+    a rdf:Property ;
+    rdfs:label "document metadata"@en ;
+    rdfs:comment "document metadata"@en ;
+    rdf:range iotics:DidDocumentMetadata ;
+    rdf:domain iotics:DidDocument ; 
+    .
+    
+iotics:publicKey
+    a rdf:Property ;
+    rdfs:label "public key"@en ;
+    rdfs:comment "public key"@en ;
+    rdf:range iotics:KeyID ;
+    rdf:domain iotics:DidDocument ; 
+    .
+    
+iotics:authentication
+    a rdf:Property ;
+    rdfs:label "authentication"@en ;
+    rdfs:comment "authentication key"@en ;
+    rdf:range iotics:KeyID ;
+    rdf:domain iotics:DidDocument ; 
+    .
+    
+iotics:delegateControl
+    a rdf:Property ;
+    rdfs:label "delegate control"@en ;
+    rdfs:comment "list of control delegations"@en ;
+    rdf:range iotics:ControlDelegation ;
+    rdf:domain iotics:DidDocument ; 
+    .
+    
+iotics:delegateAuthentication
+    a rdf:Property ;
+    rdfs:label "delegate authentication"@en ;
+    rdfs:comment "list of authentication delegations"@en ;
+    rdf:range iotics:AuthenticationDelegation ;
+    rdf:domain iotics:DidDocument ; 
+    .
+    
+iotics:proof
+    a rdf:Property ;
+    rdfs:label "proof"@en ;
+    rdfs:comment "the proof used to make this document (is Base64 encoded signature bytes)"@en ;
+    rdf:range xsd:string ;
+    rdf:domain iotics:DidDocument ; 
+    .
+
+
+iotics:DocumentType
+    a rdfs:Class ;
+    rdfs:label "Document Type"@en ;
+    .
+
+iotics:documentType_agent
+    a owl:NamedIndividual, iotics:DocumentType ;
+    rdfs:label "document type (agent)"@en ;
+    .
+
+iotics:documentType_user
+    a owl:NamedIndividual, iotics:DocumentType ;
+    rdfs:label "document type (user)"@en ; 
+    .
+
+iotics:documentType_twin
+    a owl:NamedIndividual, iotics:DocumentType  ;
+    rdfs:label "document type (twin)"@en ;
+    .
+
+iotics:AcceptedDocumentType
+    a rdfs:Class ;
+    owl:equivalentClass 
+        [ a rdfs:Class  ;
+          owl:oneOf(iotics:documentType_agent iotics:documentType_user iotics:documentType_twin)] ;
+    rdfs:label "Accepted Document Type"@en ;    .
+
+iotics:didDocumentRevoked
+    a rdf:Property ;
+    rdfs:label "did document revoked"@en ;
+    rdfs:comment "whether this document has been revoked"@en ;
+    rdf:range xsd:boolean ;
+    rdf:domain iotics:DidDocument ; 
+    .
+    
+iotics:controller
+    a rdf:Property ;
+    rdfs:label "document controller"@en ;
+    rdfs:comment "the controller of this document"@en ;
+    rdf:range iotics:Did ;
+    rdf:domain iotics:DidDocument ; 
+    .
+    
+iotics:ControlDelegation
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:Delegation ;
+    rdfs:label "Control Delegation" ;
+    rdfs:comment """Delegation issued by a twin, giving authority to an agent to control the twin identity and behaviour."""@en
+    .
+
+
+iotics:AuthenticationDelegation
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:Delegation ;
+    rdfs:label "Authentication Delegation" ;
+    rdfs:comment """Delegation issued by a user, giving authority to an agent to authenticate and operate on their behalf."""@en
+    .
+
+iotics:AuthenticationToken
+    a rdfs:Class ;
+    rdfs:comment """A token used to prove authentication and delegation"""@en ;
+    rdfs:label "Authentication Token"@en 
+    .
+
+iotics:JwtToken
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:AuthenticationToken ;
+    rdfs:comment """A self-contained text string in JWT (RFC 7519) format containing cryptographic proof it was created by an Agent or Twin"""@en ;
+    rdfs:label "JWT Token"@en 
+    .
+
+iotics:KeyPairSecrets
+    a rdfs:Class ;
+    rdfs:comment "Data required to make a Private/Public Key Pair, specifically a seed and a derivation path"@en ;
+    rdfs:label "Key Pair Secrets"@en ;
+    .
+
+
+iotics:PrivateKey
+    a rdfs:Class ;
+    rdfs:comment "A 256-bit random number that should be kept secret. Iotics Identity SDK uses a deterministic method to make random private keys by hashing the seed"@en ;
+    rdfs:label "Private Key"@en ;
+    .
+
+iotics:Proof
+    a rdfs:Class ;
+    rdfs:comment "A cryptographic signature proving a claim"@en ;
+    rdfs:label "Proof"@en ;
+    .
+
+iotics:PublicKey
+    a rdfs:Class ;
+    rdfs:comment "Derived from the private key in a one way function. These are shared via DID Documents and by Proof signatures."@en ;
+    rdfs:label "Public Key"@en ;
+    .
+
+
+iotics:RegisteredDocument
+    a rdfs:Class ;
+    rdfs:comment "A DID Document registered in and retrieved from the resolver system."@en ;
+    rdfs:label "Registered Document"@en ;
+    .
+
+
+iotics:RegisteredIdentity
+    a rdfs:Class ;
+    rdfs:comment "An identity that has been registered and can be retrieved from the resolver system."@en ;
+    rdfs:label "Registered Identity"@en ;
+    .
+
+
+iotics:Resolver
+    a rdfs:Class ;
+    rdfs:label "Resolver"@en ;
+    rdfs:comment """
+A mechanism for registering/resolving/retrieving DID Documents using their DID Identifier.
+Every network of IOTICSpaces requires access to a Resolver. 
+IOTICS provides a resolver system that exposes an API for documents to be registered and retrieved.
+"""@en ;
+    .
+
+iotics:Seed
+    a rdfs:Class ;
+    rdfs:comment """A random number that is used to deterministically generate Private Keys. 
+It is a 128-bit or 256-bit number that can be represented as hexadecimal or mnemonic phrase. 
+    """@en ;
+    rdfs:label "Seed"@en ;
+    .
+
+iotics:PnetKey
+    a rdfs:Class, iotics:ConfigurationParameter;
+    rdfs:label "PNET Key" ;
+    rdfs:comment """A symmetric enchryption key used to enchrypt the traffic in a Network. 
+All hosts in the same network must share the same enchryption key in order to be able to communicate.""" ;
+    .

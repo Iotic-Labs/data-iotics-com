@@ -1,0 +1,67 @@
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix iotics: <http://localhost:8000/> .
+@prefix app:    <https://data.iotics.com/app#> .
+
+
+app:Model 
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:DigitalTwin ;
+    rdfs:label "Digital Twin Model"@en ;
+    rdfs:comment "A template for creating digital twins with the same feeds and properties"@en ;
+.
+
+app:model 
+    a rdf:Property ;
+    rdfs:label "Twin model";
+    rdfs:comment "Model from which the twin was created" ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range app:Model ;
+.
+
+# app:createdFrom rdf:type rdf:Property ;
+#     rdfs:label "Created from"@en ;
+#     rdfs:comment "How the twin was created"@en ;
+#     rdfs:domain iotics:DigitalTwin ;
+#     rdfs:range app:TwinCreationMeans ;
+# .
+
+app:spaceName 
+    a rdf:Property ;
+    rdfs:label "Space name"@en ;
+    rdfs:comment "User-friendly name of the space the model belongs to"@en ;
+    rdfs:domain app:Model ;
+    rdfs:range xsd:string ;
+.
+
+app:spaceUrl 
+    a rdf:Property ;
+    rdfs:label "Space URL"@en ;
+    rdfs:comment "URL name of the space the model belongs to"@en ;
+    rdfs:domain app:Model ;
+    rdfs:range xsd:string ;
+.
+
+app:color 
+    a rdf:Property ;
+    rdfs:label "Color"@en ;
+    rdfs:comment "Hex color of the portal representation of this model's twins"@en ;
+    rdfs:domain app:Model ;
+    rdfs:range xsd:string ;
+.
+
+app:defines 
+    a rdf:Property ;
+    rdfs:label "Defines"@en ;
+    rdfs:comment "The URI of the model this twin describes (a Model instance defined in another ontology)"@en ;
+    rdfs:domain app:Model ;
+    rdfs:range app:Model ;
+.
+
+app:dataSource rdf:type rdf:Property ;
+    rdfs:label "has Data Source Twin" ;
+    rdfs:comment "ID of twin providing data to this application" ;
+    rdfs:domain app:Application ;
+    rdfs:range iotics:DigitalTwin ;
+.

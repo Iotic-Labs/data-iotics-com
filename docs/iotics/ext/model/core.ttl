@@ -1,16 +1,28 @@
-# Copyright (c) 2021 Iotic Labs Ltd. All rights reserved.
+@prefix iotics: <http://localhost:8000/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-###############################################################################
-# IOTICS Resource Ontology                                                    #
-###############################################################################
+iotics:Asset
+    a rdfs:Class ;
+    rdfs:label "Asset"@en ;
+    rdfs:comment """A 'real' asset (person, device, system, algorithm, etc.) that can be virtualised. 
+An asset may be the combination of multiple 'real' objects. This classifier is kept purposefully generic.
+"""@en ;
+    .
 
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-
-PREFIX iotics:    <http://data.iotics.com/iotics#>
-
-## Base ontology for IOTICS Digital Twins and the data they share.
+iotics:virtualises
+    a rdf:Property ;
+    rdfs:label "virtualises"@en ;
+    rdfs:comment "Links an asset with its own digital twin."@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range iotics:Asset ;
+    .
 
 iotics:DigitalTwin
     a rdfs:Class ;
@@ -18,16 +30,18 @@ iotics:DigitalTwin
     rdfs:comment "A virtual representation of a real asset, device, concept or person in an IOTICSpace"@en ;
     .
 
+## we need a shape saying that HostTwin virtualise a Host
 iotics:HostTwin
     a rdfs:Class ;
     rdfs:subClassOf iotics:DigitalTwin ;
-    rdfs:label "IOTICS Host Twin"@en ;
+    rdfs:label "Host Twin"@en ;
     rdfs:comment "The Digital Twin of an IOTICS Host"@en ;
+    iotics:virtualises iotics:Host ;
     .
 
 iotics:advertises
     a rdf:Property ;
-    rdfs:label "Advertises"@en ;
+    rdfs:label "advertises"@en ;
     rdfs:comment "Lists (advertises) what mechanisms (points) the Digital Twin has to interact with other Twins"@en ;
     rdfs:domain iotics:DigitalTwin ;
     rdfs:range iotics:Point ;
@@ -35,7 +49,7 @@ iotics:advertises
 
 iotics:createdAt
     a rdf:Property ;
-    rdfs:label "createdAt"@en ;
+    rdfs:label "created at"@en ;
     rdfs:comment "The date on which a IOTICS Digital Twin was created"@en ;
     rdfs:domain iotics:DigitalTwin ;
     rdfs:range xsd:dateTime
@@ -43,20 +57,22 @@ iotics:createdAt
 
 iotics:updatedAt
     a rdf:Property ;
-    rdfs:label "updatedAt"@en ;
-    rdfs:comment """The date on which an IOTICS Digital Twin, or any of its feeds
-        or inputs was updated, including updates which do not otherwise modify the
-        Digital Twin, its feeds or inputs"""@en ;
+    rdfs:label "updated at"@en ;
+    rdfs:comment """The date on which an IOTICS Digital Twin,
+or any of its feeds or inputs was updated, including updates which 
+do not otherwise modify the Digital Twin, its feeds or inputs
+"""@en ;
     rdfs:domain iotics:DigitalTwin ;
     rdfs:range xsd:dateTime ;
     .
 
 iotics:Point
     a rdfs:Class ;
-    rdfs:label "IOTICS Point"@en ;
+    rdfs:label "Twin Point"@en ;
     rdfs:comment """A means by which an IOTICS Digital Twin may interact with other twins, either outbound or inbound.
-        Metadata describing the payload of the point is available when the point is described and therefore separate to the
-        payload data. Interactions with the point are brokered and secured according to policies controlled by the twin."""@en ;
+Metadata describing the payload of the point is available when the point is described and therefore separate to the
+payload data. Interactions with the point are brokered and secured according to policies controlled by the twin.
+"""@en ;
     .
 
 iotics:pointName
@@ -64,8 +80,8 @@ iotics:pointName
     # - a twin can't have two different feeds with the same pointName
     # - a feed can't have two or more  pointName properties
 	a rdf:Property ;
-    rdfs:label "IOTICS Point name"@en ;
-    rdfs:comment "The name of the point. This must be unique per Digital Twin (for a given point type, e.g. Feed)."@en ;
+    rdfs:label "point name"@en ;
+    rdfs:comment "The name of the point. This must be unique per type of point for a given Digital Twin."@en ;
 	rdfs:domain iotics:Point ;
 	rdfs:range xsd:string ;
 	.
@@ -73,15 +89,15 @@ iotics:pointName
 iotics:Feed
     a rdfs:Class ;
     rdfs:subClassOf iotics:Point ;
-    rdfs:label "IOTICS Data Feed"@en ;
+    rdfs:label "Twin Feed"@en ;
     rdfs:comment """A feed of data advertised by an IOTICS Digital Twin, used by the twin to broadcast values.
-        Authorised twins following this feed receive data when published"""@en ;
+Authorised twins following this feed receive data when published"""@en ;
     .
 
 iotics:storesLast
     a rdf:Property ;
-    rdfs:label "Stores last published payload"@en ;
-    rdfs:comment "Whether most recent published payload might be available on this feed."@en ;
+    rdfs:label "stores last"@en ;
+    rdfs:comment "Stores last published payload: whether most recent published payload might be available on this feed."@en ;
     rdfs:domain iotics:Feed ;
     rdfs:range xsd:boolean ;
     .
@@ -89,30 +105,32 @@ iotics:storesLast
 iotics:Input
     a rdfs:Class ;
     rdfs:subClassOf iotics:Point ;
-    rdfs:label "IOTICS Input"@en ;
+    rdfs:label "Twin Input"@en ;
     rdfs:comment """By advertising an input, an IOTICS Digital Twin allows authorised twins to send messages whose meaning
-    might be described by the properties of the input itself and of its payload.
-    For example, inputs can be used to send commands to change the state of the underlying asset or to send messages
-    that can be interpreted by the twin to implement request/response exchanges."""@en ;
+might be described by the properties of the input itself and of its payload.
+For example, inputs can be used to send commands to change the state of the underlying asset or to send messages
+that can be interpreted by the twin to implement request/response exchanges.
+"""@en ;
     .
 
 iotics:Value
     a rdfs:Class ;
-    rdfs:label "IOTICS Payload Value"@en ;
+    rdfs:label "Point Payload Value"@en ;
     rdfs:comment "A semantic description of a Value used by Points when communicating data"@en ;
     .
 
 iotics:valueKey
     a rdf:Property ;
     rdfs:subPropertyOf rdfs:label ;
-    rdfs:label "Value Key"@en ;
+    rdfs:label "value key"@en ;
     rdfs:comment "Unique identifier for this Value among those offered by its Point."@en ;
     rdfs:domain iotics:Value ;
+    rdfs:range xsd:string ;
     .
 
 iotics:valueType
     a rdf:Property ;
-    rdfs:label "Value Type"@en ;
+    rdfs:label "value type"@en ;
     rdfs:comment "The xsd datatype of the Value, e.g. xsd:decimal. See https://www.w3.org/TR/rdf11-concepts/#xsd-datatypes"@en ;
     rdfs:domain iotics:Value ;
     # is there a way to restrct the range to some ontology that captures the xsd data types?
@@ -120,16 +138,18 @@ iotics:valueType
 
 iotics:valueUnit
     a rdf:Property ;
-    rdfs:label "Value Unit"@en ;
+    rdfs:label "value unit"@en ;
     rdfs:comment "The unit of the value, e.g. obo:UO_0000027 representing Celsius degrees"@en ;
     rdfs:domain iotics:Value ;
     .
 
 iotics:presents
     a rdf:Property ;
-    rdfs:label "Presents"@en ;
+    rdfs:label "presents"@en ;
     rdfs:comment """The property defining what values compose the payload of this point. For example, a feed for a weather station
-        may have a payload with two values representing temperature and pressure defined as iotics:Value resources."""@en ;
+may have a payload with two values representing temperature and pressure defined as iotics:Value resources.
+"""@en ;
     rdfs:domain iotics:Point ;
     rdfs:range iotics:Value ;
     .
+

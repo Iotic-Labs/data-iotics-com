@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html><pre>
+# Auto-generated from iotic-rdf-ontology repository, iotics/ext. Edits will be overwritten!
+
+@prefix iotics: &lt;http://localhost:8000/&gt; .
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix vann: &lt;http://purl.org/vocab/vann/&gt; .
+@prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
+
+
+&lt;http://localhost:8000/iotics.ttl&gt; 
+    a owl:Ontology ;
+    dcterms:title "IOTICS information model" ;
+    dcterms:description """This ontology implements the IOTICS information model. 
+                            Currently in draft, it identifies and define the core terms in the model.""" ;
+    dcterms:publisher &lt;https://iotics.com/&gt; ;
+    dcterms:creator &lt;https://www.linkedin.com/in/fabriziocannizzo/&gt; ;
+    owl:versionIRI &lt;https://data.iotics.com/iotics/v1.0.0/&gt; ;
+    owl:versionInfo "v1.0.0" ;
+    dcterms:modified "2022-11-01"^^xsd:date ;
+    dcterms:issued "2032-11-01"^^xsd:date ;
+    dcterms:license &lt;https://iotics.com/iotics-ontology-license&gt; ;
+    dcterms:source &lt;https://data.iotics.com/iotics.ttl&gt; ;
+    dcterms:publisher iotics:IOTICS ;
+    vann:preferredNamespacePrefix "iotics" ;
+    vann:preferredNamespaceUri "https://data.iotics.com/iotics" ;
+    .
+
+iotics:
+    owl:imports &lt;model/infra.ttl&gt; ;
+    owl:imports &lt;model/accesscontrol.ttl&gt; ;
+    owl:imports &lt;model/core.ttl&gt; ;
+    owl:imports &lt;model/identity.ttl&gt; ;
+    owl:imports &lt;model/app.ttl&gt; ;
+    .
+
+iotics:IOTICS
+    a iotics:Participant ;
+    foaf:homepage &lt;https://www.iotics.com&gt; ;
+    iotics:hasCommonName "IOTICS" ;
+    iotics:hasLegalName "Iotic-Labs Ltd." ;
+    rdfs:label "IOTICS" ;
+    rdfs:comment "We are IOTICS" ;
+    .
+
+
+</pre></html>

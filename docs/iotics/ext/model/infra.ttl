@@ -1,0 +1,295 @@
+@prefix iotics: <http://localhost:8000/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+iotics:Participant
+    a rdfs:Class;
+    rdfs:subClassOf foaf:Agent, org:Organization;
+    rdfs:label "Participant"@en;
+    rdfs:comment "Stakeholder owning a component in IOTICS or managed by IOTICS."@en;
+    .
+
+iotics:InfrastructureComponent 
+    a rdfs:Class;
+    rdfs:label "InfrastructureComponent"@en ;
+    rdfs:comment """The class of all infrastructure components in IOTICS. 
+Anything that is part of the physical infrastructure of the IOTICS offering can use this classifier.
+"""@en;
+    .
+
+iotics:ConfigurationParameter
+    a rdfs:Class;
+    rdfs:label "ConfigurationParameter"@en ;
+    rdfs:comment """The class of all configuration parameters for IOTICSpace and components."""@en;
+    .
+
+iotics:hasCommonName
+	a rdf:Property ;
+	rdfs:label "common name"@en;
+	rdfs:comment "Commonly used name or term for the Participant."@en ;
+	rdfs:domain iotics:Participant ;
+	rdfs:range xsd:string ;
+	.
+
+iotics:hasLegalName
+	a rdf:Property ;
+	rdfs:label "legal name"@en;
+	rdfs:comment """The complete legal name of a Participant. 
+Unlike the name the participant which refers to the commonly used name 
+or term for the Participant, a legal name identifies a participant for legal, 
+administrative and other official purposes."""@en ;
+	rdfs:domain iotics:Participant ;
+	rdfs:range xsd:string ;
+	.
+
+iotics:maintainer 
+    a rdf:Property;
+    rdfs:label "maintainer"@en;
+    rdfs:comment "Participant responsible for technical maintenance of the InfrastructureComponent."@en ;
+    rdfs:domain iotics:InfrastructureComponent;
+    rdfs:range iotics:Participant;
+    .
+
+iotics:componentVersion 
+	a rdf:Property ;
+    rdfs:label "component version"@en;
+    rdfs:comment "InfrastructureComponent version."@en ;
+    rdfs:domain iotics:InfrastructureComponent;
+    rdfs:range xsd:string;
+    .
+
+iotics:Connector
+    rdfs:subClassOf iotics:InfrastructureComponent ;
+    a rdfs:Class ;
+    rdfs:comment """A connector is an Agent application that typically manages the creation and behaviour 
+of multiple twins. Typically connectors act on behalf of a single non-human user, and their execution is automated.
+Connectors are multi-tenanted as far as twins are concerned and single-tenanted as far as users are concerned.
+A connector needs a runtime environment to run, outside IOTICS.
+It's uncommon but a connector can implement more than one agent concurrently depending on the user requirements. For example a simulator of
+multiple real agents that are bundled in a single application.
+"""@en ;
+    rdfs:label "Connector"@en 
+    .
+
+
+iotics:Host
+    rdfs:subClassOf iotics:InfrastructureComponent ;
+    a rdfs:Class, iotics:Asset ;
+    rdfs:label "Host" ;
+    rdfs:comment """The host is a server providing access to Twin's metadata and provides the necessary 
+infrastructure for twins to publish/subscribe data and send/receive inputs.
+Host provides an API endpoint for agents to interact with the 'local' twins and with twins in remote hosts.
+Metadata is stored in a triple store database in the host.
+One or more hosts are deployed in an IOTICSpace""" ;
+ .
+
+iotics:CentralisedResolverSystem
+    rdfs:subClassOf iotics:InfrastructureComponent, iotics:Resolver;
+    a rdfs:Class ;
+    rdfs:label "Centralised Resolver System" ;
+    rdfs:comment "This is a Centralised Resolver that is hosted by IOTICS to provide resolver capabilities for IOTICSpaces hosted by IOTICS" ;
+ .
+
+iotics:IoticSpace
+    a iotics:Asset ;
+    rdfs:label "IOTICSpace" ;
+    rdfs:comment "An IOTICSpace is IOTICS product." ;
+ .
+
+ iotics:groups 
+    a rdf:Property;
+    rdfs:label "groups"@en;
+    rdfs:comment "An IOTICSpace is a logical grouping of a set of distinct infrastructure components and configuration parameters"@en ;
+    rdfs:domain iotics:IoticSpace;
+    rdfs:range [ rdf:type rdfs:Class ;
+                owl:unionOf ( iotics:InfrastructureComponent iotics:ConfigurationParameter)
+              ] ;
+    .
+
+iotics:IoticsUI
+    rdfs:subClassOf iotics:InfrastructureComponent ;
+    a rdfs:Class ;
+    rdfs:label "IOTICS UI" ;
+    rdfs:comment "IOTICS UI is a browser based application allowing to interact with IOTICSpace" ;
+ .
+
+iotics:Network
+    a rdfs:Class ;
+    rdfs:label "Netowrk" ;
+    rdfs:comment "A netowrk is a set of hosts connected to each other and able to exchange data with each other" ;
+ .
+
+iotics:connects 
+    a rdf:Property;
+    rdfs:label "connects"@en;
+    rdfs:comment "A network connects multiple hosts"@en ;
+    rdfs:domain iotics:Network;
+    rdfs:range iotics:Host;
+    .
+
+iotics:trafficEncryptedBy
+    a rdf:Property;
+    rdfs:label "traffic enchrypted by"@en;
+    rdfs:comment "Network traffic for this host is enchrypted by a pnet key"@en ;
+    rdfs:domain iotics:Host;
+    rdfs:range iotics:PnetKey;
+    .
+
+iotics:hasEndpoint
+    a rdf:Property ;
+    rdfs:label "has endpoint"@en ;
+    rdfs:comment "Relates twins to their endpoints"@en ;
+    rdfs:domain iotics:Twin ;
+    rdfs:range iotics:Endpoint ;
+    .
+
+iotics:Endpoint
+    a rdfs:Class ;
+    rdfs:label "Endpoint"@en ;
+    rdfs:comment "A means of interacting with a twin or host"@en ;
+    .
+
+iotics:grpcEndpoint
+    a iotics:IoticsAgentAPI ;
+    rdfs:label "gRPC Endpoint"@en ;
+    rdfs:comment "A means of interacting with a twin or host via gRPC"@en ;
+    .
+
+iotics:restStompEndpoint
+    a iotics:IoticsAgentAPI ;
+    rdfs:label "REST/STOMP Endpoint"@en ;
+    rdfs:comment "A means of interacting with a twin or host via REST and STOMP/Websocket"@en ;
+    .
+
+iotics:IoticsNetworkAPI
+    a iotics:Endpoint ;
+    rdfs:label "IOTICS network api" ;
+    rdfs:comment "The API used by hosts to communicate with each other" ;
+ .
+
+iotics:IoticsAgentAPI
+    rdfs:subClassOf iotics:Endpoint ;
+    a rdfs:Class ;
+    rdfs:label "IOTICS agent api" ;
+    rdfs:comment "The API used by agents to interact with a Host. This API is private in the sense that it is accessible only by the owner of the Host." ;
+ .
+
+
+iotics:IoticsResolverAPI
+    rdfs:subClassOf iotics:Endpoint ;
+    a rdfs:Class ;
+    rdfs:label "IOTICS resolver api" ;
+    rdfs:comment """The API used by the Resolver System. 
+This API allows clients to store or retrieve DID Documents by their DID. 
+It is also used by Hosts to verify delegations for any incoming requests.""" ;
+ .
+
+iotics:ClientArtifact
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:InfrastructureComponent ;
+    rdfs:label "IOTICS client library" ;
+    rdfs:comment "Any software component/library provided by IOTICS that can be used to build applications (agents, connectors) that interact with IOTICS" ;
+    .
+
+iotics:isSupported
+    a rdf:Property ;
+    rdfs:label "is supported" ;
+    rdfs:comment "if true the library is supported by IOTICS" ;
+    rdfs:domain iotics:ClientArtifact ;
+    rdfs:range xsd:boolean ;
+    .
+
+iotics:forLanguage
+    a rdf:Property ;
+    rdfs:label "for language" ;
+    rdfs:comment "the language/environment this library is for" ;
+    rdfs:domain iotics:ClientArtifact ;
+    rdfs:range xsd:string ;
+    .
+
+iotics:IdentityLibrary
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:ClientArtifact ;
+    rdfs:label "IOTICS Identity Library" ;
+    rdfs:comment "Client software library implementing the IOTICS DID specification." ;
+    .
+
+iotics:goIdentityLibrary
+    a iotics:IdentityLibrary ;
+    rdfs:label "GOLANG Identity Library" ;
+    iotics:isSupported true ;
+    iotics:forLanguage "golang" ;
+    .
+
+iotics:pythonIdentityLibrary
+    a iotics:IdentityLibrary ;
+    rdfs:label "PYTHON Identity Library" ;
+    iotics:isSupported true ;
+    iotics:forLanguage "python" ;
+    .
+
+iotics:rustIdentityLibrary
+    a iotics:IdentityLibrary ;
+    rdfs:label "RUST Identity Library" ;
+    iotics:isSupported true ;
+    iotics:forLanguage "rust" ;
+    .
+
+iotics:ApiLibrary
+    a rdfs:Class ;
+    rdfs:subClassOf iotics:ClientArtifact ;
+    rdfs:label "IOTICS API Library" ;
+    rdfs:comment "Client software library implementing the IOTICS API for agents/connectors to interact with IOTICSpace hosts." ;
+    .
+
+iotics:integratesEndpoint
+    a rdf:Property ;
+    rdfs:label "integrates endpoint" ;
+    rdfs:comment "What endpoint this API library integrates with." ;
+    rdfs:domain iotics:ApiLibrary ;
+    rdfs:range iotics:Endpoint ;
+    .
+
+iotics:stompApiLibrary
+    a iotics:ApiLibrary ;
+    rdfs:label "STOMP API Library" ;
+    iotics:isSupported true ;
+    iotics:forLanguage "python" ;
+    iotics:integratesEndpoint iotics:restStompEndpoint ;
+    .
+
+iotics:javaApiLibrary
+    a iotics:ApiLibrary ;
+    rdfs:label "JAVA API Library" ;
+    iotics:isSupported false ;
+    iotics:forLanguage "java" ;
+    iotics:integratesEndpoint iotics:grpcEndpoint ;
+    .
+
+iotics:typescriptApiLibrary
+    a iotics:IdentityLibrary ;
+    rdfs:label "TYPESCRIPT API Library" ;
+    iotics:isSupported true ;
+    iotics:forLanguage "typescript" ;
+    iotics:integratesEndpoint iotics:grpcEndpoint ;
+    .
+
+iotics:pythonApiLibrary
+    a iotics:IdentityLibrary ;
+    rdfs:label "PYTHON API Library" ;
+    iotics:isSupported true ;
+    iotics:forLanguage "python" ;
+    iotics:integratesEndpoint iotics:grpcEndpoint ;
+    .
+
+iotics:rustApiLibrary
+    a iotics:IdentityLibrary ;
+    rdfs:label "RUST API Library" ;
+    iotics:isSupported true ;
+    iotics:forLanguage "rust" ;
+    iotics:integratesEndpoint iotics:grpcEndpoint ;
+    .

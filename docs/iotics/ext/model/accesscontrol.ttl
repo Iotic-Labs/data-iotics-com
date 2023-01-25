@@ -1,0 +1,51 @@
+@prefix iotics: <http://localhost:8000/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+iotics:hostAllowList
+    rdf:type rdf:Property ;
+    rdfs:label "Host Data allow list"@en ;
+    rdfs:comment "Determines whether a Digital Twin's Data is accessible or not by a Digital Twin from other Hosts. The Twin's Data will always be accessible to other Twins in the same Host."@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range iotics:AllowListValue ;
+    .
+
+iotics:hostMetadataAllowList
+    rdf:type rdf:Property ;
+    rdfs:label "Host Metadata allow list"@en ;
+    rdfs:comment "Determines whether the Digital Twin's Metadata is visible or not to other Hosts. The Twin's Metadata will always be visible in the same Host."@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range iotics:AllowListValue ;
+    .
+
+iotics:userAllowList
+    rdf:type rdf:Property ;
+    rdfs:label "User allow list"@en ;
+    rdfs:comment "Determines whether a set of user identities are allowed to perform an action against the Iotics API."@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range iotics:AllowListValue ;
+    .
+
+iotics:agentAllowList
+    rdf:type rdf:Property ;
+    rdfs:label "Agent allow list"@en ;
+    rdfs:comment "Determines whether a set of agent identities are allowed to perform an action against the Iotics API."@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range iotics:AllowListValue ;
+    .
+
+iotics:AllowListValue rdf:type rdfs:Class ;
+    rdfs:label "Allow list value"@en ;
+    rdfs:comment "Value expected to be a DID or one of iotics:all or iotics:none."@en ;
+.
+
+iotics:all
+    rdf:type iotics:AllowListValue ;
+    rdfs:label "All identities allowed value"@en ;
+    rdfs:comment "Allow list value used to allow any interaction initiated by the related identity."@en ;
+    .
+
+iotics:none
+    rdf:type iotics:AllowListValue ;
+    rdfs:label "No identities allowed value"@en ;
+    rdfs:comment "Allow list value used to deny any interaction initiated by the related identity."@en ;
+    .
