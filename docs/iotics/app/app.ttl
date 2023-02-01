@@ -19,20 +19,6 @@ app:model rdf:type rdf:Property ;
     rdfs:range app:Model ;
 .
 
-app:createdAt rdf:type rdf:Property ;
-    rdfs:label "Created at"@en ;
-    rdfs:comment "Twin creation time"@en ;
-    rdfs:domain iotics:DigitalTwin ;
-    rdfs:range xsd:dateTime ;
-.
-
-app:updatedAt rdf:type rdf:Property ;
-    rdfs:label "Updated at"@en ;
-    rdfs:comment "Twin update time"@en ;
-    rdfs:domain iotics:DigitalTwin ;
-    rdfs:range xsd:dateTime ;
-.
-
 app:createdBy rdf:type rdf:Property ;
     rdfs:label "Created by"@en ;
     rdfs:comment "Name of user who created the twin"@en ;
