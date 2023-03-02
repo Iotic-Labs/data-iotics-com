@@ -7,8 +7,8 @@ PREFIX schema:  <https://schema.org/>
 ### Top level concepts related to construction
 
 construction:Sensor rdf:type rdfs:Class ;
-    rdfs:label "Customer" ;
-    rdfs:comment "A utilities customer" ;
+    rdfs:label "Sensor" ;
+    rdfs:comment "A construction sensor" ;
     .
 
 construction:hasState rdf:type rdf:Property ;
