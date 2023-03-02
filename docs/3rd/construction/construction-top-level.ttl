@@ -1,0 +1,27 @@
+PREFIX construction:   <http://data.iotics.com/construction#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema:  <https://schema.org/>
+
+### Top level concepts related to construction
+
+construction:Sensor rdf:type rdfs:Class ;
+    rdfs:label "Customer" ;
+    rdfs:comment "A utilities customer" ;
+    .
+
+construction:hasState rdf:type rdf:Property ;
+    rdfs:label "State of sensor" ;
+    rdfs:comment "The current state of the sensor" ;
+    rdfs:domain construction:Sensor ;
+    rdfs:range xsd:string ;
+    .
+
+construction:hasLocation rdf:type rdf:Property ;
+    rdfs:label "Sensor location" ;
+    rdfs:comment "Link to location of sensor" ;
+    rdfs:domain construction:Sensor ;
+    rdfs:range xsd:anyURI ;
+    .
+
