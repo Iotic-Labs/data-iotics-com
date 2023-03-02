@@ -1,0 +1,353 @@
+PREFIX train:   <http://ex/train/>
+
+PREFIX rrps:    <http://www.mtu-solutions.com/ont/>
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX geo:     <http://www.w3.org/2003/01/geo/wgs84_pos#>
+
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:      <http://www.w3.org/ns/shacl#>
+PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+
+#### Top-level concepts.
+
+rrps:Application rdf:type rdfs:Class .
+
+# Specific RRPS applications.
+rrps:Rail      rdf:type rrps:Application .
+rrps:Marine    rdf:type rrps:Application .
+rrps:PowerGen  rdf:type rrps:Application .
+
+## ---- Class: Fleet
+
+rrps:Fleet  rdf:type rdfs:Class ;
+    rdfs:label "Fleet" ;
+    rdfs:comment "RRPS term for a collection of customer objects";
+    rdfs:comment """
+Multiple objects of the same customer with the same purpose/application which are equipped with RRPS products. (e.g. Trains, Boats, Trucks, Power Field).
+""" .
+
+# -- Properties
+rrps:customer rdf:type rdf:Property ;
+    rdfs:label "Customer" ;
+    rdfs:comment "The customer who controls a fleet." ;
+    rdfs:domain rrps:Fleet ;
+    rdfs:range  rrps:Company ;
+    .
+
+rrps:application rdf:type rdf:Property ;
+    rdfs:domain rrps:Fleet ;
+    rdfs:range  rrps:Application ;
+    .
+
+rrps:designation rdf:type rdf:Property ;
+    rdfs:subPropertyOf rdfs:label ;
+    rdfs:domain rrps:Fleet ;
+    rdfs:range  xsd:string ;
+    .
+
+## -- Shape
+
+rrps:fleet-shape
+    sh:targetClass rrps:Fleet ;
+    sh:property [
+        sh:path rrps:customer ;
+        sh:class rrps:Company ;
+    ] ;
+    sh:property [
+        sh:path rrps:application ;
+        sh:class rrps:Application ;
+    ] ;
+    sh:property [
+        sh:path rrps:designation;
+        sh:datatype xsd:string ;
+    ] ;
+    .
+
+## ---- Class: Company
+
+rrps:Company  rdf:type rdfs:Class ;
+    rdfs:label "Company" ;
+    rdfs:comment "Company, such as a Customer of RRPS" ;
+    .
+
+## -- Properties
+
+rrps:companyName  rdf:type rdf:Property ;
+    rdfs:domain rrps:Company ;
+    rdfs:range  xsd:string ;
+    .
+    
+rrps:companyRef  rdf:type rdf:Property ;
+    rdfs:label   "Company Reference" ;
+    rdfs:comment "RRPS internal customer reference" ;
+    rdfs:domain rrps:Company ;
+    rdfs:range  xsd:string ;
+    .
+
+## -- Shape
+
+rrps:shape-company
+    sh:targetClass rrps:Company ;
+    sh:property [
+        sh:path rrps:companyName ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path rrps:companyRef ;
+        sh:datatype xsd:string ;
+    ] ;
+    .
+
+## ---- Class: CustomerAsset
+
+rrps:CustomerAsset rdf:type rdfs:Class ;
+    rdfs:label     "Customer Asset" ;
+    rdfs:comment   "One moving or stationary object of the same customer into which one or more RRPS systems is integrated. (e.g. Railcar, Locomotive, Ship, Power Plant, Truck, Power Container)." ;
+    .
+
+## -- Properties
+
+## rrps:customerId rdf:type rdf:Property ;
+
+## @@?? rrps:unitId
+
+rrps:unit rdf:type rdf:Property ;
+    rdfs:label   "Unit in asset";
+    rdfs:comment "Unit part of a customer asset" ;
+    rdfs:domain  rrps:CustomerAsset ;
+    rdfs:range   rrps:Unit ;
+    .
+
+## rrps:inFleet rdf:type rdf:Property ;
+
+## -- Shape
+
+rrps:shape-customerAsset
+    sh:targetClass rrps:CustomerAsset ;
+    sh:property
+        rrps:customerId-shape ;
+    sh:property [
+        sh:path rrps:unit ;
+        sh:class rrps:Unit ;
+    ] ;
+    sh:property
+        rrps:inFleet-shape ;
+    .
+
+## ---- Class: Unit
+
+rrps:Unit rdf:type rdfs:Class ; ## @@ rrps:RRPSUnit 
+    rdfs:label   "Unit" ;
+    rdfs:comment "Highest level of a solution. Multiple systems can be part of same customer object. Sub-Systems can be replaced as complete unit or Equipments as part of it. (e.g. Automation, Genset, Powerpack, Power Management)." ;
+    .
+
+## -- Properties
+
+## rrps:inFleet rdf:type rdf:Property ;
+
+rrps:contains rdf:type rdf:Property ;
+    rdfs:label   "Contains";
+    rdfs:comment "Sub-unit within a unit" ;
+    rdfs:domain  rrps:Unit ;
+    rdfs:range   rrps:SubUnit ;
+    .
+
+## @@ rrps:unitId
+## How to make required when here?
+
+## rrps:installationDate rdf:type rdf:Property
+
+## rrps:materialDescription  rdf:type rdf:Property ;
+
+rrps:component  rdf:type rdf:Property ;
+    rdfs:label   "Component" ;
+    rdfs:comment "Component of unit";
+    ## rdfs:domain  rrps:Unit or rrps:SubUnit
+    rdfs:range   rrps:Component ;
+    .
+
+## -- Shape
+
+rrps:shape-Unit
+    sh:targetClass rrps:Unit ;
+    sh:property
+        rrps:inFleet-shape ;
+    sh:property [
+        sh:path rrps:contains ;
+        sh:class rrps:Unit ;
+    ] ;
+    sh:property
+        rrps:installationDate-shape ;
+    sh:property
+        rrps:materialDescription-shape ;
+    sh:property
+        rrps:unitId-shape ;
+    sh:property [
+        sh:path rrps:component ;
+        sh:class rrps:Component ;
+    ] ;
+    .
+
+## ---- Class: SubUnit
+
+rrps:SubUnit  rdf:type rdfs:Class ;
+    rdfs:label   "SubUnit" ;
+    rdfs:comment "Single Unit as part of a RRPS system or as a standalone unit in customer object. Can be RRPS or 3rd party product that can be completely or partly (component) replaced." ;
+    .
+
+## -- Properties
+
+rrps:subUnitId rdf:type rdf:Property ;
+    rdfs:label   "Sub-unit" ;
+    rdfs:comment "Sub Unit" ;
+    rdfs:domain  rrps:SubUnit ;
+    rdfs:range   xsd:string ;
+    .
+
+## rrps:component rdf:type rdf:Property ;
+
+## -- Shape
+
+rrps:shape-subUnit
+    sh:targetClass rrps:SubUnit ;
+    sh:property [
+        sh:path rrps:subUnitId ;  ## @@ unitId?
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property
+        rrps:component-shape ;
+    sh:property
+        rrps:materialDescription-shape ;
+    .
+
+## ---- Class: Component
+# Alternative name "Module"
+
+rrps:Component rdf:type rdfs:Class ;
+    rdfs:label   "Component" ;
+    rdfs:comment "Units as part of an sub-unit (equipment) and stored in iBase. Can be RRPS or 3rd party products that can be replaced individually." ;
+    .
+## -- Properties
+
+## rrps:unitId
+
+## -- Shape
+
+rrps:shape-Component
+    sh:targetClass rrps:Component ;
+    sh:property
+        rrps:unitId-shape ;
+    .
+
+## ---- General Properties
+
+rrps:inFleet rdf:type rdf:Property ;
+    rdfs:label   "In fleet";
+    rdfs:comment "Fleet that this entity is part of" ;
+    ## rdfs:domain : applies to assets and units.
+    rdfs:range   rrps:Fleet ;
+    .
+
+rrps:inFleet-shape rdf:type sh:PropertyShape ;
+    sh:path rrps:inFleet ;
+    sh:class rrps:Fleet ;
+    .
+## --    
+rrps:contains rdf:type rdf:Property ;
+    rdfs:label   "Contains";
+    rdfs:comment "Physical containment relationship" ;
+    .
+rrps:contains-shape rdf:type sh:PropertyShape ;
+    sh:path rrps:contains ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    .
+## --
+rrps:component rdf:type rdf:Property ;
+    rdfs:label   "Component";
+    rdfs:comment "Component of unit";
+    ## rdfs:domain  rrps:Unit or rrps:SubUnit
+    rdfs:range   rrps:Component ;
+    .
+
+## --
+rrps:unitId rdf:type rdf:Property ;
+    ## General - no xsd:domain
+    rdfs:range   xsd:string ;
+    .
+
+rrps:unitId-shape rdf:type sh:PropertyShape ;
+    sh:path rrps:unitId ;
+    sh:datatype xsd:string ;
+    .
+## --
+rrps:customerId rdf:type rdf:Property ;
+    rdfs:label   "Id" ;
+    rdfs:comment "Id used by the customer to identify something" ;
+    rdfs:comment "The reference by which the customer identifies something. e.g. Customer serial number, Train number, ...";
+    .
+    
+rrps:customerId-shape  rdf:type rdf:Property ;
+    sh:path rrps:customerId ;
+    sh:datatype xsd:string ;
+    .
+## --
+rrps:serialNumber rdf:type rdf:Property ;
+    rdfs:label   "Serial number" ;
+    rdfs:comment "Serial number" ;
+    .
+
+rrps:serialNumber-shape  rdf:type sh:PropertyShape ;
+    sh:path rrps:serialNumber ;
+    sh:datatype xsd:string ;
+    .
+## --
+rrps:materialDescription  rdf:type rdf:Property ;
+    rdfs:label   "Material Description" ;
+    rdfs:comment "Material Description" ;
+    .
+    
+rrps:materialDescription-shape rdf:type sh:PropertyShape ;
+    sh:path rrps:materialDescription ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    .
+## --
+rrps:installationDate rdf:type rdf:Property ;
+    rdfs:label   "Installation date";
+    rdfs:comment "Date of installation" ;
+    rdfs:domain  rrps:Unit ;
+    rdfs:range   xsd:date ;
+    .
+
+rrps:installationDate-shape rdf:type sh:PropertyShape ;
+    sh:path rrps:installationDate ;
+    sh:datatype xsd:date ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    .
+## --
+rrps:productDocumentation  rdf:type rdf:Property ;
+    rdfs:label   "Product Documentation" ;
+    rdfs:comment "Product Documentation" ;
+    .
+    
+rrps:productDocumentation-shape rdf:type sh:PropertyShape ;
+    sh:path rrps:productDocumentation ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 0 ;
+    sh:maxCount 1 ;
+    .
+## --
+rrps:software rdf:type rdf:Property ;
+    rdfs:label    "Software" ;
+    rdfs:comment  "Software name/version" ;
+    rdfs:range    xsd:string ;
+    .
+
+rrps:software-shape rdf:type sh:PropertyShape ;
+    sh:path rrps:software ;
+    sh:nodeKind sh:IRI ;
+    .

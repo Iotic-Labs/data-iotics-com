@@ -1,0 +1,118 @@
+PREFIX water:   <http://data.iotics.com/water#>
+PREFIX iotb:    <http://purl.org/net/iotic-labs#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+<urn:did:wwdevice1> a water:WelshWaterDevice ;
+    water:stationName "CARDIFF SWK" ;
+    water:stationId "1222" ;
+    water:deviceName "1222 FOUL PUMP SUMP LEVEL" ;
+    water:deviceId "E15052" ;
+    water:setPointsAvailable "Not Yet";
+    water:setPointsStatus "None configured - can map them but may not be set up in OSTN" ;
+    water:setPointHiHi "V1484" ;
+    water:setPointHigh "V1485" ;
+    water:setPointLow "V1486" ;
+    water:setPointLoLo "V1487" ;
+    iotb:advertises <urn:did:wwpoint1> ;
+    .
+
+<urn:did:wwpoint1> a iotb:Point ;
+    iotb:presents <urn:did:wwval1> ;
+    iotb:presents <urn:did:wwval2> ;
+    iotb:presents <urn:did:wwval3> ;
+    .
+
+<urn:did:wwval1> a iotb:Value ;
+    iotb:valueLabel "LEVEL" ;
+    iotb:valueComment "level in meters" ;
+    iotb:valueUnit <http://qudt.org/2.1/vocab/unit/M> ;
+    iotb:valueType xsd:decimal ;
+    .
+
+## In practice I've never seen these as anything but 'N'. If they're never true alongside a reading they can probably
+## be implied by a special reading value (or lack thereof) and omitted.
+
+<urn:did:wwval2> a iotb:Value ;
+    iotb:valueLabel "Invalid" ;
+    iotb:valueComment "Whether the reading is invalid" ;
+    iotb:valueType xsd:boolean ;
+    .
+
+<urn:did:wwval3> a iotb:Value ;
+    iotb:valueLabel "Suspect" ;
+    iotb:valueComment "Whether the reading is suspect" ;
+    iotb:valueType xsd:boolean ;
+.
+
+<urn:did:wwdevice2> a water:WelshWaterDevice ;
+    water:stationName "CARDIFF SWK" ;
+    water:stationId "1222" ;
+    water:deviceName "1222 FLO TO TREATMENT DAY TOT" ;
+    water:deviceId "E15079" ;
+    water:setPointsAvailable "Not Yet";
+    water:setPointsStatus "None configured - can map them but may not be set up in OSTN" ;
+    water:setPointHiHi "V1494" ;
+    water:setPointHigh "V1495" ;
+    water:setPointLow "V1496" ;
+    water:setPointLoLo "V1497" ;
+    iotb:advertises <urn:did:wwpoint2> ;
+.
+
+## wwval5 and 6 exactly as 2 and 3, limitation of existing iotic ontology/api, as discussed
+
+<urn:did:wwpoint2> a iotb:Point ;
+    iotb:presents <urn:did:wwval4> ;
+    iotb:presents <urn:did:wwval5> ;
+    iotb:presents <urn:did:wwval6> ;
+.
+
+<urn:did:wwval4> a iotb:Value ;
+    iotb:valueLabel "Reading" ;
+    iotb:valueComment "Flow in meters cubed" ;
+    iotb:valueUnit <http://qudt.org/2.1/vocab/unit/M> ;
+    iotb:valueType xsd:integer ;
+    .
+
+<urn:did:nrwdevice1> a water:NRWDevice ;
+    water:stationId "1000";
+    water:stationName "Brynhyfryd Ruthin School"@en ;
+    water:stationName "Brynhyfryd Ruthin School"@cy ;
+    water:isOnline true ;
+    water:url "rivers-and-seas.naturalresources.wales/station/1000";
+    water:ngr "SJ1330958410";
+    water:deviceId "10095";
+    water:deviceName "Brynhyfryd Ruthin School raingauge"@en ;
+    water:deviceId "Mesurydd glaw Ysgol Brynhyfryd, Ruthin"@cy ;
+    water:deviceType "Rainfall"@en ;
+    water:deviceType "Glawiad"@cy ;
+    iotb:advertises <urn:did:nrwpoint1> ;
+.
+
+<urn:did:nrwpoint1> a iotb:Point ;
+    iotb:presents <urn:did:nrwval1> ;
+    iotb:presents <urn:did:nrwval2> ;
+    iotb:presents <urn:did:nrwval3> ;
+.
+
+<urn:did:nrwval1> a iotb:Value ;
+    iotb:valueLabel "Reading" ;
+    iotb:valueComment "Quantifiable value" ;
+    iotb:valueUnit <http://qudt.org/2.1/vocab/unit/MilliM> ;
+    iotb:valueType xsd:integer ;
+.
+
+<urn:did:nrwval2> a iotb:Value ;
+    iotb:valueLabel "Status"@en ;
+    iotb:valueComment "Device status"@en ;
+    iotb:valueUnit water:StatusUnit ;
+    iotb:valueType xsd:string ;
+.
+
+<urn:did:nrwval3> a iotb:Value ;
+    iotb:valueLabel "Statws"@cy ;
+    iotb:valueComment "Statws mesur"@cy ;
+    iotb:valueUnit water:StatusUnit ;
+    iotb:valueType xsd:string ;
+.

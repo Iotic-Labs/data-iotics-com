@@ -1,0 +1,166 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix uostr: <https://w3id.org/DigiTwin/TestRun#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix iotics:  <http://data.iotics.com/iotics#> .
+@prefix uom: <http://www.ontology-of-units-of-measure.org/resource/om-2/> .
+@prefix geosp: <http://www.opengis.net/ont/geosparql#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+# Classes
+uostr:TestRun
+  a rdfs:Class ;
+  rdfs:label "A single run of experiments." ;
+  rdfs:comment "An experimental run with a specific experimental configuration." ;
+.
+
+uostr:TestType
+  a rdfs:Class ;
+  rdfs:label "Type of test" ;
+  rdfs:comment "Type of test regarding the excitation force used." ;
+.
+
+uostr:SingleShakerExcitationTest
+  a rdfs:Class ;
+  rdfs:subClassOf uostr:TestType ;
+  rdfs:label "A test using a single shaker." ;
+  rdfs:comment "A test with only one mechanical shaker to excite the structure." ;
+.
+uostr:MultipleShakerExcitationTest
+  a rdfs:Class ;
+  rdfs:subClassOf uostr:TestType ;
+  rdfs:label "A test using multiple shaker." ;
+  rdfs:comment "A test with more than one mechanical shaker to excite the structure." ;
+.
+
+uostr:BurstRandom
+  a uostr:SingleShakerExcitationTest;
+  rdfs:label "A test using a burst random excitation." ;
+  rdfs:comment "A single shaker test, whose excitation force is a burst random excitation." ;
+.
+
+uostr:ContinuousRandom
+  a uostr:SingleShakerExcitationTest ;
+  rdfs:label "A test using a continuous random excitation." ;
+  rdfs:comment "A single shaker test, whose excitation force is a continuously random signal also known as white-noise or pseudo-random excitation." ;
+.
+
+uostr:SineSwept
+  a uostr:SingleShakerExcitationTest ;
+  rdfs:label "A test using a sine swept excitation." ;
+  rdfs:comment "A single shaker test with a single frequency excitation, whose excitation frequency changes as a function of time." ;
+.
+
+uostr:AddedMass
+  a rdfs:Class ;
+  rdfs:label "The added-on-the-structure mass during the run." ;
+  rdfs:comment "The value and position of the mass, which was added on the structure during the run, often in order to immitate the existence of damage or nonlinearity." ;
+.
+
+uostr:CoordinatesArray
+  a rdfs:Class ;
+  rdfs:label "Array of coordinates in a 3D euclidean space" ;
+  rdfs:comment "Coordinates in a 3D euclidean space" ;
+.
+
+uostr:MassArray
+  a rdfs:Class ;
+  rdfs:label "Array of added masses during a run." ;
+  rdfs:comment "Array of masses in kg" ;
+.
+
+uostr:ControlFramework
+  a rdfs:Class ;
+  rdfs:label "Control of shaker output in frequency domain" ;
+  rdfs:comment "The control framework used to control the mechanical shaker during the run." ;
+.
+
+uostr:ClosedLoopControlFramework
+  a uostr:ControlFramework ;
+  rdfs:label "Closed loop control of shaker output in frequency domain." ;
+  rdfs:comment "A control framework that utilises real-time information to modulate the excitation to a desired output." ;
+.
+
+uostr:OpenLoopControlFramework
+  a uostr:ControlFramework ;
+  rdfs:label "Open loop control of shaker output in frequency domain" ;
+  rdfs:comment "A control framework that uses a pre-determined signal to excite the system." ;
+.
+
+# Properties of Classes, domain base of link and range tip of arrow. No domain means can be applied to multiple classes
+uostr:hasTestType
+  a rdf:property;
+  rdfs:domain uostr:TestRun;
+  rdfs:range uostr:TestType;
+  rdfs:label "Specify excitation type";
+.
+
+uostr:hasAmplificationLevel
+  a rdf:property ;
+  rdfs:domain uostr:TestRun ;
+  rdfs:range xsd:float ;
+  rdfs:label "Power amplification from LMS to Shaker" ;
+.
+
+uostr:hasBandwidth
+  a rdf:property ;
+  rdfs:domain uostr:TestRun ;
+  rdfs:range xsd:float ;
+  rdfs:label "Frequency Bandwidth" ;
+.
+
+uostr:hasAddedMasses
+  a rdf:property ;
+  rdfs:domain uostr:TestRun ;
+  rdfs:range uostr:AddedMass ;
+  rdfs:label "Specify if there are added masses" ;
+.
+
+uostr:hasMassLocations
+  a rdf:property;
+  rdfs:domain uostr:AddedMass ;
+  rdfs:range uostr:CoordinatesArray;
+  rdfs:label "Location of masses";
+.
+
+uostr:hasMassValues
+  a rdf:property ;
+  rdfs:domain uostr:AddedMass ;
+  rdfs:range uostr:MassArray ;
+  rdfs:label "The mass added at a specific points for an experiment" ;
+.
+
+uostr:hasSpectralLines
+  a rdf:property;
+  rdfs:domain uostr:TestRun ;
+  rdfs:range xsd:integer;
+  rdfs:label "Number of frequencies in FRF";
+.
+
+uostr:hasNumberOfAverages
+  a rdf:property;
+  rdfs:domain uostr:TestRun ;
+  rdfs:range xsd:integer ;
+  rdfs:label "Number of FRF windows for averaging";
+.
+
+uostr:hasControlFramework
+  a rdf:property;
+  rdfs:domain uostr:TestRun ;
+  rdfs:range uostr:ControlFramework;
+  rdfs:label "Specify Control";
+.
+
+uostr:hasRepetitionIndex
+  a rdf:property;
+  rdfs:domain uostr:TestRun ;
+  rdfs:range xsd:integer ;
+  rdfs:label "Set index for repetitions";
+.
+
+uostr:hasAdditionalNotes
+  a rdf:property;
+  rdfs:domain uostr:TestRun ;
+  rdfs:range xsd:string ;
+  rdfs:label "Added Notes";
+.
