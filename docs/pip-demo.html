@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html><pre>
+# Auto-generated from iotic-rdf-ontology repository, 3rd/pip-demo. Edits will be overwritten!
+
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt; .
+@prefix pip-demo: &lt;http://data.iotics.com/pip-demo#&gt; .
+
+# Classes
+pip-demo:Sensor
+    a rdfs:Class ;
+    rdfs:label "Sensor"@en ;
+    rdfs:comment "A device used to make digital observations about a subject."@en ;
+.
+pip-demo:AirQualitySensor
+    a rdfs:Class ;
+    rdfs:label "Air Quality Sensor"@en ;
+    rdfs:comment "A type of sensor used to measure air quality."@en ;
+    rdfs:subClassOf pip-demo:Sensor;
+.
+# Properties
+pip-demo:Manufacturer
+    a rdf:Property ;
+    rdfs:label "Manufacturer"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The company responsible for the original manufacture of the device."@en ;
+    rdfs:range xsd:string
+.
+pip-demo:MinOpTemp
+    a rdf:Property ;
+    rdfs:label "Minimum Operating Temperature"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The minimum temperature in degrees celcius at which the device is designed to operate reliably."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:MaxOpTemp
+    a rdf:Property ;
+    rdfs:label "Maximum Operating Temperature"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The maximum temperature in degrees celcius at which the device is designed to operate reliably."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:MinStoreTemp
+    a rdf:Property ;
+    rdfs:label "Minimum Storage Temperature"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The minimum temperature in degrees celcius at which the device may be stored safely."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:MaxStoreTemp
+    a rdf:Property ;
+    rdfs:label "Maximum Storage Temperature"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The maximum temperature in degrees celcius at which the device may be stored safely."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:AveDraw
+    a rdf:Property ;
+    rdfs:label "Average Current Draw"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The average electrical current in milliamperes drawn by the device."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:PeakDraw
+    a rdf:Property ;
+    rdfs:label "Peak Current Draw"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The peak electrical current in milliamperes drawn by the device."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:DimHeight
+    a rdf:Property ;
+    rdfs:label "Height Dimension"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The height dimension of the device excluding any mountings or connectors in millimetres."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:DimWidth
+    a rdf:Property ;
+    rdfs:label "Width Dimension"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The width dimension of the device excluding any mountings or connectors in millimetres."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:DimDepth
+    a rdf:Property ;
+    rdfs:label "Depth Dimension"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The depth dimension of the device excluding any mountings or connectors in millimetres."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:Weight
+    a rdf:Property ;
+    rdfs:label "Weight"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The weight of the device excluding any mountings or connectors in millimetres."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:UpdateInterval
+    a rdf:Property ;
+    rdfs:label "Update Interval"@en ;
+    rdfs:domain pip-demo:Sensor ;
+    rdfs:comment "The expected interval between observations made by the device in seconds."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:Measures
+    a rdf:Property ;
+    rdfs:label "Measures"@en ;
+    rdfs:domain pip-demo:AirQualitySensor ;
+    rdfs:comment "The subject for which observations are made."@en ;
+    rdfs:range xsd:string
+.
+pip-demo:MinParticleMeasure
+    a rdf:Property ;
+    rdfs:label "Minimum Particle Measurement"@en ;
+    rdfs:domain pip-demo:AirQualitySensor ;
+    rdfs:comment "The minimum particle size the device can detect in micrometres."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:MaxParticleMeasure
+    a rdf:Property ;
+    rdfs:label "Maximum Particle Measurement"@en ;
+    rdfs:domain pip-demo:AirQualitySensor ;
+    rdfs:comment "The maximum particle size the device can detect in micrometres."@en ;
+    rdfs:range xsd:decimal
+.
+pip-demo:Accuracy
+    a rdf:Property ;
+    rdfs:label "Measurement Accuracy"@en ;
+    rdfs:domain pip-demo:AirQualitySensor ;
+    rdfs:comment "The accuracy of the particle observations in micrometres per meter squared."@en ;
+    rdfs:range xsd:decimal
+.
+
+
+</pre></html>
