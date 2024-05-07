@@ -4,6 +4,7 @@
 | --- | --- |
 | [app](app) | [source](iotics/app) |
 | [iotics](iotics) | [source](iotics/iotics) |
+| [public](public) | [source](iotics/public) |
 
 
 # User ontologies
