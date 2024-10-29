@@ -6,7 +6,7 @@ PREFIX iotics:  <http://data.iotics.com/iotics#>
 PREFIX pub:     <http://data.iotics.com/public#>
 
 pub:HostTwin
-    rdf:type rdfs:Class ;
+    a rdfs:Class ;
     rdfs:subClassOf pub:AllowListValue ;
     rdfs:subClassOf iotics:DigitalTwin ;
     rdfs:label "Iotics Host Twin"@en ;
@@ -14,7 +14,7 @@ pub:HostTwin
     .
 
 pub:hostAllowList
-    rdf:type rdf:Property ;
+    a rdf:Property ;
     rdfs:label "Host Data allow list"@en ;
     rdfs:comment "Determines whether a Digital Twin's Data is accessible or not by a Digital Twin from other Hosts. The Twin's Data will always be accessible to other Twins in the same Host."@en ;
     rdfs:domain iotics:DigitalTwin ;
@@ -22,7 +22,7 @@ pub:hostAllowList
     .
 
 pub:hostMetadataAllowList
-    rdf:type rdf:Property ;
+    a rdf:Property ;
     rdfs:label "Host Metadata allow list"@en ;
     rdfs:comment "Determines whether the Digital Twin's Metadata is visible or not to other Hosts. The Twin's Metadata will always be visible in the same Host."@en ;
     rdfs:domain iotics:DigitalTwin ;
@@ -30,7 +30,7 @@ pub:hostMetadataAllowList
     .
 
 pub:userAllowList
-    rdf:type rdf:Property ;
+    a rdf:Property ;
     rdfs:label "User allow list"@en ;
     rdfs:comment "Determines whether a set of user identities are allowed to perform an action against the Iotics API."@en ;
     rdfs:domain iotics:DigitalTwin ;
@@ -38,26 +38,38 @@ pub:userAllowList
     .
 
 pub:agentAllowList
-    rdf:type rdf:Property ;
+    a rdf:Property ;
     rdfs:label "Agent allow list"@en ;
     rdfs:comment "Determines whether a set of agent identities are allowed to perform an action against the Iotics API."@en ;
     rdfs:domain iotics:DigitalTwin ;
     rdfs:range pub:AllowListValue ;
     .
 
-pub:AllowListValue rdf:type rdfs:Class ;
+pub:isInCircle
+    a rdf:Property
+    rdfs:label "Is in Circle"@en ;
+    rdfs:comment """One or more Circles to which this twin belongs. Any allow list rules from Circles are considered
+        together with existing twin-assigned ones. There is no additional rule precedence beyond what is defined or
+        individual rules.
+        """@en ;
+    rdfs:domain iotics:DigitalTwin ;
+    rdfs:range iotics:Circle ;
+    .
+
+pub:AllowListValue
+    a rdfs:Class ;
     rdfs:label "Allow list value"@en ;
     rdfs:comment "Value expected to be a DID or one of pub:all or pub:none."@en ;
-.
+    .
 
 pub:all
-    rdf:type iotics:AllowListValue ;
+    a iotics:AllowListValue ;
     rdfs:label "All identities allowed value"@en ;
     rdfs:comment "Allow list value used to allow any interaction initiated by the related identity."@en ;
     .
 
 pub:none
-    rdf:type iotics:AllowListValue ;
+    a iotics:AllowListValue ;
     rdfs:label "No identities allowed value"@en ;
     rdfs:comment "Allow list value used to deny any interaction initiated by the related identity."@en ;
     .

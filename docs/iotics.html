@@ -138,8 +138,9 @@ iotics:updatedAt
     rdfs:label "updatedAt"@en ;
     rdfs:comment """The date on which an IOTICS Digital Twin, or any of its feeds
         or inputs was updated, including updates which do not otherwise modify the
-        Digital Twin, its feeds or inputs"""@en ;
-    rdfs:domain iotics:DigitalTwin ;
+        Digital Twin, its feeds or inputs. Also applies to Circles.
+        """@en ;
+    rdfs:domain iotics:DigitalTwin, iotics:Circle ;
     rdfs:range xsd:dateTime ;
     .
 
@@ -224,6 +225,14 @@ iotics:presents
         may have a payload with two values representing temperature and pressure defined as iotics:Value resources."""@en ;
     rdfs:domain iotics:Point ;
     rdfs:range iotics:Value ;
+    .
+
+iotics:Circle
+    a rdf:Class
+    rdfs:label "IOTICS Circle"@en ;
+    rdfs:comment """A collection of access control (allow list) rules. Both data and metadata rule can be defined, scoped
+        to any number of hosts. A circle can be applied to one or more twins. (see http://data.iotics.com/public#isInCircle)
+        """@en ;
     .
 
 
